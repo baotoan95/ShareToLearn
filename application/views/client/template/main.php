@@ -55,8 +55,6 @@
         <script type="text/javascript" src="<?php echo base_url() . 'assets/client/js/jquery.fancybox.js' ?>"></script>
         <script type="text/javascript" src="<?php echo base_url() . 'assets/client/js/jcarousel.js' ?>"></script>
         <script type="text/javascript" src="<?php echo base_url() . 'assets/client/js/jquery.masonry.min.js' ?>"></script>
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-        <script type="text/javascript" src="<?php echo base_url() . 'assets/client/js/gmap3.min.js' ?>"></script>
         <script type="text/javascript" src="<?php echo base_url() . 'assets/client/js/script.js' ?>"></script>
     </body>
 </html>
