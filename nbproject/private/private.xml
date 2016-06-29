@@ -5,11 +5,10 @@
         <group>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/PostModel.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Redirect.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/UtilModel.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/PostController.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/BaseModel.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/config/database.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/AdminRedirect.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Contact.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/DemoModel.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Demo.php</file>
         </group>
     </open-files>
 </project-private>
