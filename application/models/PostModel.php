@@ -14,7 +14,7 @@ class PostModel extends BaseModel {
         $this->set_table('posts', 'p_id');
     }
 
-    public function addPost($post) {
+    public function addPost($post, $categories, $tags) {
         return $this->insert($post);
     }
 

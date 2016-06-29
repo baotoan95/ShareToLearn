@@ -71,10 +71,17 @@
                     <li><a href="<?php echo base_url() . 'adminredirect/profile'?>"><i class="fa fa-circle-o"></i> Hồ sơ của bạn</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="pages/calendar.html">
-                    <i class="fa fa-cog"></i> <span>Cấu hình</span>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-cog"></i>
+                    <span>Cấu Hình</span>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="<?php echo base_url() . 'adminredirect/posts'?>"><i class="fa fa-circle-o"></i> General</a></li>
+                    <li><a href="<?php echo base_url() . 'adminredirect/newpost'?>"><i class="fa fa-circle-o"></i> Thảo luận</a></li>
+                    <li><a href="<?php echo base_url() . 'adminredirect/tags'?>"><i class="fa fa-circle-o"></i> Email</a></li>
+                </ul>
             </li>
         </ul>
     </section>

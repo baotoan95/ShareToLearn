@@ -27,12 +27,7 @@ class AdminRedirect extends CI_Controller {
         $this->load->view('admin/template/main', $data);
     }
 
-    public function newpost() {
-        $data = array(
-            "content" => "admin/post"
-        );
-        $this->load->view('admin/template/main', $data);
-    }
+    
 
     public function tags() {
         $data = array(

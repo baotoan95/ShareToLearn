@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>Dashboard <?php echo isset($title) ? " - " . $title : "" ?></title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.4 -->
@@ -13,6 +13,8 @@
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- jQuery 2.1.4 -->
     <script src="<?php echo base_url() . 'assets/admin/plugins/jQuery/jQuery-2.1.4.min.js' ?>" type="text/javascript"></script>
+    <!-- common function -->
+    <script src="<?php echo base_url() . 'assets/common.js' ?>" type="text/javascript"></script>
     <!-- jvectormap -->
     <link href="<?php echo base_url() . 'assets/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.css' ?>" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
