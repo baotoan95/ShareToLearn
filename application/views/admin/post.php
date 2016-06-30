@@ -1,3 +1,8 @@
+<?php
+    print_r($categories);
+    echo $categories[0]->getName();
+?>
+
 <script>
     var edited = false;
     $(document).ready(function () {
@@ -48,7 +53,7 @@
                         </script>
                     </div>
                     <div class="form-group">
-                        <label for="guid">Tiêu Đề</label>
+                        <label for="guid">Đường dẫn</label>
                         <?php
                         if (form_error('guid')) {
                             echo "<div class='has-error'>"
@@ -157,12 +162,62 @@
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
-                    <div class="form-group">
+                    <div class="form-group" style="max-height: 200px; overflow: scroll;">
+<!--                        <ul>
+                            <li>
+                                <div class='checkbox'>
+                                    <input type='checkbox'> Check 1
+                                </div>
+                            </li>
+                            <li>
+                                <div class='checkbox'>
+                                    <input type='checkbox'> Check 1
+                                </div>
+                                <ul>
+                                    <li>
+                                        <div class='checkbox'>
+                                            <input type='checkbox'> Check 1
+                                        </div>
+                                        <ul>
+                                            <li>    
+                                                <div class='checkbox'>
+                                                    <input type='checkbox'> Check 1
+                                                </div>
+                                                <ul>
+                                                    <li>    
+                                                        <div class='checkbox'>
+                                                            <input type='checkbox'> Check 1
+                                                        </div>
+                                                        <ul>
+                                                            <li>    
+                                                                <div class='checkbox'>
+                                                                    <input type='checkbox'> Check 1
+                                                                </div>
+                                                                <ul>
+                                                                    <li>    
+                                                                        <div class='checkbox'>
+                                                                            <input type='checkbox'> Check 1
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>-->
+                        
+                        
                         <?php
-                        foreach ($categories as $key => $value) {
+                        foreach ($categories as $category) {
                             echo "<div class='checkbox'>" .
                             "<label>" .
-                            "<input type='checkbox' name='categories[]' value='$key'>" . $value .
+                            "<input type='checkbox' name='categories[]' value='" . 
+                                    $category->getId() . "'>" . $category->getName() .
                             "</label>" .
                             "</div>";
                         }
@@ -179,8 +234,8 @@
                             <select class="form-control" name="parent_cate">
                                 <option>-- Parent Category --</option>
                                 <?php
-                                foreach ($categories as $key => $value) {
-                                    echo "<option value='$key'>$value</option>";
+                                foreach ($categories as $catgory) {
+                                    echo "<option value='". $catgory->getId() ."'>" . $catgory->getName() . "</option>";
                                 }
                                 ?>
                             </select>

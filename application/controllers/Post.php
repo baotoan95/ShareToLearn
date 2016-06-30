@@ -9,25 +9,17 @@ class Post extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('postModel');
-        $this->load->model('tagModel');
+        $this->load->model('mPost');
+        $this->load->model('mCategory');
     }
     // util functions
     private function initPostView() {
-        $categories = array(
-            "1" => "Học lập trình",
-            "2" => "Linh tinh",
-            "3" => "Giải trí"
-        );
+        $categories = $this->mCategory->getCategories();
         $data = array(
             "content" => "admin/post",
             "categories" => $categories,
         );
         return $data;
-    }
-    
-    private function post($field_name) {
-        return $this->input->post($field_name);
     }
     // End util functions
 
@@ -50,36 +42,32 @@ class Post extends CI_Controller {
             return;
         }
         
-        // Add tags if it is new
-        $tags = explode(',', $this->post('tags'));
-        $this->tagModel->addTags($tags);
+        // Refine data
+        $tags = array();
+        if(!empty(get_data_by_post('tags'))) {
+            $tags = explode(',', $this->post('tags'));
+        }
+        $categories = get_data_by_post('categories');
+        $visibility = get_data_by_post('visibility');
         
-        // Create a new post
+        // Create a new post and add it to DB
         $post = array(
-            "p_title" => $this->input->post('title'),
-            "p_content" => $this->post('content'),
+            "p_title" => get_data_by_post('title'),
+            "p_content" => get_data_by_post('content'),
             "p_author" => 1,
             "p_view_count" => 0,
             "p_comment_count" => 0,
-            "p_excerpt" => $this->post('excerpt'),
-            "p_catalogue" => $this->post('catalogue'),
-            "p_status" => $this->post('status'),
+            "p_excerpt" => get_data_by_post('excerpt'),
+            "p_catalogue" => get_data_by_post('catalogue'),
+            "p_status" => get_data_by_post('status'),
             "p_published" => date('yyyy-MM-dd HH:mm:ss'),
-            "p_guid" => $this->post('guid'),
-            "p_comment_allow" => empty($this->post('comment_allowed')) ? false : true,
+            "p_guid" => get_data_by_post('guid'),
+            "p_comment_allow" => empty(get_data_by_post('comment_allowed')) ? false : true,
             "p_type" => "post",
             "p_banner" => "assets/upload/images/Koala.jpg",
-            "p_password" => $this->post('password')
+            "p_password" => get_data_by_post('password')
         );
-        $this->postModel->addPost($post);
-        
-        // Add tags for post
-        for($i = 0; $i < count($tags); $i++) {
-            
-        }
-        
-        $categories = $this->post('categories');
-        $visibility = $this->post('visibility');
+        $this->mPost->addPost($post, $tags, $categories);
         
         $this->load->view('admin/template/main', $data);
     }

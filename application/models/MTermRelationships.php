@@ -5,7 +5,7 @@
  *
  * @author BaoToan
  */
-class TermRelationshipsModel extends BaseModel {
+class MTermRelationships extends BaseModel {
     public function __construct() {
         parent::__construct();
         $this->set_table('term_relationships', 'tr_object_id');

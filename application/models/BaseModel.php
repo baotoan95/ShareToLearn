@@ -35,10 +35,11 @@ class BaseModel extends CI_Model {
 
     /**
      * @param array $data
-     * @return true if insert success, else...
+     * @return number Id of current record
      */
     public function insert($data) {
-        return $this->db->insert($this->_table['table_name'], $data);
+        $this->db->insert($this->_table['table_name'], $data);
+        return $this->db->insert_id();
     }
 
     /**
