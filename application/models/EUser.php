@@ -24,7 +24,10 @@ class EUser {
     private $role;
     private $non_blocked;
 
-    public function __construct($id, $username, $password, $full_name, $avatar, $desc, $bio, $email, $phone, $facebook, $skype, $google, $key, $actived, $role, $non_blocked) {
+    public function __construct($id = 0, $username = '', $password = '', $full_name = '', 
+            $avatar = '', $desc = '', $bio = '', $email = '', $phone = '', 
+            $facebook = '', $skype = '', $google = '', $key = '', 
+            $actived = 0, $role = '', $non_blocked = 0) {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;

@@ -8,15 +8,17 @@
 class Category extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('termModel');
+        $this->load->model('mCategory');
     }
     
     public function addCategory() {
-        $category = array(
-            "t_name" => get_data_by_post('newcate'),
-            "t_slug" => convert_vi_to_en(get_data_by_post('newcate'), true)
-        );
-        $parent = get_data_by_post('parent_cate');
-        $this->termModel->addTerm($category, 'category');
+        $name = $this->input->post('newcate');
+        $parent = $this->input->post('parent_cate');
+        $categories = array(new ECategory(0, trim($name), '', '', trim($parent)));
+        if($this->mCategory->addCategories($categories, 'category')) {
+            echo 'success';
+        } else {
+            echo 'failure';
+        }
     }
 }

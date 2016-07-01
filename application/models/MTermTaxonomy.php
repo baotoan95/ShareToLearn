@@ -1,11 +1,11 @@
 <?php
-
+require_once 'Base_Model.php';
 /**
  * Description of TermTaxonomyModel
  *
  * @author BaoToan
  */
-class MTermTaxonomy extends BaseModel {
+class MTermTaxonomy extends Base_Model {
 
     public function __construct() {
         parent::__construct();

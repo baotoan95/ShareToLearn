@@ -24,8 +24,10 @@ class EPost {
     private $banner;
     private $password;
     private $parent;
+    private $categories;
+    private $tags;
 
-    public function __construct($id, $title, $content, $author, $views, $comments, $excerpt, $catalogue, $status, $published, $guid, $cmt_allow, $order, $type, $banner, $password, $parent) {
+    public function __construct($id = 0, $title = '', $content = '', $author = 0, $views = 0, $comments = 0, $excerpt = '', $catalogue = '', $status = '', $published = '', $guid = '', $cmt_allow = 0, $order = 0, $type = '', $banner = '', $password = '', $parent = 0) {
         $this->id = $id;
         $this->title = $title;
         $this->content = $content;
@@ -179,6 +181,22 @@ class EPost {
 
     function setParent($parent) {
         $this->parent = $parent;
+    }
+
+    public function getCategories() {
+        return $this->categories;
+    }
+
+    public function getTags() {
+        return $this->tags;
+    }
+
+    public function setCategories($categories) {
+        $this->categories = $categories;
+    }
+
+    public function setTags($tags) {
+        $this->tags = $tags;
     }
 
 }

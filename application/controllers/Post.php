@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Description of PostController
  *
@@ -9,9 +8,20 @@ class Post extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        // import class
+        $this->load->model('ETag');
+        $this->load->model('EPost');
+        // Load model class
         $this->load->model('mPost');
         $this->load->model('mCategory');
     }
+    
+    public function post($action, $k) {
+        if($action == 'edit') {
+            
+        }
+    }
+    
     // util functions
     private function initPostView() {
         $categories = $this->mCategory->getCategories();
@@ -44,31 +54,57 @@ class Post extends CI_Controller {
         
         // Refine data
         $tags = array();
-        if(!empty(get_data_by_post('tags'))) {
-            $tags = explode(',', $this->post('tags'));
+        if(!empty($this->input->post('tags'))) {
+            $tag_names = explode(',', $this->input->post('tags'));
+            foreach($tag_names as $tag_name) {
+                $tags[] = new ETag(0, $tag_name, $tag_name);
+            }
         }
-        $categories = get_data_by_post('categories');
-        $visibility = get_data_by_post('visibility');
+        
+        $categories = array();
+        if(!empty($category_ids = $this->input->post('categories'))) {
+            foreach($category_ids as $id) {
+                $categories[] = $this->mCategory->getCategoryById($id);
+            }
+        }
+        
+        $visibility = $this->input->post('visibility');
         
         // Create a new post and add it to DB
-        $post = array(
-            "p_title" => get_data_by_post('title'),
-            "p_content" => get_data_by_post('content'),
-            "p_author" => 1,
-            "p_view_count" => 0,
-            "p_comment_count" => 0,
-            "p_excerpt" => get_data_by_post('excerpt'),
-            "p_catalogue" => get_data_by_post('catalogue'),
-            "p_status" => get_data_by_post('status'),
-            "p_published" => date('yyyy-MM-dd HH:mm:ss'),
-            "p_guid" => get_data_by_post('guid'),
-            "p_comment_allow" => empty(get_data_by_post('comment_allowed')) ? false : true,
-            "p_type" => "post",
-            "p_banner" => "assets/upload/images/Koala.jpg",
-            "p_password" => get_data_by_post('password')
-        );
-        $this->mPost->addPost($post, $tags, $categories);
+        $post = new EPost();
+        $post->setTitle($this->input->post('title'));
+        $post->setContent($this->input->post('content'));
+        $post->setAuthor(1);
+        $post->setViews(0);
+        $post->setComments(0);
+        $post->setExcerpt($this->input->post('excerpt'));
+        $post->setCatalogue($this->input->post('catalogue'));
+        // set status for post
+        $post->setStatus($this->input->post('status'));
+        if($this->input->post('status') == 'draf') {
+            $post->setStatus($this->input->post('status'));
+        }
+        $post->setPublished(date('yyyy-MM-dd HH:mm:ss'));
+        $post->setGuid($this->input->post('guid'));
+        $post->setCmt_allow(empty($this->input->post('comment_allowed')) ? FALSE : TRUE);
+        $post->setOrder(0);
+        $post->setType('post');
+        $post->setBanner('assets/upload/images/Koala.jpg');
+        $post->setPassword($this->input->post('password'));
+        $post->setParent(0);
+        $post->setCategories($categories);
+        $post->setTags($tags);
         
+        if($this->mPost->addPost($post)) {
+            $this->session->set_flashdata("flash_message", "Đã thêm bài viết: " . $post->getTitle() 
+                    . " | <a href='". base_url() . "post/view/" . $post->getGuid() . "'>Xem</a>");
+        } else {
+            $this->session->set_flashdata("flash_error", "Bài viết bị trùng: " . $post->getTitle() 
+                    . " | <a href='". base_url() . "post/view/" . $post->getGuid() . "'>Xem</a>");
+        }
+        
+        // Restore data to view
+        $data['post'] = $post;
         $this->load->view('admin/template/main', $data);
     }
 

@@ -11,7 +11,7 @@ class ETag {
     private $name;
     private $desc;
 
-    function __construct($id, $name, $desc) {
+    public function __construct($id = 0, $name = '', $desc = '') {
         $this->id = $id;
         $this->name = $name;
         $this->desc = $desc;

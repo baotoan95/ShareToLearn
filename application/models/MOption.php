@@ -1,11 +1,11 @@
 <?php
-
+require_once 'Base_Model.php';
 /**
  * Description of ConfigModel
  *
  * @author BaoToan
  */
-class MOption extends BaseModel {
+class MOption extends Base_Model {
     public function __construct() {
         parent::__construct();
         $this->set_table('options', 'o_name');

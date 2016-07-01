@@ -12,12 +12,8 @@ class ECategory {
     private $slug;
     private $desc;
     private $parent;
-    
-    public function __construct() {
-        
-    }
 
-    public function ECategory($name, $slug, $desc, $parent, $id = 0) {
+    public function ECategory($id = 0, $name = '', $slug = '', $desc = '', $parent = 0) {
         $this->id = $id;
         $this->name = $name;
         $this->slug = $slug;

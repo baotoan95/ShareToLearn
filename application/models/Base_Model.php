@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Description of UtilModel
+ * Description of BaseModel
  *
  * @author BaoToan
  */
-class BaseModel extends CI_Model {
+class Base_Model extends CI_Model {
 
     protected $_table = array();
 
