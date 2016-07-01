@@ -19,7 +19,7 @@ class Base_Model extends CI_Model {
      * @param string $primary_key
      * @return void
      */
-    public function set_table($table_name, $primary_key) {
+    public function set_table($table_name, $primary_key = 'id') {
         $this->_table['table_name'] = $table_name;
         $this->_table['primary_key'] = $primary_key;
     }
@@ -30,7 +30,7 @@ class Base_Model extends CI_Model {
      */
     public function getByKey($id) {
         $this->db->where($this->_table['primary_key'], $id);
-        return $this->db->get($this->_table['table_name'])->result_array();
+        return $this->db->get($this->_table['table_name'])->row_array();
     }
 
     /**

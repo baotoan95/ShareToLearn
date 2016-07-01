@@ -10,11 +10,13 @@ class ETag {
     private $id;
     private $name;
     private $desc;
+    private $slug;
 
-    public function __construct($id = 0, $name = '', $desc = '') {
+    public function __construct($id = 0, $name = '', $desc = '', $slug = '') {
         $this->id = $id;
         $this->name = $name;
         $this->desc = $desc;
+        $this->slug = $slug;
     }
 
     function getId() {
@@ -39,6 +41,14 @@ class ETag {
 
     function setDesc($desc) {
         $this->desc = $desc;
+    }
+
+    public function getSlug() {
+        return $this->slug;
+    }
+
+    public function setSlug($slug) {
+        $this->slug = $slug;
     }
 
 }

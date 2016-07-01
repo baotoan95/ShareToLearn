@@ -19,7 +19,8 @@
 </script>
 
 <div class="row">
-    <form id="post" action="<?php echo base_url() . 'post/addpost' ?>" method="post">
+    <form id="post" action="<?php echo base_url() . 'post/' . $action ?>" method="post">
+        <input type="hidden" name="id" value="<?php echo isset($post) ? $post->getId() : "" ?>"/>
         <div class="col-md-9">
             <?php 
             if($this->session->has_userdata('flash_message') || $this->session->has_userdata('flash_error')) {
@@ -50,7 +51,7 @@
                         }
                         ?>
                         <input class="form-control" id="title" name="title" onkeyup="updateGuid(this.value);" onkeypress="change();"
-                               value="<?php echo set_value('title') ?>" type="text">
+                               value="<?php echo isset($post) ? $post->getTitle() : set_value('title') ?>" type="text">
                         <script lang="javascript">
                             function updateGuid(str) {
                                 $('input[name=guid]').val(convert_vi_en(str));
@@ -69,12 +70,12 @@
                         }
                         ?>
                         <input class="form-control" id="title" name="guid" onkeypress="change()"
-                               value="<?php echo set_value('guid') ?>" type="text">
+                               value="<?php echo isset($post) ? $post->getGuid() : set_value('guid') ?>" type="text">
                     </div>
                     <div class="form-group">
                         <label for="excerpt">Trích Đoạn</label>
                         <textarea id="excerpt" class="form-control" rows="5" name="excerpt" onkeypress="change()">
-                            <?php echo set_value('excerpt'); ?>
+                            <?php echo isset($post) ? $post->getExcerpt() : set_value('excerpt'); ?>
                         </textarea>
                     </div>
                     <div class="form-group">
@@ -94,7 +95,7 @@
                         }
                         ?>
                         <textarea class="form-control" rows="30" name="content" onkeypress="change()">
-                            <?php echo set_value('content'); ?>
+                            <?php echo isset($post) ? $post->getContent() : set_value('content'); ?>
                         </textarea>
                     </div>
                 </div><!-- /.box-body -->

@@ -49,14 +49,6 @@ class MTerm extends Base_Model {
         }
     }
     
-    public function deleteTerm($id) {
-        $this->delete($id);
-    }
-    
-    public function updateTerm($term) {
-        $this->update($term);
-    }
-    
     public function getTermById($id) {
         $this->db->select('t_id, tt_id, t_name, t_slug, t_group, tt_taxonomy_name, tt_desc, tt_parent, tt_count');
         $this->db->from($this->_table['table_name']);
@@ -82,4 +74,14 @@ class MTerm extends Base_Model {
                 '" and tt_taxonomy_name = "' . $taxonomy_name . '"');
         return $this->db->get()->row_array();
     }
+    
+    public function deleteTermById($id) {
+        $this->delete($id);
+    }
+    
+    public function updateTerm($term) {
+        $this->update($term);
+    }
+    
+    
 }
