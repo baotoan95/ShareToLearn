@@ -28,7 +28,7 @@ class Category extends CI_Controller {
             // If required parentBox then return array include cateBox and parentBox
             if($hasParentBox) {
                 $data = array(
-                    "category" => json_encode((array)$newcate),
+                    "category" => $newcate,
                     "categoriesParentBox" => $categoriesParentBox
                 );
                 echo json_encode($data);
@@ -36,7 +36,7 @@ class Category extends CI_Controller {
                 echo json_encode((array)$newcate);
             }
         } else {
-            echo 'failure';
+            echo '{"status":"failure"}';
         }
     }
 }

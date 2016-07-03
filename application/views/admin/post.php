@@ -267,20 +267,23 @@
                                     hasParentBox : true
                                 },
                                 success: function (res) {
-                                    alert(res);
                                     var response = $.parseJSON(res);
-                                    alert(response.category.id);
-                                    if($('#cate_' + response.category.parent).has('ul').length > 0) {
-                                        $('#cate_' + response.category.parent + ' ul').append(
-                                            "<li id='cate_" + category.id + "'>" +
+                                    var container = '#cate_container';
+                                    if(response.category.parent > 0) {
+                                        container = '#cate_' + response.category.parent;
+                                    }
+                                    if($(container).has('ul').length === 0) {
+                                        $(container).append("<ul></ul>");
+                                    }
+                                    $(container + ' ul').first().append(
+                                            "<li id='cate_" + response.category.id + "'>" +
                                             "<div class='checkbox'>" +
                                             "<label>" +
                                             "<input type='checkbox' name='categories[]' value='" +
-                                            category.id + "'>" + category.name +
+                                            response.category.id + "'>" + response.category.name +
                                             "</label>" +
                                             "</div></li>"
-                                        );
-                                    }
+                                    );
                                     $('select[name=parent_cate]').html(
                                             "<option value='0'>-- Parent Category --</option>" + 
                                             response.categoriesParentBox);

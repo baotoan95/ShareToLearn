@@ -5,7 +5,7 @@
  *
  * @author BaoToan
  */
-class ECategory {
+class ECategory implements JsonSerializable {
 
     private $id;
     private $name;
@@ -59,6 +59,16 @@ class ECategory {
 
     public function setParent($parent) {
         $this->parent = $parent;
+    }
+    
+    public function jsonSerialize() {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'slug' => $this->getSlug(),
+            'desc' => $this->getDesc(),
+            'parent' => $this->getParent()
+        ];
     }
 
 }
