@@ -15,7 +15,7 @@ class Redirect extends CI_Controller {
 
     public function index() {
         $data = array(
-            // set views
+            // Set views
             "sidebar" => 'client/template/sidebar',
             "content" => 'client/index'
         );

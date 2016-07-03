@@ -76,3 +76,8 @@
     color: red;
     cursor: pointer;
 }
+
+#cate_container ul {
+    list-style: none;
+    margin-left: -20px;
+}

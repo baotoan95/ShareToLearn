@@ -74,8 +74,12 @@ class MPost extends Base_Model {
             return FALSE;
         } else {
             $this->db->trans_commit();
-            return TRUE;
+            return $post_id;
         }
+    }
+    
+    public function getPosts($start, $record, $pagination = false) {
+        
     }
 
     public function getPostById($id, $inc_cates = false, $inc_tags = false) {
@@ -126,6 +130,14 @@ class MPost extends Base_Model {
     }
 
     public function updatePost($post) {
+        // Add tags to DB if them is new
+        $tags = $post->getTags();
+        $this->mTag->addTags($tags, 'tag');
+        // Add categories if them is new
+        $categories = $post->getCategories();
+        $this->mCategory->addCategories($categories, 'category');
+        
+        // Update post
         $data = array(
             "p_id" => $post->getId(),
             "p_title" => $post->getTitle(),
@@ -145,29 +157,44 @@ class MPost extends Base_Model {
             "p_menu_order" => $post->getOrder(),
             "p_parent" => $post->getParent()
         );
+        $this->db->trans_start();
+        $this->update($data);
         // Update tags and categories for post in term_relationships
-        $this->mTermRelatinoships->deleteTermRelationshipByObjectId($post->getId());
+        $this->mTermRelationships->deleteTermRelationshipByObjectId($post->getId());
         // Add tags for post
         if (!empty($tags = $post->getTags())) {
             foreach ($tags as $tag) {
                 $term = $this->mTerm->getTerm($tag->getName(), 'tag');
-                $termRelationship = array(
-                    "tr_object_id" => $post->getId(),
-                    "tr_term_taxonomy_id" => $term['tt_id']
-                );
-                $this->mTermRelationships->addTermRelationship($termRelationship);
+                if(!empty($term)) {
+                    $termRelationship = array(
+                        "tr_object_id" => $post->getId(),
+                        "tr_term_taxonomy_id" => $term['tt_id']
+                    );
+                    $this->mTermRelationships->addTermRelationship($termRelationship);
+                }
             }
         }
         // Add categories for post
         if (!empty($categories = $post->getCategories())) {
             foreach ($categories as $category) {
                 $term = $this->mTerm->getTerm($category->getName(), 'category');
-                $termRelationship = array(
-                    "tr_object_id" => $post->getId(),
-                    "tr_term_taxonomy_id" => $term['tt_id']
-                );
-                $this->mTermRelationships->addTermRelationship($termRelationship);
+                if(!empty($term)) {
+                    $termRelationship = array(
+                        "tr_object_id" => $post->getId(),
+                        "tr_term_taxonomy_id" => $term['tt_id']
+                    );
+                    $this->mTermRelationships->addTermRelationship($termRelationship);
+                }
             }
+        }
+        // Commit if process successful
+        $this->db->trans_complete();
+        if($this->db->trans_status() == FALSE) {
+            $this->db->trans_rollback();
+            return FALSE;
+        } else {
+            $this->db->trans_commit();
+            return TRUE;
         }
     }
 

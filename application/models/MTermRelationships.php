@@ -28,6 +28,6 @@ class MTermRelationships extends Base_Model {
     
     public function deleteTermRelationshipByObjectId($object_id) {
         $this->db->where($this->_table['table_name'] . '.tr_object_id', $object_id);
-        return $this->db->delete();
+        return $this->db->delete($this->_table['table_name']);
     }
 }
