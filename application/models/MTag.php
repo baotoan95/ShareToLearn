@@ -13,10 +13,8 @@ class MTag extends Base_Model {
     }
     
     public function addTags($tags = array()) {
-        return $this->mTerm->addTerms($tags, 'tag');
-    }
-    
-    public function getTagsByPost($post_id) {
-//        $tags = $this->mTerm->getTerm()
+        foreach($tags as $tag) {
+            $this->mTerm->addTerm($tag, 'tag');
+        }
     }
 }

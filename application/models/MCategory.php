@@ -14,26 +14,6 @@ class MCategory extends Base_Model {
         $this->load->model('mTerm');
     }
 
-    public function getCategoriesBox($parentId) {
-        $categories = $this->getCategoriesByParent($parentId);
-        // If not have any child return "" (it is condition to stop recursive)
-        if ($categories) {
-            $html = "<ul>";
-            foreach ($categories as $category) {
-                $html .= "<li id='cate_" . $category->getId() . "'>" .
-                            "<div class='checkbox'>" .
-                            "<label>" .
-                            "<input type='checkbox' name='categories[]' value='" .
-                            $category->getId() . "'>" . $category->getName() .
-                            "</label>" .
-                            "</div>" . $this->getCategoriesBox($category->getId()) .
-                        "</li>";
-            }
-            return $html .= "</ul>";
-        }
-        return "";
-    }
-
     // Create select category parent (in post view)
     function getCategoriesParentBox($parentId = 0, $space = "", $trees = "") {
         $categories = $this->getCategoriesByParent($parentId);
@@ -50,7 +30,7 @@ class MCategory extends Base_Model {
     }
 
     public function getCategoriesByParent($parentId) {
-        $terms = $this->mTerm->getTermByParent($parentId);
+        $terms = $this->mTerm->getTermByParent($parentId, 'category');
         $categories = array();
         foreach ($terms as $term) {
             $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']));
@@ -68,11 +48,7 @@ class MCategory extends Base_Model {
     }
 
     public function addCategory($category) {
-        return $this->mTerm->addTerm($category, 'category');
-    }
-
-    public function addCategories($categories) {
-        return $this->mTerm->addTerms($categories, 'category');
+        return $this->mTerm->addTerm($category, 'category', $category->getParent());
     }
 
 }

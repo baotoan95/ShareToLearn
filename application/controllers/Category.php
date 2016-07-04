@@ -21,7 +21,7 @@ class Category extends CI_Controller {
         $name = $this->input->post('newcate');
         $parent = $this->input->post('parent_cate');
         $category = new ECategory(0, trim($name), '', '', trim($parent));
-        $category_id = $this->mCategory->addCategory($category, 'category');
+        $category_id = $this->mCategory->addCategory($category);
         if($category_id) {
             $newcate = $this->mCategory->getCategoryById($category_id);
             $categoriesParentBox = $this->mCategory->getCategoriesParentBox(0);

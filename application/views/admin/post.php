@@ -331,13 +331,13 @@
                         if (isset($post)) {
                             foreach ($post->getTags() as $tag) {
                                 echo "<l><i class='fa fa-times-circle-o'></i> "
-                                . $tag->getName() .
-                                "<l>&nbsp;&nbsp;&nbsp;";
+                                . $tag->getName() . "<input type='hidden' name='tags[]' value='".$tag->getName()."'/>" .
+                                "</l>&nbsp;&nbsp;&nbsp;";
                                 $tags .= "'" . $tag->getName() . "',";
                             }
                         }
                         ?>
-                        <input type="hidden" name="tags"/>
+                        
                     </div>
                 </div><!-- /.box-body -->
                 <script lang="javascript"> // Handler tags
@@ -359,10 +359,9 @@
                         tag_name = normalizationString($('input[id=tag_name]').val());
                         if (tag_name.length > 0 && tags.indexOf(tag_name) < 0) {
                             $('#tags').append('<l><i class="fa fa-times-circle-o"></i> '
-                                    + tag_name +
-                                    '<l>&nbsp;&nbsp;&nbsp;');
+                                    + tag_name + '<input type="hidden" name="tags[]" value="'+tag_name+'"/>' +
+                                    '</l>&nbsp;&nbsp;&nbsp;');
                             tags.push(tag_name);
-                            $('input[name=tags]').val(tags);
                         }
                         $('input[id=tag_name]').val("");
                     }
@@ -372,13 +371,11 @@
                             e.preventDefault();
                             addTag();
                         }
-                        ;
                     });
 
                     $(document).on('click', '#tags .fa-times-circle-o', function () {
                         tags.splice(tags.indexOf($(this).parent().text().trim()), 1);
                         $(this).parent().remove();
-                        $('input[name=tags]').val(tags);
                     });
                 </script>
             </div><!-- /.box -->

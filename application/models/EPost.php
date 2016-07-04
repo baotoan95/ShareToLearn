@@ -27,7 +27,10 @@ class EPost {
     private $categories;
     private $tags;
 
-    public function __construct($id = 0, $title = '', $content = '', $author = 0, $views = 0, $comments = 0, $excerpt = '', $catalogue = '', $status = '', $published = '', $guid = '', $cmt_allow = 0, $order = 0, $type = '', $banner = '', $password = '', $parent = 0) {
+    public function __construct($id = 0, $title = '', $content = '', $author = 0, 
+            $views = 0, $comments = 0, $excerpt = '', $catalogue = '', 
+            $status = '', $published = '', $guid = '', $cmt_allow = 0, $order = 0, 
+            $type = '', $banner = '', $password = '', $parent = 0) {
         $this->id = $id;
         $this->title = $title;
         $this->content = $content;

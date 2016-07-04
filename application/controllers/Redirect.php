@@ -11,6 +11,7 @@ class Redirect extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('mPost');
     }
 
     public function index() {
@@ -19,6 +20,7 @@ class Redirect extends CI_Controller {
             "sidebar" => 'client/template/sidebar',
             "content" => 'client/index'
         );
+        $data['post_latest'] = $this->mPost->getPosts('public', array('records' => 20, 'begin' => 0));
         $this->load->view('client/template/main', $data);
     }
 
@@ -30,10 +32,11 @@ class Redirect extends CI_Controller {
         $this->load->view('client/template/main', $data);
     }
 
-    public function single() {
+    public function single($p) {
         $data = array(
             "sidebar" => 'client/template/sidebar',
-            "content" => 'client/single'
+            "content" => 'client/single',
+            "post" => $this->mPost->getPostById($p)
         );
         $this->load->view('client/template/main', $data);
     }

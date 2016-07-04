@@ -19,16 +19,34 @@ class Post extends CI_Controller {
 
     // util functions
     private function initPostView() {
-        $categories = $this->mCategory->getCategoriesBox(0);
         $categoriesParentBox = $this->mCategory->getCategoriesParentBox(0);
         $data = array(
             "content" => "admin/post",
-            "categories" => $categories,
             "categoriesParentBox" => $categoriesParentBox
         );
         return $data;
     }
-
+    private function getCategoriesBox($parentId, $categoriesNeedChecked) {
+        $categories = $this->mCategory->getCategoriesByParent($parentId, 'category');
+        // If not have any child return "" (it is condition to stop recursive)
+        if ($categories) {
+            $html = "<ul>";
+            foreach ($categories as $category) {
+                $html .= "<li id='cate_" . $category->getId() . "'>" .
+                            "<div class='checkbox'>" .
+                            "<label>" .
+                            "<input type='checkbox' " . 
+                        (is_contain($categoriesNeedChecked, $category) ? "checked" : "")
+                        . " name='categories[]' value='" .
+                            $category->getId() . "'>" . $category->getName() .
+                            "</label>" .
+                            "</div>" . $this->getCategoriesBox($category->getId(), $categoriesNeedChecked) .
+                        "</li>";
+            }
+            return $html .= "</ul>";
+        }
+        return "";
+    }
     private function upload_image($image, $dis, $config = array()) {
         $config["upload_path"] = $dis;
         $config["allowed_types"] = "gif|png|jpg|jpeg";
@@ -41,12 +59,14 @@ class Post extends CI_Controller {
             return $this->upload->data()["file_name"];
         }
     }
+    
     // End util functions
 
     public function newPost() {
         $data = $this->initPostView();
         $data["title"] = "Thêm bài viết mới";
         $data['action'] = "addpost";
+        $data['categories'] = $this->getCategoriesBox(0, array());
         $this->load->view('admin/template/main', $data);
     }
 
@@ -57,6 +77,7 @@ class Post extends CI_Controller {
         $data = $this->initPostView();
         $data["title"] = "Thêm bài viết mới";
         $data["action"] = "addpost";
+        $data['categories'] = $this->getCategoriesBox(0, array());
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('admin/template/main', $data);
@@ -78,8 +99,7 @@ class Post extends CI_Controller {
 
         // Refine data
         $tags = array();
-        if (!empty($this->input->post('tags'))) {
-            $tag_names = explode(',', $this->input->post('tags'));
+        if (!empty($tag_names = $this->input->post('tags'))) {
             foreach ($tag_names as $tag_name) {
                 $tags[] = new ETag(0, $tag_name, $tag_name, convert_vi_to_en($tag_name, TRUE));
             }
@@ -108,7 +128,7 @@ class Post extends CI_Controller {
         if ($this->input->post('status') == 'draf') {
             $post->setStatus($this->input->post('status'));
         }
-        $post->setPublished(date('yyyy-MM-dd HH:mm:ss'));
+        $post->setPublished(date('y-m-d H:i:s'));
         $post->setGuid($this->input->post('guid'));
         $post->setCmt_allow(empty($this->input->post('comment_allowed')) ? FALSE : TRUE);
         $post->setOrder(0);
@@ -135,26 +155,29 @@ class Post extends CI_Controller {
         $data['post'] = ($post = $this->mPost->getPostById($k, TRUE, TRUE));
         $data['title'] = "Cập nhật bài viết";
         $data['action'] = "update";
+        $categoriesNeedChecked = $post->getCategories();
+        $data['categories'] = $this->getCategoriesBox(0, $categoriesNeedChecked);
         $this->load->view('admin/template/main', $data);
     }
 
     public function update() {
+        
         // Validation form
         $this->form_validation->set_rules('title', 'Tiêu đề', 'required');
 
         $data = $this->initPostView();
         $data["title"] = "Thêm bài viết mới";
         $data['action'] = "update";
+        $data['categories'] = $this->getCategoriesBox(0, array());
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('admin/template/main', $data);
             return;
         }
-
+        
         // Refine data
         $tags = array();
-        if (!empty($this->input->post('tags'))) {
-            $tag_names = explode(',', $this->input->post('tags'));
+        if (!empty($tag_names = $this->input->post('tags'))) {
             foreach ($tag_names as $tag_name) {
                 $tags[] = new ETag(0, $tag_name, $tag_name, convert_vi_to_en($tag_name, TRUE));
             }

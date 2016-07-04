@@ -50,23 +50,18 @@ class Base_Model extends CI_Model {
     }
 
     /**
-     * @param int $record
-     * @param int $begin
-     * @return array records in current table limit 0, 10
-     */
-    public function getLimit($record = 10, $begin = 0) {
-        $this->db->limit($record, $begin);
-        return $this->db->get($this->_table['table_name'])->result_array();
-    }
-
-    /**
      * @param array $condition
      * @param array $fields
+     * @param array $order
+     * @param int $record
+     * @param int $begin
      * @return array records with brove fields
      */
-    public function get($condition, $fields) {
+    public function get($condition = array(), $fields = array(), $order = array(), $record = 10, $begin = 0) {
         $this->db->select($fields);
         $this->db->where($condition);
+        $this->db->limit($record, $begin);
+        $this->db->order_by($order);
         return $this->db->get($this->_table['table_name'])->result_array();
     }
 

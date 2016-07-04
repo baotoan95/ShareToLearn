@@ -12,6 +12,9 @@ class MPost extends Base_Model {
     public function __construct() {
         parent::__construct();
         $this->set_table('posts', 'p_id');
+        
+        $this->load->model('EPost');
+        
         $this->load->model('mTerm');
         $this->load->model('mTermRelationships');
         $this->load->model('mCategory');
@@ -21,10 +24,8 @@ class MPost extends Base_Model {
     public function addPost($post) {
         // Add tags to DB if them is new
         $tags = $post->getTags();
-        $this->mTag->addTags($tags, 'tag');
-        // Add categories if them is new
-        $categories = $post->getCategories();
-        $this->mCategory->addCategories($categories, 'category');
+        $this->mTag->addTags($tags);
+        
         // Add post to DB
         $this->db->trans_start();
         $data = array(
@@ -45,7 +46,9 @@ class MPost extends Base_Model {
             "p_menu_order" => $post->getOrder(),
             "p_parent" => $post->getParent()
         );
+        print_r($data);
         $post_id = $this->insert($data);
+        
         // Add tags for post
         if (!empty($tags)) {
             foreach ($tags as $tag) {
@@ -57,9 +60,11 @@ class MPost extends Base_Model {
                 $this->mTermRelationships->addTermRelationship($termRelationship);
             }
         }
+        
+        echo count($post->getCategories());
         // Add categories for post
-        if (!empty($categories)) {
-            foreach ($categories as $category) {
+        if (!empty($post->getCategories())) {
+            foreach ($post->getCategories() as $category) {
                 $term = $this->mTerm->getTerm($category->getName(), 'category');
                 $termRelationship = array(
                     "tr_object_id" => $post_id,
@@ -76,10 +81,6 @@ class MPost extends Base_Model {
             $this->db->trans_commit();
             return $post_id;
         }
-    }
-    
-    public function getPosts($start, $record, $pagination = false) {
-        
     }
 
     public function getPostById($id, $inc_cates = false, $inc_tags = false) {
@@ -108,8 +109,8 @@ class MPost extends Base_Model {
             $term_relates = $this->mTermRelationships
                     ->getTermRelationshipByObjectId($post->getId(), 'category');
             foreach($term_relates as $term_relate) {
-                $category = new ECategory($term_relate['t_id'], $term_relate['t_name'], 
-                        $term_relate['t_slug'], $term_relate['tt_desc'], $term_relate['tt_parent']);
+                $category = new ECategory(intval($term_relate['t_id']), $term_relate['t_name'], 
+                        $term_relate['t_slug'], $term_relate['tt_desc'], intval($term_relate['tt_parent']));
                 $categories[] = $category;
             }
             $post->setCategories($categories);
@@ -120,7 +121,7 @@ class MPost extends Base_Model {
             $term_relates = $this->mTermRelationships
                     ->getTermRelationshipByObjectId($post->getId(), 'tag');
             foreach($term_relates as $term_relate) {
-                $tag = new ETag($term_relate['t_id'], $term_relate['t_name'], 
+                $tag = new ETag(intval($term_relate['t_id']), $term_relate['t_name'], 
                         $term_relate['tt_desc'], $term_relate['t_slug']);
                 $tags[] = $tag;
             }
@@ -132,10 +133,7 @@ class MPost extends Base_Model {
     public function updatePost($post) {
         // Add tags to DB if them is new
         $tags = $post->getTags();
-        $this->mTag->addTags($tags, 'tag');
-        // Add categories if them is new
-        $categories = $post->getCategories();
-        $this->mCategory->addCategories($categories, 'category');
+        $this->mTag->addTags($tags);
         
         // Update post
         $data = array(
@@ -178,7 +176,7 @@ class MPost extends Base_Model {
         if (!empty($categories = $post->getCategories())) {
             foreach ($categories as $category) {
                 $term = $this->mTerm->getTerm($category->getName(), 'category');
-                if(!empty($term)) {
+                if(!empty($category)) {
                     $termRelationship = array(
                         "tr_object_id" => $post->getId(),
                         "tr_term_taxonomy_id" => $term['tt_id']
@@ -196,6 +194,52 @@ class MPost extends Base_Model {
             $this->db->trans_commit();
             return TRUE;
         }
+    }
+    
+    /**
+     * 
+     * @param string $status
+     * @param array $paginationConfig (records, begin) 
+     * @param int $taxonomy (index of term)
+     * @param date $fromDate
+     * @return array posts
+     */
+    public function getPosts($status, $paginationConfig, $taxonomy = -1, $fromDate = '') {
+        $this->db->select('p_id');
+        $this->db->from($this->_table['table_name']);
+        // If specific taxonomy then join, else...
+        if($taxonomy != -1) {
+            $this->db->join('term_relationships', 'tr_object_id = p_id');
+            $this->db->join('term_taxonomy', 'tr_term_taxonomy_id = tt_id');
+            $this->db->where('tt_term_id = ' . $taxonomy);
+        }
+        
+        $this->db->where_in('p_status', $status);
+        if($fromDate != '') {
+            $this->db->where('p_published >= "' . $fromDate . '"');
+        }
+        
+        $this->db->order_by('p_published', 'DESC');
+        $this->db->limit($paginationConfig['records'], $paginationConfig['begin']);
+        $postIds = $this->db->get()->result_array();
+        
+        $posts = array();
+        foreach($postIds as $postId) {
+            $posts[] = $this->getPostById($postId['p_id']);
+        }
+        return $posts;
+    }
+    
+    public function countByStatus() {
+        $this->db->select("p_status as name, count(p_status) as value");
+        $this->db->group_by("p_status");
+        $count = $this->db->get($this->_table['table_name'])->result_array();
+        $total = 0;
+        foreach($count as $i) {
+            $total += $i['value'];
+        }
+        $count[]['total'] = $total;
+        return $count;
     }
 
 }

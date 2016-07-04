@@ -2,11 +2,14 @@
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Danh Sách Bài Viết</h3>
-            <div class="input-group" style="width: 150px;">
+            <div class="input-group">
                 <div class="input-group-btn">
-                    <button class="btn btn-sm btn-default">Tất cả</button>
-                    <button class="btn btn-sm btn-default">Chưa Duyệt</button>
-                    <button class="btn btn-sm btn-default">Đã Duyệt</button>
+                    <button class="btn btn-sm btn-default">Tất cả (100)</button>
+                    <button class="btn btn-sm btn-default">Chờ duyệt (12)</button>
+                    <button class="btn btn-sm btn-default">Công khai (32)</button>
+                    <button class="btn btn-sm btn-default">Riêng tư (32)</button>
+                    <button class="btn btn-sm btn-default">Nháp (32)</button>
+                    <button class="btn btn-sm btn-default">Rác (32)</button>
                 </div>
             </div>
             <div class="box-tools">
@@ -32,72 +35,35 @@
                         <th>Ngày Đăng</th>
                         <th>Trạng Thái</th>
                     </tr>
+                    <?php
+                        foreach($posts as $post) {
+                    ?>
                     <tr>
-                        <td>183</td>
-                        <td>Làm thế nào để trở thành lập trình viên giỏi</td>
+                        <td><?php echo $post->getId(); ?></td>
+                        <td><a href="<?php echo base_url() . 'post/edit/' . $post->getId(); ?>"><?php echo $post->getTitle(); ?></a></td>
                         <td>John Doe</td>
                         <td>Học lập trình</td>
                         <td>hoclaptrinh, baotoan, damme</td>
-                        <td>20</td>
-                        <td>2000</td>
-                        <td>20/10/1995</td>
+                        <td><?php echo $post->getComments(); ?></td>
+                        <td><?php echo $post->getViews(); ?></td>
+                        <td><?php echo $post->getPublished(); ?></td>
                         <td><span class="label label-success">Approved</span></td>
                     </tr>
-                    <tr>
-                        <td>183</td>
-                        <td>Làm thế nào để trở thành lập trình viên giỏi</td>
-                        <td>John Doe</td>
-                        <td>Học lập trình</td>
-                        <td>hoclaptrinh, baotoan, damme</td>
-                        <td>20</td>
-                        <td>2000</td>
-                        <td>20/10/1995</td>
-                        <td><span class="label label-success">Approved</span></td>
-                    </tr>
-                    <tr>
-                        <td>183</td>
-                        <td>Làm thế nào để trở thành lập trình viên giỏi</td>
-                        <td>John Doe</td>
-                        <td>Học lập trình</td>
-                        <td>hoclaptrinh, baotoan, damme</td>
-                        <td>20</td>
-                        <td>2000</td>
-                        <td>20/10/1995</td>
-                        <td><span class="label label-success">Approved</span></td>
-                    </tr>
-                    <tr>
-                        <td>183</td>
-                        <td>Làm thế nào để trở thành lập trình viên giỏi</td>
-                        <td>John Doe</td>
-                        <td>Học lập trình</td>
-                        <td>hoclaptrinh, baotoan, damme</td>
-                        <td>20</td>
-                        <td>2000</td>
-                        <td>20/10/1995</td>
-                        <td><span class="label label-success">Approved</span></td>
-                    </tr>
-                    <tr>
-                        <td>183</td>
-                        <td>Làm thế nào để trở thành lập trình viên giỏi</td>
-                        <td>John Doe</td>
-                        <td>Học lập trình</td>
-                        <td>hoclaptrinh, baotoan, damme</td>
-                        <td>20</td>
-                        <td>2000</td>
-                        <td>20/10/1995</td>
-                        <td><span class="label label-success">Approved</span></td>
-                    </tr>
+                    <?php
+                        }
+                    ?>
                 </tbody>
             </table>
         </div><!-- /.box-body -->
         <div class="box-footer clearfix">
-            <ul class="pagination pagination-sm no-margin pull-right">
+            <?php echo $links ?>
+<!--            <ul class="pagination pagination-sm no-margin pull-right">
                 <li><a href="#">«</a></li>
                 <li><a href="#">1</a></li>
                 <li><a href="#">2</a></li>
                 <li><a href="#">3</a></li>
                 <li><a href="#">»</a></li>
-            </ul>
+            </ul>-->
         </div>
     </div><!-- /.box -->
 </div>
