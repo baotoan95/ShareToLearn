@@ -37,7 +37,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'adminredirect/posts'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
+                    <li><a href="<?php echo base_url() . 'adminredirect/posts/all'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
                     <li><a href="<?php echo base_url() . 'adminredirect/newpost'?>"><i class="fa fa-circle-o"></i> Thêm bài viết</a></li>
                 </ul>
             </li>
@@ -48,8 +48,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'adminredirect/posts'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
-                    <li><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Thêm bài viết</a></li>
+                    <li><a href="<?php echo base_url() . 'adminredirect/posts/all'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
+                    <li class="active"><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Thêm bài viết</a></li>
                     <li><a href="<?php echo base_url() . 'adminredirect/tags'?>"><i class="fa fa-circle-o"></i> Tags</a></li>
                 </ul>
             </li>

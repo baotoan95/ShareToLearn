@@ -14,6 +14,7 @@ class MPost extends Base_Model {
         $this->set_table('posts', 'p_id');
         
         $this->load->model('EPost');
+        $this->load->model('ETag');
         
         $this->load->model('mTerm');
         $this->load->model('mTermRelationships');
@@ -214,10 +215,12 @@ class MPost extends Base_Model {
             $this->db->where('tt_term_id = ' . $taxonomy);
         }
         
-        $this->db->where_in('p_status', $status);
         if($fromDate != '') {
             $this->db->where('p_published >= "' . $fromDate . '"');
         }
+        
+        $this->db->where('p_type', 'post');
+        $this->db->where_in('p_status', $status);
         
         $this->db->order_by('p_published', 'DESC');
         $this->db->limit($paginationConfig['records'], $paginationConfig['begin']);
@@ -225,7 +228,7 @@ class MPost extends Base_Model {
         
         $posts = array();
         foreach($postIds as $postId) {
-            $posts[] = $this->getPostById($postId['p_id']);
+            $posts[] = $this->getPostById($postId['p_id'], TRUE, TRUE);
         }
         return $posts;
     }
@@ -234,12 +237,32 @@ class MPost extends Base_Model {
         $this->db->select("p_status as name, count(p_status) as value");
         $this->db->group_by("p_status");
         $count = $this->db->get($this->_table['table_name'])->result_array();
+        
         $total = 0;
+        
+        $result = array();
         foreach($count as $i) {
-            $total += $i['value'];
+            $result[$i['name']] = $i['value'];
+            $total += intval($i['value']);
         }
-        $count[]['total'] = $total;
-        return $count;
+        $result['total'] = $total;
+        return $result;
+    }
+    
+    /**
+     * @return array date of post group by month and year published
+     */
+    public function groupDateOfPosts() {
+        $this->db->select("p_published");
+        $this->db->group_by("month(p_published)");
+        $this->db->group_by("year(p_published)");
+        $this->db->order_by("p_published");
+        $result = $this->db->get($this->_table['table_name'])->result_array();
+        $dates = array();
+        foreach($result as $date) {
+            $dates[] = $date["p_published"];
+        }
+        return $dates;
     }
 
 }

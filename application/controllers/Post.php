@@ -199,7 +199,7 @@ class Post extends CI_Controller {
         $post->setComments(0);
         $post->setExcerpt($this->input->post('excerpt'));
         $post->setCatalogue($this->input->post('catalogue'));
-        $post->setPublished(date('yyyy-MM-dd HH:mm:ss'));
+        $post->setPublished(date('y-m-d H:i:s'));
         $post->setGuid($this->input->post('guid'));
         $post->setCmt_allow(empty($this->input->post('comment_allowed')) ? FALSE : TRUE);
         $post->setOrder(0);
