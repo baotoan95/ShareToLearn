@@ -5,13 +5,11 @@
         <group>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/helpers/Pagination_Helper.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/client/index.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/MTerm.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/AdminRedirect.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/posts.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/template/sidebar.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/system/libraries/Pagination.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/MPost.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/EPost.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Post.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/MCategory.php</file>
         </group>
     </open-files>
 </project-private>

@@ -41,8 +41,8 @@
                                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && $_GET['status'] == 'private') ? "active" : "") . "'>"
                                             . "Riêng tư ($value)</a>";
                                             break;
-                                        case 'craf': echo "<a href='$uri?status=$key' "
-                                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && $_GET['status'] == 'craf') ? "active" : "") . "'>"
+                                        case 'draf': echo "<a href='$uri?status=$key' "
+                                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && $_GET['status'] == 'draf') ? "active" : "") . "'>"
                                             . "Nháp ($value)</a>";
                                             break;
                                         case 'trash': echo "<a href='$uri?status=$key' "
@@ -103,17 +103,22 @@
                         ?>
                         <tr>
                             <td><?php echo $post->getId(); ?></td>
-                            <td><a href="<?php echo base_url() . 'post/edit/' . $post->getId(); ?>"><?php echo $post->getTitle(); ?></a></td>
+                            <td><a href="<?php echo base_url() . 'post/edit/' . $post->getId(); ?>">
+                                <?php echo $post->getTitle(); ?></a></td>
                             <td>John Doe</td>
                             <td>
                                 <?php
                                 $categories = $post->getCategories();
                                 for ($i = 0; $i < count($categories); $i++) {
                                     if ($i == count($categories) - 1) {
-                                        echo "<a href=''>" . $categories[$i]->getName() . "</a>";
+                                        echo "<a href='".base_url()."adminredirect/posts?"
+                                                . "status=all&category=".$categories[$i]->getId()."'>" . 
+                                                $categories[$i]->getName() . "</a>";
                                         break;
                                     }
-                                    echo "<a href=''>" . $categories[$i]->getName() . "</a>, ";
+                                    echo "<a href='".base_url()."adminredirect/posts?"
+                                            . "status=all&category=".$categories[$i]->getId()."'>" . 
+                                            $categories[$i]->getName() . "</a>, ";
                                 }
                                 ?>
                             </td>
@@ -122,10 +127,14 @@
                                 $tags = $post->getTags();
                                 for ($i = 0; $i < count($tags); $i++) {
                                     if ($i == count($tags) - 1) {
-                                        echo "<a href=''>" . $tags[$i]->getName() . "</a>";
+                                        echo "<a href='".base_url()."adminredirect/posts?"
+                                                . "status=all&tag=".$tags[$i]->getId()."'>" . 
+                                                $tags[$i]->getName() . "</a>";
                                         break;
                                     }
-                                    echo "<a href=''>" . $tags[$i]->getName() . "</a>, ";
+                                    echo "<a href='".base_url()."adminredirect/posts?"
+                                                . "status=all&tag=".$tags[$i]->getId()."'>" . 
+                                            $tags[$i]->getName() . "</a>, ";
                                 }
                                 ?>
                             </td>

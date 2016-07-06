@@ -24,27 +24,31 @@ class AdminRedirect extends CI_Controller {
 
     public function posts() {
         $this->load->library("pagination");
-        
+
         // Init data receive from client
         $segment = $this->input->get('p', TRUE);
         $page = isset($segment) ? $segment : 0;
-        
+
         $status = $this->input->get('status', TRUE);
-        if(!isset($status) || $status == 'all') {
+        if (!isset($status) || $status == 'all' || $status == '') {
             $status = array("public", "draf", "pending", "private");
         }
         $date = $this->input->get('date', TRUE);
-        
+
         $category = $this->input->get('category', TRUE);
-        if(!isset($category)) {
+        $tag = $this->input->get('tag', TRUE);
+        if (!isset($category)) {
             $category = '';
         }
-        
+        if(isset($tag) && strlen(trim($tag)) > 0) {
+            $category = $tag;
+        }
+
         $search = $this->input->get('search', TRUE);
-        
+
         // Get list count by status
         $count = $this->mPost->countByStatus();
-        
+
         // Config for pagination
         $config["base_url"] = base_url() . "adminredirect";
         $config["prefix"] = "posts?status=" . (is_array($status) ? "all" : $status) .
@@ -53,10 +57,9 @@ class AdminRedirect extends CI_Controller {
         $config["cur_page"] = $segment;
 
         // Init data response client
-        $result = $this->mPost->getPosts($status, array('records' => $config['per_page'], 'begin' => $page),
-                $category, $date, $search);
+        $result = $this->mPost->getPosts($status, array('records' => $config['per_page'], 'begin' => $page), $category, $date, $search);
         $config["total_rows"] = $result['total'];
-        
+
         // Call pagination helper to make links
         $pagination = pagination($config, $this->pagination);
         $data = array(
