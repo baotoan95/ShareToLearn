@@ -1,11 +1,12 @@
 <div class="col-xs-12">
+    <form action="" method="get">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Danh Sách Bài Viết</h3>
-
+            <h3 class="box-title">Danh Sách Bài Viết</h3><br/>
+            <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả tìm kiếm cho \"" . $_GET['search'] . "\"" : "" ?>
             <div class="box-tools">
                 <div class="input-group" style="width: 150px;">
-                    <input name="table_search" class="form-control input-sm pull-right" placeholder="Search" type="text">
+                    <input name="search" class="form-control input-sm pull-right"  placeholder="Tìm kiếm" type="text">
                     <div class="input-group-btn">
                         <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                     </div>
@@ -15,62 +16,70 @@
 
         <!-- Body control -->
         <div class="box-body">
-            <div class="row">
-                <div class="col-xs-12 col-lg-3">
-                    <div class="input-group">
-                        <div class="input-group-btn">
-                            <?php $uri = base_url() . 'adminredirect/posts'; ?>
-                            <a href="<?php echo $uri . '/all/' ?>">
-                                <button class="btn btn-sm btn-default">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-3">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <input type="hidden" value="<?php echo $status; ?>" name="status"/>
+                                <?php $uri = base_url() . 'adminredirect/posts'; ?>
+                                <a href="<?php echo $uri . '?status=all' ?>" 
+                                   class="btn btn-sm btn-default <?php if(empty($_GET['status']) || $_GET['status'] == 'all') {echo 'active';} ?>">
                                     Tất cả (<?php echo array_pop($count); ?>)
-                                </button>
-                            </a>
-                            <?php
-                            foreach ($count as $key => $value) {
-                                switch ($key) {
-                                    case 'pending': echo "<a href='$uri/$key/'><button class='btn btn-sm btn-default'>"
-                                        . "Chờ duyệt ($value)</button></a>";
-                                        break;
-                                    case 'public': echo "<a href='$uri/$key/'><button class='btn btn-sm btn-default'>"
-                                        . "Công khai ($value)</button></a>";
-                                        break;
-                                    case 'private': echo "<a href='$uri/$key/'><button class='btn btn-sm btn-default'>"
-                                        . "Riêng tư ($value)</button></a>";
-                                        break;
-                                    case 'craf': echo "<a href='$uri/$$key/'><button class='btn btn-sm btn-default'>"
-                                        . "Nháp ($value)</button></a>";
-                                        break;
-                                    case 'trash': echo "<a href='$uri/$$key/'><button class='btn btn-sm btn-default'>"
-                                        . "Rác ($value)</button></a>";
-                                        break;
+                                </a>
+                                <?php
+                                foreach ($count as $key => $value) {
+                                    switch ($key) {
+                                        case 'pending': echo "<a href='$uri?status=$key' "
+                                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && $_GET['status'] == 'pending') ? "active" : "") . "'>"
+                                            . "Chờ duyệt ($value)</a>";
+                                            break;
+                                        case 'public': echo "<a href='$uri?status=$key' "
+                                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && $_GET['status'] == 'public') ? "active" : "") . "'>"
+                                            . "Công khai ($value)</a>";
+                                            break;
+                                        case 'private': echo "<a href='$uri?status=$key' "
+                                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && $_GET['status'] == 'private') ? "active" : "") . "'>"
+                                            . "Riêng tư ($value)</a>";
+                                            break;
+                                        case 'craf': echo "<a href='$uri?status=$key' "
+                                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && $_GET['status'] == 'craf') ? "active" : "") . "'>"
+                                            . "Nháp ($value)</a>";
+                                            break;
+                                        case 'trash': echo "<a href='$uri?status=$key' "
+                                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && $_GET['status'] == 'trash') ? "active" : "") . "'>"
+                                            . "Rác ($value)</a>";
+                                            break;
+                                    }
                                 }
-                            }
-                            ?>
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3">
-                    <select class="form-control">
-                        <option>Tất cả ngày</option>
-                        <?php
-                        foreach($dates as $date) {
-                            echo "<option value='$date'>" . date_format(date_create(substr($date, 0, strpos($date, ' '))), 'M Y') . "</option>";
-                        }
-                        ?>
-                    </select>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <select class="form-control" name="date">
+                            <option value="">Tất cả ngày</option>
+                            <?php
+                            foreach ($dates as $date) {
+                                echo "<option " . (isset($_GET['date']) && $_GET['date'] == date('MY', strtotime($date)) ? "selected" : "")
+                                . " value='" . date('MY', strtotime($date)) . "'>" 
+                                        . date_format(date_create(substr($date, 0, strpos($date, ' '))), 'M Y') 
+                                        . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                        <select class="form-control" name="category">
+                            <option value="">Tất cả thể loại</option>
+                            <?php echo $categories; ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-1">
+                        <button class="btn btn-sm btn-default">Lọc</button>
+                    </div>
                 </div>
-                <div class="col-lg-3">
-                    <select class="form-control">
-                        <option>Tất cả thể loại</option>
-                        <?php echo $categories; ?>
-                    </select>
-                </div>
-                <div class="col-lg-1">
-                    <button class="btn btn-sm btn-default">Lọc</button>
-                </div>
-            </div>
         </div>
         <!-- End body control -->
 
@@ -123,7 +132,7 @@
                             <td><?php echo $post->getComments(); ?></td>
                             <td><?php echo $post->getViews(); ?></td>
                             <td><?php echo $post->getPublished(); ?></td>
-                            <td><span class="label label-success">Approved</span></td>
+                            <td><span class="label label-success"><?php echo $post->getStatus(); ?></span></td>
                         </tr>
                         <?php
                     }
@@ -134,8 +143,10 @@
         <!-- End body show data -->
         <!-- /.box-body -->
         <div class="box-footer clearfix">
+            Kết quả: <?php echo count($posts) . '/' . $totalResult; ?>
             <!-- Pagination -->
             <?php echo $links ?>
         </div>
+    </form>
     </div><!-- /.box -->
 </div>

@@ -22,39 +22,52 @@ class AdminRedirect extends CI_Controller {
         $this->load->view('admin/template/main', $data);
     }
 
-    public function posts($status, $p = 1) {
+    public function posts() {
         $this->load->library("pagination");
         
         // Init data receive from client
-        if($status == 'all') {
+        $segment = $this->input->get('p', TRUE);
+        $page = isset($segment) ? $segment : 0;
+        
+        $status = $this->input->get('status', TRUE);
+        if(!isset($status) || $status == 'all') {
             $status = array("public", "draf", "pending", "private");
         }
         $date = $this->input->get('date', TRUE);
+        
         $category = $this->input->get('category', TRUE);
+        if(!isset($category)) {
+            $category = '';
+        }
+        
+        $search = $this->input->get('search', TRUE);
         
         // Get list count by status
         $count = $this->mPost->countByStatus();
         
         // Config for pagination
-        $config["base_url"] = base_url() . "adminredirect/posts/" . 
-                (is_array($status) ? "all" : $status) . '/';
-        $config["total_rows"] = is_array($status) ? $count['total'] : $count[$status];
+        $config["base_url"] = base_url() . "adminredirect";
+        $config["prefix"] = "posts?status=" . (is_array($status) ? "all" : $status) .
+                "&category=$category&date=$date&search=$search&p=";
         $config["per_page"] = 2;
-        // Call pagination helper to make links
-        $pagination = pagination($config, $this->pagination);
-        
-        // Get begin record from url at segment 4
-        $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        $config["cur_page"] = $segment;
 
         // Init data response client
-        $posts = $this->mPost->getPosts($status, array('records' => $config['per_page'], 'begin' => $page));
+        $result = $this->mPost->getPosts($status, array('records' => $config['per_page'], 'begin' => $page),
+                $category, $date, $search);
+        $config["total_rows"] = $result['total'];
+        
+        // Call pagination helper to make links
+        $pagination = pagination($config, $this->pagination);
         $data = array(
             "content" => "admin/posts",
-            "posts" => $posts,
+            "posts" => $result['posts'],
             "links" => $pagination,
             "count" => $count,
             "dates" => $this->mPost->groupDateOfPosts(),
-            "categories" => $this->mCategory->getCategoriesParentBox(0)
+            "categories" => $this->mCategory->getCategoriesParentBox(0, "", array(intval($category))),
+            "status" => (is_array($status) ? "all" : $status),
+            "totalResult" => $result['total']
         );
 
         $this->load->view('admin/template/main', $data);

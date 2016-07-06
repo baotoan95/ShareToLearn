@@ -203,34 +203,48 @@ class MPost extends Base_Model {
      * @param array $paginationConfig (records, begin) 
      * @param int $taxonomy (index of term)
      * @param date $fromDate
-     * @return array posts
+     * @return array includes posts and total records before limit
      */
-    public function getPosts($status, $paginationConfig, $taxonomy = -1, $fromDate = '') {
-        $this->db->select('p_id');
+    public function getPosts($status, $paginationConfig, $taxonomy = '', $fromDate = '', $title = '') {
+        $this->db->select('SQL_CALC_FOUND_ROWS p_id', FALSE);
         $this->db->from($this->_table['table_name']);
         // If specific taxonomy then join, else...
-        if($taxonomy != -1) {
+        if($taxonomy != '') {
             $this->db->join('term_relationships', 'tr_object_id = p_id');
             $this->db->join('term_taxonomy', 'tr_term_taxonomy_id = tt_id');
             $this->db->where('tt_term_id = ' . $taxonomy);
         }
         
         if($fromDate != '') {
-            $this->db->where('p_published >= "' . $fromDate . '"');
+            $this->db->where('month(p_published) <= month("' . date_format(date_create($fromDate), 'y-m-d') . '")');
+            $this->db->where('year(p_published) <= year("' . date_format(date_create($fromDate), 'y-m-d') . '")');
         }
         
         $this->db->where('p_type', 'post');
         $this->db->where_in('p_status', $status);
         
+        if($title != '') {
+            $this->db->group_start();
+            $this->db->like('p_title', $title, 'before');
+            $this->db->or_like('p_title', $title);
+            $this->db->or_like('p_title', $title, 'after');
+            $this->db->group_end();
+        }
+        
         $this->db->order_by('p_published', 'DESC');
         $this->db->limit($paginationConfig['records'], $paginationConfig['begin']);
         $postIds = $this->db->get()->result_array();
+        $total = $this->db->query('select FOUND_ROWS() count')->row()->count;
         
         $posts = array();
         foreach($postIds as $postId) {
             $posts[] = $this->getPostById($postId['p_id'], TRUE, TRUE);
         }
-        return $posts;
+        
+        return array(
+            "posts" => $posts,
+            "total" => $total
+        );
     }
     
     public function countByStatus() {

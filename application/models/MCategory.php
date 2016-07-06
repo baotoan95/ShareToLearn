@@ -15,11 +15,14 @@ class MCategory extends Base_Model {
     }
 
     // Create select category parent (in post view)
-    function getCategoriesParentBox($parentId = 0, $space = "", $trees = "") {
+    function getCategoriesParentBox($parentId = 0, $space = "", $categoryIdsNeeedSelect = array(), $trees = "") {
         $categories = $this->getCategoriesByParent($parentId);
         foreach ($categories as $category) {
-            $trees .= "<option value='" . $category->getId() . "'>" . $space . $category->getName() . "</option>" .
-                    $this->getCategoriesParentBox($category->getId(), $space . '&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;');
+            $trees .= "<option value='" . $category->getId() . "' " .
+                    (in_array($category->getId(), $categoryIdsNeeedSelect) ? "selected" : "") . ">" 
+                    . $space . $category->getName() . "</option>" .
+                    $this->getCategoriesParentBox($category->getId(), 
+                            $space . '&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;', $categoryIdsNeeedSelect);
         }
         return $trees;
     }

@@ -16,6 +16,8 @@ function pagination($my_config, $pagination) {
     $default_config["next_tag_close"] = "</li>";
     $default_config["last_tag_open"] = "<li>";
     $default_config["last_tag_close"] = "</li>";
+    $default_config["first_url"] = $my_config["prefix"];
+    
 
     $pagination->initialize(array_merge($default_config, $my_config));
     return $pagination -> create_links();
