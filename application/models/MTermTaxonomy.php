@@ -16,4 +16,14 @@ class MTermTaxonomy extends Base_Model {
         $this->insert($term_taxonomy);
     }
     
+    public function deleteTermTaxonomyByTermId($term_id) {
+        $this->db->where('tt_term_id', $term_id);
+        return $this->db->delete($this->_table['table_name']);
+    }
+    
+    public function updateTermTaxonomyByTermId($term_id, $term_taxonomy) {
+        $this->db->where('tt_term_id', $term_id);
+        return $this->db->update($this->_table['table_name'], $term_taxonomy);
+    }
+    
 }

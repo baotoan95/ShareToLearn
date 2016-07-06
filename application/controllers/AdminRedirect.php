@@ -26,17 +26,17 @@ class AdminRedirect extends CI_Controller {
         $this->load->library("pagination");
 
         // Init data receive from client
-        $segment = $this->input->get('p', TRUE);
+        $segment = trim($this->input->get('p', TRUE));
         $page = isset($segment) ? $segment : 0;
 
-        $status = $this->input->get('status', TRUE);
+        $status = trim($this->input->get('status', TRUE));
         if (!isset($status) || $status == 'all' || $status == '') {
             $status = array("public", "draf", "pending", "private");
         }
-        $date = $this->input->get('date', TRUE);
+        $date = trim($this->input->get('date', TRUE));
 
-        $category = $this->input->get('category', TRUE);
-        $tag = $this->input->get('tag', TRUE);
+        $category = trim($this->input->get('category', TRUE));
+        $tag = trim($this->input->get('tag', TRUE));
         if (!isset($category)) {
             $category = '';
         }
@@ -44,7 +44,7 @@ class AdminRedirect extends CI_Controller {
             $category = $tag;
         }
 
-        $search = $this->input->get('search', TRUE);
+        $search = trim($this->input->get('search', TRUE));
 
         // Get list count by status
         $count = $this->mPost->countByStatus();

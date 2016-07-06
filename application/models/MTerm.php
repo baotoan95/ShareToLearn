@@ -23,17 +23,17 @@ class MTerm extends Base_Model {
             $this->db->trans_start();
             $data = array(
                 "t_name" => $term->getName(),
-                "t_slug" => convert_vi_to_en($term->getName(), TRUE)
+                "t_slug" => strlen(trim($term->getSlug())) > 0 ? 
+                trim($term->getSlug()) : convert_vi_to_en($term->getName(), TRUE)
             );
 
             // Add new a term to DB
             $term_id = $this->insert($data);
-
             // Specifit type of term
             $term_taxonomy = array(
                 "tt_term_id" => $term_id,
                 "tt_taxonomy_name" => $taxonomy_name,
-                "tt_desc" => $taxonomy_name,
+                "tt_desc" => $term->getDesc(),
                 "tt_parent" => ($term instanceof ECategory) ? $term->getParent() : 0,
                 "tt_count" => 0
             );
@@ -60,11 +60,32 @@ class MTerm extends Base_Model {
         return $this->db->get()->row_array();
     }
 
-    public function getTermsByTaxonomy($taxonomy_name) {
-        $this->db->select('t_id, tt_id, t_name, t_slug, t_group, tt_taxonomy_name, tt_desc, tt_parent, tt_count');
+    /**
+     * 
+     * @param string $taxonomy_name
+     * @param array $limitConfig (records, begin)
+     * @param string $term_name term name
+     * @return array if specific limitConfig then return array(array terms, int total), 
+     * else just return array terms
+     */
+    public function getTermsByTaxonomy($taxonomy_name, $limitConfig = array(), $term_name = '') {
+        $this->db->select('SQL_CALC_FOUND_ROWS t_id, tt_id, t_name, t_slug, t_group, tt_taxonomy_name, '
+                . 'tt_desc, tt_parent, tt_count', FALSE);
         $this->db->from($this->_table['table_name']);
         $this->db->join('term_taxonomy', 'terms.t_id = term_taxonomy.tt_term_id');
+        if($term_name != '') {
+            $this->db->where('terms.t_name', $term_name);
+        }
         $this->db->where('term_taxonomy.tt_taxonomy_name = "' . $taxonomy_name . '"');
+        if(count($limitConfig) > 0) {
+            $this->db->limit($limitConfig['records'], $limitConfig['begin']);
+            $records = $this->db->get()->result_array();
+            $count = $this->db->query('select FOUND_ROWS() count')->row()->count;
+            return array(
+                "terms" => $records,
+                "total" => $count
+            );
+        }
         return $this->db->get()->result_array();
     }
     
@@ -88,11 +109,39 @@ class MTerm extends Base_Model {
     }
 
     public function deleteTermById($id) {
+        $this->db->trans_start();
+        $this->mTermTaxonomy->deleteTermTaxonomyByTermId($id);
         $this->delete($id);
+        $this->db->trans_complete();
+        if($this->db->trans_status() == FALSE) {
+            $this->db->trans_rollback();
+            return FALSE;
+        } else {
+            $this->db->trans_commit();
+            return TRUE;
+        }
     }
 
     public function updateTerm($term) {
-        $this->update($term);
+        $this->db->trans_start();
+        $data = array(
+            "t_id" => $term->getId(),
+            "t_name" => $term->getName(),
+            "t_slug" => (strlen(trim($term->getSlug())) > 0) ? trim($term->getSlug()) : convert_vi_to_en($term->getName(), TRUE)
+        );
+        $this->update($data);
+        $term_taxonomy = array(
+            "tt_desc" => $term->getDesc()
+        );
+        $this->mTermTaxonomy->updateTermTaxonomyByTermId($term->getId(), $term_taxonomy);
+        $this->db->trans_complete();
+        if($this->db->trans_status() == FALSE) {
+            $this->db->trans_rollback();
+            return FALSE;
+        } else {
+            $this->db->trans_commit();
+            return TRUE;
+        }
     }
 
 }

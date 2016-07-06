@@ -5,18 +5,20 @@
  *
  * @author BaoToan
  */
-class ETag {
+class ETag implements JsonSerializable {
 
     private $id;
     private $name;
     private $desc;
     private $slug;
+    private $count;
 
-    public function __construct($id = 0, $name = '', $desc = '', $slug = '') {
+    public function __construct($id = 0, $name = '', $desc = '', $slug = '', $count = 0) {
         $this->id = $id;
         $this->name = $name;
         $this->desc = $desc;
         $this->slug = $slug;
+        $this->count = $count;
     }
 
     function getId() {
@@ -49,6 +51,24 @@ class ETag {
 
     public function setSlug($slug) {
         $this->slug = $slug;
+    }
+
+    public function getCount() {
+        return $this->count;
+    }
+
+    public function setCount($count) {
+        $this->count = $count;
+    }
+    
+    public function jsonSerialize(){
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'desc' => $this->getDesc(),
+            'slug' => $this->getSlug(),
+            'count' => $this->getCount()
+        ];
     }
 
 }
