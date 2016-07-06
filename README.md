@@ -20,7 +20,7 @@
 - Ajax (JSON)
 
 ## Cách sử dụng
-- Bước 1: import CSDL vào MySQL sử dụng file chirstmas.sql
+- Bước 1: import CSDL vào MySQL sử dụng file sharetolearn.sql
 - Bước 2: Sửa username và password truy cập MySQL server trong file config database.java
 
 ## Bản quyền
