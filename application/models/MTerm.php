@@ -16,10 +16,10 @@ class MTerm extends Base_Model {
         $this->load->model('mTermTaxonomy');
     }
 
-    public function addTerm($term, $taxonomy_name, $parent = -1) {
+    public function addTerm($term, $taxonomy_name) {
         // Check tag have not exist in DB
         $term_id = 0;
-        if (empty($this->getTerm($term->getName(), $taxonomy_name, $parent))) {
+        if (empty($this->getTerm($term->getName(), $taxonomy_name, $term->getParent()))) {
             $this->db->trans_start();
             $data = array(
                 "t_name" => $term->getName(),
@@ -74,7 +74,11 @@ class MTerm extends Base_Model {
         $this->db->from($this->_table['table_name']);
         $this->db->join('term_taxonomy', 'terms.t_id = term_taxonomy.tt_term_id');
         if($term_name != '') {
-            $this->db->where('terms.t_name', $term_name);
+            $this->db->group_start();
+            $this->db->like('terms.t_name', $term_name, 'before');
+            $this->db->or_like('terms.t_name', $term_name);
+            $this->db->or_like('terms.t_name', $term_name, 'after');
+            $this->db->group_end();
         }
         $this->db->where('term_taxonomy.tt_taxonomy_name = "' . $taxonomy_name . '"');
         if(count($limitConfig) > 0) {

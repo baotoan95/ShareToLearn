@@ -69,8 +69,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Bài Viết</h3><br/>
-                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả cho\"" . $_GET['search'] . "\"" : "";
-                ?>
+                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả cho\"" . $_GET['search'] . "\"" : "";?>
                 <div class="box-tools">
                     <form action="" method="get">
                         <div class="input-group" style="width: 150px;">

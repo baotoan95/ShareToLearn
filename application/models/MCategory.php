@@ -41,17 +41,20 @@ class MCategory extends Base_Model {
         return $categories;
     }
 
-    public function getCategories() {
-        $terms = $this->mTerm->getTermsByTaxonomy('category');
+    public function getCategories($limitConfig = array(), $term_name = '') {
+        $result = $this->mTerm->getTermsByTaxonomy('category', $limitConfig, $term_name);
         $categories = array();
-        foreach ($terms as $term) {
+        foreach ($result['terms'] as $term) {
             $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']));
         }
-        return $categories;
+        return array(
+            "categories" => $categories,
+            "total" => intval($result['total'])
+        );
     }
 
     public function addCategory($category) {
-        return $this->mTerm->addTerm($category, 'category', $category->getParent());
+        return $this->mTerm->addTerm($category, 'category');
     }
 
 }
