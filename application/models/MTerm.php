@@ -133,10 +133,15 @@ class MTerm extends Base_Model {
             "t_name" => $term->getName(),
             "t_slug" => (strlen(trim($term->getSlug())) > 0) ? trim($term->getSlug()) : convert_vi_to_en($term->getName(), TRUE)
         );
+        
         $this->update($data);
         $term_taxonomy = array(
-            "tt_desc" => $term->getDesc()
+            "tt_desc" => $term->getDesc(),
+            "tt_count" => $term->getCount()
         );
+        if($term instanceof ECategory) {
+            $term_taxonomy["tt_parent"] = $term->getParent();
+        }
         $this->mTermTaxonomy->updateTermTaxonomyByTermId($term->getId(), $term_taxonomy);
         $this->db->trans_complete();
         if($this->db->trans_status() == FALSE) {

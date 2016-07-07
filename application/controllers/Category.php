@@ -80,4 +80,41 @@ class Category extends CI_Controller {
             echo "failure";
         }
     }
+    
+    public function editCategory($cate_id) {
+        $category = $this->mCategory->getCategoryById($cate_id);
+        $data = array(
+            "category" => $category,
+            "title" => "Cập nhật thể loại",
+            "content" => "admin/category",
+            "categoriesParentBox" => $this->mCategory->getCategoriesParentBox(0, "", array($category->getParent()))
+        );
+        $this->load->view('admin/template/main', $data);
+    }
+    
+    public function updateCategory() {
+        $id = $this->input->post('id');
+        $name = $this->input->post('name');
+        $parent = $this->input->post('parent_cate');
+        $slug = $this->input->post('slug');
+        $desc = $this->input->post('desc');
+        $count = $this->input->post('count');
+        
+        $category = new ECategory($id, trim($name), $slug, $desc, $parent, $count);
+        $category_id = $this->mCategory->updateCategory($category);
+        
+        if($category_id) {
+            $this->session->set_flashdata('flash_message', 'Cập nhật thành công');
+            header('Location: ' . base_url() . 'category/categories', TRUE, 301);
+        } else {
+            $data = array(
+                "category" => $category,
+                "title" => "Cập nhật thể loại",
+                "content" => "admin/category",
+                "categoriesParentBox" => $this->mCategory->getCategoriesParentBox(0, "", array($category->getParent()))
+            );
+            $this->session->set_flashdata('flash_error', 'Cập nhật thất bại');
+            $this->load->view('admin/template/main', $data);
+        }
+    }
 }

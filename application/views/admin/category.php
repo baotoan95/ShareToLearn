@@ -13,27 +13,34 @@
         <!-- general form elements -->
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Thêm Người Dùng</h3>
+                <h3 class="box-title"><?php echo $title; ?></h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="<?php echo base_url() . 'tag/updateTag' ?>" method="post">
-                <input type="hidden" name="id" value="<?php echo $tag->getId(); ?>"/>
-                <input type="hidden" name="count" value="<?php echo $tag->getCount(); ?>"/>
+            <form role="form" action="<?php echo base_url() . 'category/updateCategory' ?>" method="post">
+                <input type="hidden" name="id" value="<?php echo $category->getId(); ?>"/>
+                <input type="hidden" name="count" value="<?php echo $category->getCount(); ?>"/>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="name">Tên thẻ</label>
+                        <label for="name">Tên thể loại</label>
                         <input class="form-control" name="name" 
-                               value="<?php echo $tag->getName(); ?>" id="name" placeholder="" type="text">
+                               value="<?php echo $category->getName(); ?>" id="name" placeholder="" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label>Cha</label>
+                        <select name="parent_cate" class="form-control">
+                            <option value="0">---- Cha ----</option>
+                            <?php echo $categoriesParentBox; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="slug">Slug</label>
                         <input class="form-control" name="slug" 
-                               value="<?php echo $tag->getSlug(); ?>" id="slug" placeholder="slug" type="text">
+                               value="<?php echo $category->getSlug(); ?>" id="slug" placeholder="slug" type="text">
                     </div>
                     <div class="form-group">
                         <label>Mô tả</label>
                         <textarea class="form-control" rows="5" name="desc" placeholder="Nhập mô tả ...">
-                            <?php echo $tag->getDesc(); ?>
+                            <?php echo $category->getDesc(); ?>
                         </textarea>
                     </div>
                 </div><!-- /.box-body -->

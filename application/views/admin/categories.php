@@ -1,4 +1,16 @@
 <div class="row">
+    <div class="col-md-12">
+        <?php
+        if ($this->session->has_userdata('flash_message') || $this->session->has_userdata('flash_error')) {
+            $isMsg = $this->session->has_userdata('flash_message');
+            echo "<div class='callout " . ($isMsg ? "callout-success" : "callout-warning") . "'>" .
+            "<h4>Thông báo!</h4>" .
+            "<p>" . $this->session->flashdata('flash_message') .
+            $this->session->flashdata('flash_error') . "</p>" .
+            "</div>";
+        }
+        ?>
+    </div>
     <div class="col-md-3">
         <!-- general form elements -->
         <div class="box box-primary">
@@ -34,7 +46,7 @@
                         // ADD tag
                         $('#submit').click(function (e) {
                             e.preventDefault();
-                            if(!$('input[name=newcate]').val()) {
+                            if (!$('input[name=newcate]').val()) {
                                 return;
                             }
                             $.ajax({
@@ -46,7 +58,7 @@
                                     slug: $('input[name=slug]').val(),
                                     parent_cate: $('select[name=parent_cate]').val(),
                                     desc: $('textarea[name=desc]').val(),
-                                    hasParentBox : true
+                                    hasParentBox: true
                                 },
                                 success: function (res) {
                                     if (res !== 'failure') {
@@ -81,7 +93,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Danh Sách Bài Viết</h3><br/>
-                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả cho\"" . $_GET['search'] . "\"" : "";?>
+                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả cho\"" . $_GET['search'] . "\"" : ""; ?>
                 <div class="box-tools">
                     <form action="" method="get">
                         <div class="input-group" style="width: 150px;">

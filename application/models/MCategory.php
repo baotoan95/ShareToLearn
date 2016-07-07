@@ -29,14 +29,14 @@ class MCategory extends Base_Model {
 
     public function getCategoryById($id) {
         $term = $this->mTerm->getTermById($id);
-        return new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']));
+        return new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']), intval($term['tt_count']));
     }
 
     public function getCategoriesByParent($parentId) {
         $terms = $this->mTerm->getTermByParent($parentId, 'category');
         $categories = array();
         foreach ($terms as $term) {
-            $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']));
+            $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']), intval($term['tt_count']));
         }
         return $categories;
     }
@@ -59,6 +59,10 @@ class MCategory extends Base_Model {
     
     public function deleteCategory($category_id) {
         return $this->mTerm->deleteTermById($category_id);
+    }
+    
+    public function updateCategory($category) {
+        return $this->mTerm->updateTerm($category);
     }
 
 }

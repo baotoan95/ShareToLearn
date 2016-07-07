@@ -81,8 +81,9 @@ class Tag extends CI_Controller {
         $name = $this->input->post('name');
         $slug = $this->input->post('slug');
         $desc = $this->input->post('desc');
+        $count = $this->input->post('count');
         
-        $tag = new ETag($id, $name, $desc, $slug);
+        $tag = new ETag($id, $name, $desc, $slug, $count);
         $tag_id = $this->mTag->updateTag($tag);
         
         if($tag_id) {
