@@ -23,11 +23,11 @@ class EUser {
     private $actived;
     private $role;
     private $non_blocked;
+    private $count_posts; // Extra (not have in DB)
 
     public function __construct($id = 0, $username = '', $password = '', $full_name = '', 
-            $avatar = '', $desc = '', $bio = '', $email = '', $phone = '', 
-            $facebook = '', $skype = '', $google = '', $key = '', 
-            $actived = 0, $role = '', $non_blocked = 0) {
+            $avatar = '', $desc = '', $bio = '', $email = '', $phone = '', $facebook = '', 
+            $skype = '', $google = '', $key = '', $actived = 0, $role = '', $non_blocked = 0, $count_posts = 0) {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
@@ -44,6 +44,7 @@ class EUser {
         $this->actived = $actived;
         $this->role = $role;
         $this->non_blocked = $non_blocked;
+        $this->count_posts = $count_posts;
     }
 
     function getId() {
@@ -172,6 +173,14 @@ class EUser {
 
     function setNon_blocked($non_blocked) {
         $this->non_blocked = $non_blocked;
+    }
+
+    public function getCount_posts() {
+        return $this->count_posts;
+    }
+
+    public function setCount_posts($count_posts) {
+        $this->count_posts = $count_posts;
     }
 
 }

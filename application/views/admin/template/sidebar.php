@@ -37,8 +37,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'adminredirect/posts?status=all'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
-                    <li><a href="<?php echo base_url() . 'adminredirect/newpost'?>"><i class="fa fa-circle-o"></i> Thêm bài viết</a></li>
+                    <li><a href="<?php echo base_url() . 'post/posts?status=all'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
+                    <li><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Thêm bài viết</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -48,7 +48,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'adminredirect/posts?status=all'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
+                    <li><a href="<?php echo base_url() . 'post/posts?status=all'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
                     <li class="active"><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Thêm bài viết</a></li>
                     <li><a href="<?php echo base_url() . 'tag/tags'?>"><i class="fa fa-circle-o"></i> Tags</a></li>
                 </ul>
@@ -66,8 +66,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'adminredirect/users'?>"><i class="fa fa-circle-o"></i> Tất cả người dùng</a></li>
-                    <li><a href="<?php echo base_url() . 'adminredirect/newuser'?>"><i class="fa fa-circle-o"></i> Thêm người dùng</a></li>
+                    <li><a href="<?php echo base_url() . 'user/users?role=all'?>"><i class="fa fa-circle-o"></i> Tất cả người dùng</a></li>
+                    <li><a href="<?php echo base_url() . 'user/newuser'?>"><i class="fa fa-circle-o"></i> Thêm người dùng</a></li>
                     <li><a href="<?php echo base_url() . 'adminredirect/profile'?>"><i class="fa fa-circle-o"></i> Hồ sơ của bạn</a></li>
                 </ul>
             </li>

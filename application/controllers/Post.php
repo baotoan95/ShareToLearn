@@ -149,6 +149,60 @@ class Post extends CI_Controller {
         // When add success then redirect to update page
         header('Location: ' . base_url() . 'post/edit/' . $post_id, TRUE, 301);
     }
+    
+    public function posts() {
+        $this->load->library("pagination");
+
+        // Init data receive from client
+        $segment = trim($this->input->get('p', TRUE));
+        $page = isset($segment) ? $segment : 0;
+
+        $status = trim($this->input->get('status', TRUE));
+        if (!isset($status) || $status == 'all' || $status == '') {
+            $status = array("public", "draf", "pending", "private");
+        }
+        $date = trim($this->input->get('date', TRUE));
+
+        $category = trim($this->input->get('category', TRUE));
+        $tag = trim($this->input->get('tag', TRUE));
+        if (!isset($category)) {
+            $category = '';
+        }
+        if(isset($tag) && strlen(trim($tag)) > 0) {
+            $category = $tag;
+        }
+
+        $search = trim($this->input->get('search', TRUE));
+
+        // Get list count by status
+        $count = $this->mPost->countByStatus();
+
+        // Config for pagination
+        $config["base_url"] = base_url() . "adminredirect";
+        $config["prefix"] = "posts?status=" . (is_array($status) ? "all" : $status) .
+                "&category=$category&date=$date&search=$search&p=";
+        $config["per_page"] = 2;
+        $config["cur_page"] = $segment;
+
+        // Init data response client
+        $result = $this->mPost->getPosts($status, array('records' => $config['per_page'], 'begin' => $page), $category, $date, $search);
+        $config["total_rows"] = $result['total'];
+
+        // Call pagination helper to make links
+        $pagination = pagination($config, $this->pagination);
+        $data = array(
+            "content" => "admin/posts",
+            "posts" => $result['posts'],
+            "links" => $pagination,
+            "count" => $count,
+            "dates" => $this->mPost->groupDateOfPosts(),
+            "categories" => $this->mCategory->getCategoriesParentBox(0, "", array(intval($category))),
+            "status" => (is_array($status) ? "all" : $status),
+            "totalResult" => $result['total']
+        );
+
+        $this->load->view('admin/template/main', $data);
+    }
 
     public function edit($k) {
         $data = $this->initPostView();

@@ -1,149 +1,128 @@
 <div class="row">
     <div class="col-md-9">
+        <?php
+        if ($this->session->has_userdata('flash_message') || $this->session->has_userdata('flash_error')) {
+            $isMsg = $this->session->has_userdata('flash_message');
+            echo "<div class='callout " . ($isMsg ? "callout-success" : "callout-warning") . "'>" .
+            "<h4>Thông báo!</h4>" .
+            "<p>" . $this->session->flashdata('flash_message') .
+            $this->session->flashdata('flash_error') . "</p>" .
+            "</div>";
+        }
+        ?>
         <!-- general form elements -->
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Thêm Người Dùng</h3>
+                <h3 class="box-title"><?php echo $title; ?></h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="<?php echo base_url() . 'user/updateUser' ?>" method="post">
+                <input type="hidden" name="id" value="<?php echo isset($user) ? $user->getId() : ""; ?>"/>
+                <input type="hidden" name="actived" value="<?php echo isset($user) ? $user->getActived() : ""; ?>"/>
                 <div class="box-body">
                     <div class="form-group">
+                        <label for="fullname">Họ Tên</label>
+                        <?php
+                        if (form_error('fullname')) {
+                            echo "<div class='has-error'>"
+                            . "<label class='control-label' for='inputError'>"
+                            . form_error('fullname')
+                            . "</label>"
+                            . "</div>";
+                        }
+                        ?>
+                        <input class="form-control" value="<?php echo isset($user) ? $user->getFull_name() : set_value('fullname') ?>" id="fullname" name="fullname" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <?php
+                        if (form_error('email')) {
+                            echo "<div class='has-error'>"
+                            . "<label class='control-label' for='inputError'>"
+                            . form_error('email')
+                            . "</label>"
+                            . "</div>";
+                        }
+                        ?>
+                        <input class="form-control" value="<?php echo isset($user) ? $user->getEmail() : set_value('email') ?>" id="email" name="email" type="email">
+                    </div>
+                    <div class="form-group">
                         <label for="username">Tên tài khoản</label>
-                        <input class="form-control" id="username" placeholder="" type="text">
+                        <?php
+                        if (form_error('username')) {
+                            echo "<div class='has-error'>"
+                            . "<label class='control-label' for='inputError'>"
+                            . form_error('username')
+                            . "</label>"
+                            . "</div>";
+                        }
+                        ?>
+                        <input autocomplete="false" class="form-control" value="<?php echo isset($user) ? $user->getUsername() : set_value('username') ?>" id="username" name="username" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Email</label>
-                        <input class="form-control" id="exampleInputPassword1" placeholder="email" type="email">
+                        <label for="password">Mật Khẩu</label>
+                        <?php
+                        if (form_error('password')) {
+                            echo "<div class='has-error'>"
+                            . "<label class='control-label' for='inputError'>"
+                            . form_error('password')
+                            . "</label>"
+                            . "</div>";
+                        }
+                        ?>
+                        <input class="form-control" value="<?php echo isset($user) ? $user->getPassword() : set_value('password') ?>" id="password" name="password" type="password">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Họ Tên</label>
-                        <input class="form-control" id="exampleInputPassword1" placeholder="email" type="email">
+                        <label for="phone">Điện thoại</label>
+                        <input class="form-control" value="<?php echo isset($user) ? $user->getPhone() : ""; ?>" id="phone" name="phone" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Mật Khẩu</label>
-                        <input class="form-control" id="exampleInputPassword1" placeholder="password" type="password">
+                        <label for="facebook">Facebook</label>
+                        <input class="form-control" value="<?php echo isset($user) ? $user->getFacebook() : ""; ?>" id="facebook" name="facebook" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="skype">Skype</label>
+                        <input class="form-control" value="<?php echo isset($user) ? $user->getSkype() : ""; ?>" id="skype" name="skype" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="google">Google</label>
+                        <input class="form-control" value="<?php echo isset($user) ? $user->getPhone() : ""; ?>" id="google" name="google" type="text">
                     </div>
                     <div class="form-group">
                         <label>Vai Trò</label>
-                        <select class="form-control">
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
+                        <select class="form-control" name="role">
+                            <option <?php echo (isset($user) && $user->getRole() == 'admin') ? "selected" : ""; ?> value="admin">Admin</option>
+                            <option <?php echo (isset($user) && $user->getRole() == 'writer') ? "selected" : ""; ?> value="writer">Writer</option>
+                            <option <?php echo (isset($user) && $user->getRole() == 'customer') ? "selected" : ""; ?> value="customer">Customer</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputFile">Hình Đại Diện</label>
-                        <input id="exampleInputFile" type="file">
+                        <label for="avatar">Hình Đại Diện</label>
+                        <input id="avatar" type="file" name="avatar">
                         <p class="help-block">Example block-level help text here.</p>
                     </div>
                     <div class="form-group">
-                        <label>Nội Dung</label>
-                        <textarea class="form-control" rows="30" placeholder="Enter ..."></textarea>
+                        <label>Mô tả</label>
+                        <textarea class="form-control" name="desc" rows="3" placeholder="Nhập ...">
+                            <?php echo isset($user) ? $user->getDesc() : ""; ?>
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea class="form-control" name="bio" rows="5" placeholder="Nhập ...">
+                            <?php echo isset($user) ? $user->getBio() : ""; ?>
+                        </textarea>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php echo (isset($user) && $user->getNon_blocked() == 1) ? "checked" : ""; ?> type="checkbox" name="blocked" value="1"> Khóa
+                        </label>
                     </div>
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-            </form>
-        </div><!-- /.box -->
-    </div>
-
-    <div class="col-md-3">
-        <!-- general form elements -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Thuộc Tính</h3>
-            </div><!-- /.box-header -->
-            <!-- form start -->
-            <form role="form">
-                <div class="box-body">
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Trạng thái</label>
-                        <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Hiển Thị</label>
-                        <input class="form-control" id="exampleInputEmail1" placeholder="Enter email" type="email">
-                    </div>
-                </div><!-- /.box-body -->
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div><!-- /.box -->
-
-        <!-- general form elements -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Thể Loại</h3>
-            </div><!-- /.box-header -->
-            <!-- form start -->
-            <form role="form">
-                <div class="box-body">
-                    <div class="form-group">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox">
-                                Học lập trình
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox">
-                                Giải trí
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox">
-                                Linh tinh
-                            </label>
-                        </div>
-                    </div>
-                    <u>Thêm thể loại mới</u>
-                </div><!-- /.box-body -->
-                <div class="box-footer">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <input class="form-control" id="exampleInputPassword1" placeholder="Password" type="password">
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control">
-                                <option>option 1</option>
-                                <option>option 2</option>
-                                <option>option 3</option>
-                                <option>option 4</option>
-                                <option>option 5</option>
-                            </select>
-                        </div>
-                    </div><!-- /.box-body -->
-                    <button type="submit" class="btn btn-primary">Thêm Thể Loại</button>
-                </div>
-            </form>
-        </div><!-- /.box -->
-
-        <!-- general form elements -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Tags</h3>
-            </div><!-- /.box-header -->
-            <!-- form start -->
-            <form role="form">
-                <div class="box-body">
-                    <div class="box-body">
-                        <div class="input-group input-group-sm">
-                            <input class="form-control" type="text">
-                            <span class="input-group-btn">
-                                <button class="btn btn-info btn-flat" type="button">Thêm</button>
-                            </span>
-                        </div>
-                        <i>Thêm tag cho bài viết</i>
-                    </div><!-- /.box-body -->
-                </div><!-- /.box-body -->
             </form>
         </div><!-- /.box -->
     </div>

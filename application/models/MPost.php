@@ -247,6 +247,10 @@ class MPost extends Base_Model {
         );
     }
     
+    /**
+     * Calc total of each post status type
+     * @return array (list count post status type and last element is total of all)
+     */
     public function countByStatus() {
         $this->db->select("p_status as name, count(p_status) as value");
         $this->db->group_by("p_status");
@@ -277,6 +281,17 @@ class MPost extends Base_Model {
             $dates[] = $date["p_published"];
         }
         return $dates;
+    }
+    
+    /**
+     * 
+     * @param int $user_id
+     * @return int number of posts made by user have id = $user_id
+     */
+    public function countPostByUserId($user_id) {
+        $this->db->select("count(p_id) as count");
+        $this->db->where("p_author", $user_id);
+        return $this->db->get($this->_table['table_name'])->row_array()['count'];
     }
 
 }
