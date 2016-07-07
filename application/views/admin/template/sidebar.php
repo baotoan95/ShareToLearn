@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li class="treeview">
-                <a href="<?php echo base_url() . 'adminredirect/categories'?>">
+                <a href="<?php echo base_url() . 'category/categories'?>">
                     <i class="fa fa-folder"></i>
                     <span>Quản lý thể loại</span>
                 </a>

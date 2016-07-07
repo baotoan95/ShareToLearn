@@ -20,7 +20,10 @@ class Category extends CI_Controller {
         $hasParentBox = $this->input->post('hasParentBox');
         $name = $this->input->post('newcate');
         $parent = $this->input->post('parent_cate');
-        $category = new ECategory(0, trim($name), '', '', trim($parent));
+        $slug = $this->input->post('slug');
+        $desc = $this->input->post('desc');
+        
+        $category = new ECategory(0, trim($name), $slug, $desc, $parent);
         $category_id = $this->mCategory->addCategory($category);
         if($category_id) {
             $newcate = $this->mCategory->getCategoryById($category_id);
@@ -67,5 +70,14 @@ class Category extends CI_Controller {
             "categoriesParentBox" => $this->mCategory->getCategoriesParentBox(0)
         );
         $this->load->view('admin/template/main', $data);
+    }
+    
+    public function deleteCategory() {
+        $category_id = $this->input->post('cate_id');
+        if($this->mCategory->deleteCategory($category_id)) {
+            echo "success";
+        } else {
+            echo "failure";
+        }
     }
 }

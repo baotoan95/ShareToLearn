@@ -12,13 +12,15 @@ class ECategory implements JsonSerializable {
     private $slug;
     private $desc;
     private $parent;
+    private $count;
 
-    public function ECategory($id = 0, $name = '', $slug = '', $desc = '', $parent = 0) {
+    public function ECategory($id = 0, $name = '', $slug = '', $desc = '', $parent = 0, $count = 0) {
         $this->id = $id;
         $this->name = $name;
         $this->slug = $slug;
         $this->desc = $desc;
         $this->parent = $parent;
+        $this->count = $count;
     }
 
     public function getId() {
@@ -61,13 +63,22 @@ class ECategory implements JsonSerializable {
         $this->parent = $parent;
     }
     
+    public function getCount() {
+        return $this->count;
+    }
+
+    public function setCount($count) {
+        $this->count = $count;
+    }
+
     public function jsonSerialize() {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
             'slug' => $this->getSlug(),
             'desc' => $this->getDesc(),
-            'parent' => $this->getParent()
+            'parent' => $this->getParent(),
+            'count' => $this->getCount()
         ];
     }
 

@@ -6,11 +6,11 @@
                 <h3 class="box-title">Thêm Thể Loại</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="addcategory" action="get">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="tag-name">Tên Thể Loại</label>
-                        <input class="form-control" name="name" id="tag-name" type="text">
+                        <label for="cate-name">Tên Thể Loại</label>
+                        <input class="form-control" name="newcate" id="cate-name" type="text">
                     </div>
                     <div class="form-group">
                         <label for="slug">Slug</label>
@@ -18,18 +18,59 @@
                     </div>
                     <div class="form-group">
                         <label>Cha</label>
-                        <select name="cate_parent" class="form-control">
-                            <option>---- Cha ----</option>
+                        <select name="parent_cate" class="form-control">
+                            <option value="0">---- Cha ----</option>
                             <?php echo $categoriesParentBox; ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Mô Tả</label>
-                        <textarea class="form-control" rows="3" placeholder="Nhập ..."></textarea>
+                        <textarea class="form-control" name="desc" rows="3" placeholder="Nhập ..."></textarea>
                     </div>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Thêm</button>
+                    <button type="submit" id="submit" class="btn btn-primary">Thêm</button>
+                    <script lang="javascript">
+                        // ADD tag
+                        $('#submit').click(function (e) {
+                            e.preventDefault();
+                            if(!$('input[name=newcate]').val()) {
+                                return;
+                            }
+                            $.ajax({
+                                url: <?php echo "\"" . base_url() . "category/addCategory\""; ?>,
+                                type: "POST",
+                                dataType: "text",
+                                data: {
+                                    newcate: $('input[name=newcate]').val(),
+                                    slug: $('input[name=slug]').val(),
+                                    parent_cate: $('select[name=parent_cate]').val(),
+                                    desc: $('textarea[name=desc]').val(),
+                                    hasParentBox : true
+                                },
+                                success: function (res) {
+                                    if (res !== 'failure') {
+                                        var data = $.parseJSON(res);
+                                        var category = data.category;
+                                        $('tbody').prepend(
+                                                "<tr>" +
+                                                "<td>" + category.name + "</td>" +
+                                                "<td>" + category.desc + "</td>" +
+                                                "<td>" + category.slug + "</td>" +
+                                                "<td>" + category.count + "</td>" +
+                                                "<td><i class='fa fa-fw fa-trash del_tag' id='" + category.id + "'></i></td>" +
+                                                "</tr>"
+                                                );
+                                    } else {
+
+                                    }
+                                },
+                                failure: function (error) {
+                                    alert(err);
+                                }
+                            });
+                        });
+                    </script>
                 </div>
             </form>
         </div><!-- /.box -->
@@ -54,13 +95,16 @@
             </div><!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>Tên</th>
                             <th>Mô Tả</th>
                             <th>Slug</th>
+                            <th>Số Lượng</th>
                             <th>Xóa</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         <?php
                         foreach ($categories as $category) {
                             ?>
@@ -68,13 +112,36 @@
                                 <td><a href="<?php echo base_url() . 'category/editCategory/' . $category->getId(); ?>"><?php echo $category->getName(); ?></a></td>
                                 <td><?php echo $category->getDesc(); ?></td>
                                 <td><?php echo $category->getSlug(); ?></td>
-                                <td><i class="fa fa-fw fa-trash del_tag" id="<?php echo $category->getId(); ?>"></i></td>
+                                <td><?php echo $category->getCount(); ?></td>
+                                <td><i class="fa fa-fw fa-trash del_cate" id="<?php echo $category->getId(); ?>"></i></td>
                             </tr>
                             <?php
                         }
                         ?>
                     </tbody>
                 </table>
+                <script lang="javascript">
+                    // DELETE tag
+                    $('.del_cate').click(function () {
+                        var element = $(this);
+                        $.ajax({
+                            url: <?php echo "\"" . base_url() . "category/deleteCategory\""; ?>,
+                            type: "POST",
+                            dataType: "text",
+                            data: {
+                                cate_id: element.attr('id')
+                            },
+                            success: function (res) {
+                                if (res !== 'failure') {
+                                    element.parent().parent().remove();
+                                }
+                            },
+                            failure: function (error) {
+                                alert(err);
+                            }
+                        });
+                    });
+                </script>
             </div><!-- /.box-body -->
             <div class="box-footer clearfix">
                 <ul class="pagination pagination-sm no-margin pull-right">

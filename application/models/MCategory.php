@@ -56,5 +56,9 @@ class MCategory extends Base_Model {
     public function addCategory($category) {
         return $this->mTerm->addTerm($category, 'category');
     }
+    
+    public function deleteCategory($category_id) {
+        return $this->mTerm->deleteTermById($category_id);
+    }
 
 }
