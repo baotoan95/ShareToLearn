@@ -16,7 +16,7 @@
                 <h3 class="box-title"><?php echo $title; ?></h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="<?php echo base_url() . 'user/updateUser' ?>" method="post">
+            <form role="form" action="<?php echo base_url() . 'user/' . $action ?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo isset($user) ? $user->getId() : ""; ?>"/>
                 <input type="hidden" name="actived" value="<?php echo isset($user) ? $user->getActived() : ""; ?>"/>
                 <div class="box-body">
@@ -99,19 +99,19 @@
                     <div class="form-group">
                         <label for="avatar">Hình Đại Diện</label>
                         <input id="avatar" type="file" name="avatar">
-                        <p class="help-block">Example block-level help text here.</p>
+                        <img class="avatarPreview" src="<?php echo isset($user) ? base_url() .
+                                    'assets/upload/images/avatars/' . $user->getAvatar() : "";
+                            ?>"/>
                     </div>
                     <div class="form-group">
                         <label>Mô tả</label>
-                        <textarea class="form-control" name="desc" rows="3" placeholder="Nhập ...">
-                            <?php echo isset($user) ? $user->getDesc() : ""; ?>
-                        </textarea>
+                        <textarea class="form-control" name="desc" rows="3" 
+                                  placeholder="Nhập ..."><?php echo isset($user) ? $user->getDesc() : ""; ?></textarea>
                     </div>
                     <div class="form-group">
                         <label>Bio</label>
-                        <textarea class="form-control" name="bio" rows="5" placeholder="Nhập ...">
-                            <?php echo isset($user) ? $user->getBio() : ""; ?>
-                        </textarea>
+                        <textarea class="form-control" name="bio" rows="5" 
+                                  placeholder="Nhập ..."><?php echo isset($user) ? $user->getBio() : ""; ?></textarea>
                     </div>
                     <div class="checkbox">
                         <label>

@@ -76,22 +76,14 @@
                         <label for="excerpt">Trích Đoạn</label>
                         <textarea id="excerpt" class="form-control" rows="5" 
                                   name="excerpt" onkeypress="change()"><?php echo isset($post) 
-                                  ? $post->getExcerpt() : set_value('excerpt'); ?>
-                        </textarea>
+                                  ? $post->getExcerpt() : set_value('excerpt'); ?></textarea>
                     </div>
                     <div class="form-group">
-                        <script type="text/javascript">
-                            $(document).ready(function () {
-                                $('input[name=avatar]').change(function () {
-                                    var imgPath = URL.createObjectURL(event.target.files[0]);
-                                    $("#avatarPreview").fadeIn("fast").attr('src', imgPath);
-                                });
-                            });
-                        </script>
+                        
                         <label for="avatar">Hình Đặc Trưng</label>
                         <input type="file" name="avatar">
                         <p class="help-block">Sử dụng để hiển thị.</p>
-                        <img style="display: block; width: 100%; max-height: 200px;" id="avatarPreview" src="<?php echo isset($post) ? base_url() .
+                        <img class="avatarPreview" src="<?php echo isset($post) ? base_url() .
                                     'assets/upload/images/' . $post->getBanner() : "";
                             ?>"/>
                     </div>
@@ -108,8 +100,7 @@
                         ?>
                         <textarea class="form-control" rows="30" 
                                   name="content" onkeypress="change()"><?php echo isset($post) 
-                                  ? $post->getContent() : set_value('content'); ?>
-                        </textarea>
+                                  ? $post->getContent() : set_value('content'); ?></textarea>
                     </div>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->

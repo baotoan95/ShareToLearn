@@ -85,3 +85,11 @@
     list-style: none;
     margin-left: -20px;
 }
+
+/* Style for preview avatar */
+.avatarPreview {
+    display: block; 
+    width: 300px; 
+    max-height: 200px; 
+    margin: 10px auto;
+}

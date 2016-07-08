@@ -14,11 +14,25 @@ class User extends CI_Controller {
 
         $this->load->model('mUser');
     }
+    
+    private function upload_image($image, $dis, $config = array()) {
+        $config["upload_path"] = $dis;
+        $config["allowed_types"] = "gif|png|jpg|jpeg";
+        $config["max_size"] = "900";
+        $this->load->library("upload", $config);
+        if (!$this->upload->do_upload($image)) {
+            echo $this->upload->display_errors();
+            return FALSE;
+        } else {
+            return $this->upload->data()["file_name"];
+        }
+    }
 
     public function newUser() {
         $data = array(
             "content" => "admin/user",
-            "title" => "Thêm người dùng"
+            "title" => "Thêm người dùng",
+            "action" => "addUser"
         );
         $this->load->view('admin/template/main', $data);
     }
@@ -42,7 +56,6 @@ class User extends CI_Controller {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $fullname = $this->input->post('fullname');
-        $avatar = $this->input->post('avatar');
         $desc = $this->input->post('desc');
         $bio = $this->input->post('bio');
         $email = $this->input->post('email');
@@ -51,9 +64,28 @@ class User extends CI_Controller {
         $skype = $this->input->post('skype');
         $google = $this->input->post('google');
         $role = $this->input->post('role');
+        
+        $avatar = "user.jpg";
 
         $key = generateRandomString(20);
         $user = new EUser(0, $username, $password, $fullname, $avatar, $desc, $bio, $email, $phone, $facebook, $skype, $google, $key, 0, $role, $non_blocked = 1);
+        
+        // When have request change avatar then update it
+        if ($_FILES['avatar']['error'] == 0) {
+            // Upload avatar
+            $avatar = $this->upload_image('avatar', './assets/upload/images/avatars');
+            if (!$avatar) { // Upload fail
+                $this->session->set_flashdata('flash_error', 'Thêm không thành công, vui lòng chọn hình đặc phù hợp.'
+                        . '<br/>Hình đặc trưng phù hợp là:'
+                        . '<ul>'
+                        . '<li>Thuộc định dạng: png/jpg/gif</li>'
+                        . '<li>Dung lượng: không quá 900kb</li>'
+                        . '</ul>');
+                $this->load->view('admin/template/main', $data);
+                return;
+            }
+            $user->setAvatar($avatar);
+        }
 
         if ($this->mUser->addUser($user)) {
             $this->session->set_flashdata('flash_message', 'Đã thêm một người dùng thành công');
@@ -69,7 +101,7 @@ class User extends CI_Controller {
         $role = $this->input->get('role', TRUE);
         $segment = $this->input->get('p', TRUE);
         
-        if(empty($role) || $role = 'all') {
+        if(empty($role) || $role == 'all') {
             $role = array("admin", "writer", "customer");
         }
         // Config pagination
@@ -107,7 +139,8 @@ class User extends CI_Controller {
         $data = array(
             "title" => "Cập nhật người dùng",
             "content" => "admin/user",
-            "user" => $user
+            "user" => $user,
+            "action" => "updateUser"
         );
         $this->load->view('admin/template/main', $data);
     }
@@ -121,7 +154,8 @@ class User extends CI_Controller {
         // Default data will have response to client
         $data = array(
             "content" => "admin/user",
-            "title" => "Cập nhật người dùng"
+            "title" => "Cập nhật người dùng",
+            "action" => "updateUser"
         );
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('admin/template/main', $data);
@@ -131,7 +165,6 @@ class User extends CI_Controller {
         $username = trim($this->input->post('username'));
         $password = trim($this->input->post('password'));
         $fullname = trim($this->input->post('fullname'));
-        $avatar = $this->input->post('avatar');
         $desc = trim($this->input->post('desc'));
         $bio = trim($this->input->post('bio'));
         $email = $this->input->post('email');
@@ -143,11 +176,28 @@ class User extends CI_Controller {
         $id = $this->input->post('id');
         $blocked = $this->input->post('blocked');
         $actived = $this->input->post('actived');
+        $avatar = $this->mUser->getUserById($id)->getAvatar();
 
         $key = generateRandomString(20);
         $user = new EUser($id, $username, $password, $fullname, $avatar, $desc, 
                 $bio, $email, $phone, $facebook, $skype, $google, $key, $actived, $role, $blocked);
         
+        // When have request change avatar then update it
+        if ($_FILES['avatar']['error'] == 0) {
+            // Upload avatar
+            $avatar = $this->upload_image('avatar', './assets/upload/images/avatars');
+            if (!$avatar) { // Upload fail
+                $this->session->set_flashdata('flash_error', 'Thêm không thành công, vui lòng chọn hình đặc phù hợp.'
+                        . '<br/>Hình đặc trưng phù hợp là:'
+                        . '<ul>'
+                        . '<li>Thuộc định dạng: png/jpg/gif</li>'
+                        . '<li>Dung lượng: không quá 900kb</li>'
+                        . '</ul>');
+                $this->load->view('admin/template/main', $data);
+                return;
+            }
+            $user->setAvatar($avatar);
+        }
         
         if ($this->mUser->updateUser($user)) {
             $this->session->set_flashdata('flash_message', 'Cập nhật thành công');

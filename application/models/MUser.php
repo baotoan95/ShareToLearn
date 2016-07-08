@@ -48,10 +48,10 @@ class MUser extends Base_Model {
     public function getUsers($limitConfig = array(), $role = NULL, $username = NULL) {
         $this->db->select('SQL_CALC_FOUND_ROWS *', FALSE);
         // Condition
-        if ($role) {
+        if ($role != NULL) {
             $this->db->where_in('u_role', $role);
         }
-        if ($username) {
+        if ($username != NULL) {
             $this->db->group_start();
             $this->db->or_like('u_username', $username, 'before');
             $this->db->like('u_username', $username);

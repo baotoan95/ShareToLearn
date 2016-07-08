@@ -40,15 +40,15 @@
                                 <?php
                                 foreach ($count as $key => $value) {
                                     switch ($key) {
-                                        case 'pending': echo "<a href='$uri?role=$key' "
+                                        case 'admin': echo "<a href='$uri?role=$key' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['role']) && $_GET['role'] == 'admin') ? "active" : "") . "'>"
                                             . "Quản trị ($value)</a>";
                                             break;
-                                        case 'public': echo "<a href='$uri?role=$key' "
+                                        case 'writer': echo "<a href='$uri?role=$key' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['role']) && $_GET['role'] == 'writer') ? "active" : "") . "'>"
                                             . "Tác giả ($value)</a>";
                                             break;
-                                        case 'private': echo "<a href='$uri?role=$key' "
+                                        case 'customer': echo "<a href='$uri?role=$key' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['role']) && $_GET['role'] == 'customer') ? "active" : "") . "'>"
                                             . "Người dùng thường ($value)</a>";
                                             break;
