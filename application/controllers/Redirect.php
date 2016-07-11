@@ -15,12 +15,31 @@ class Redirect extends CI_Controller {
     }
 
     public function index() {
-        $data = array(
-            // Set views
-            "sidebar" => 'client/template/sidebar',
-            "content" => 'client/index'
+        $this->load->library('pagination');
+        $segment = $this->input->get('p');
+        
+        $config = array(
+            "base_url" => base_url(),
+            "prefix" => "redirect?p=",
+            "per_page" => 1,
+            "cur_page" => $segment
         );
-        $data['post_latest'] = $this->mPost->getPosts('public', array('records' => 20, 'begin' => 0));
+        $condition = array(
+            "type" => "post",
+            "status" => "public"
+        );
+        // GET result (return list of posts)
+        $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
+        $config['total_rows'] = $result['total'];
+        
+        // Init data to response client
+        $data = array(
+            "sidebar" => 'client/template/sidebar',
+            "content" => 'client/index',
+            "post_latest" => $result['posts'],
+            "links" => pagination($config, $this->pagination) // Init pagination
+        );
+        
         $this->load->view('client/template/main', $data);
     }
 

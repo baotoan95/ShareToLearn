@@ -22,7 +22,7 @@
 
             <div class="post-meta">
                 <span class="comments"><a href="#"><?php echo $post->getComments(); ?></a></span>
-                <span class="author"><a href="#">nextwpthemes</a></span>
+                <span class="author"><a href="#"><?php echo $post->getAuthor()->getFull_name(); ?></a></span>
                 <span class="date"><a href="#"><?php echo $post->getPublished(); ?></a></span>
             </div>
         </article>
@@ -35,15 +35,7 @@
 
     <!-- Pagenation -->
     <div class="pagenation clearfix">
-        <ul class="no-bullet">
-            <li><a href="#"><</a></li>
-            <li class="active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">></a></li>
-            <li><a href="#">>></a></li>
-        </ul>
+        <?php echo $links; ?>
     </div>
     <!-- End latest posts -->
 </section>

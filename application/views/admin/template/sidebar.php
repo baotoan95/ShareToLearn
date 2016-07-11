@@ -37,8 +37,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'post/posts?status=all'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
-                    <li><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Thêm bài viết</a></li>
+                    <li><a href="<?php echo base_url() . 'post/posts?type=page&status=all'?>"><i class="fa fa-circle-o"></i> Tất cả trang</a></li>
+                    <li><a href="<?php echo base_url() . 'post/newpost?type=page'?>"><i class="fa fa-circle-o"></i> Thêm trang</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -54,7 +54,7 @@
                 </ul>
             </li>
             <li class="treeview">
-                <a href="<?php echo base_url() . 'adminredirect/comments'?>">
+                <a href="<?php echo base_url() . 'comment/comments'?>">
                     <i class="fa fa-edit"></i> <span>Quản lý bình luận</span>
                     <small class="label pull-right bg-yellow">12</small>
                 </a>
@@ -72,16 +72,10 @@
                 </ul>
             </li>
             <li class="treeview">
-                <a href="#">
+                <a href="<?php echo base_url() . 'adminredirect/setting'?>">
                     <i class="fa fa-cog"></i>
                     <span>Cấu Hình</span>
-                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'adminredirect/posts'?>"><i class="fa fa-circle-o"></i> General</a></li>
-                    <li><a href="<?php echo base_url() . 'adminredirect/newpost'?>"><i class="fa fa-circle-o"></i> Thảo luận</a></li>
-                    <li><a href="<?php echo base_url() . 'adminredirect/tags'?>"><i class="fa fa-circle-o"></i> Email</a></li>
-                </ul>
             </li>
         </ul>
     </section>

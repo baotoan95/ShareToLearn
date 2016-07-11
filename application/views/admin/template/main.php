@@ -23,6 +23,9 @@
              folder instead of downloading all of them to reduce the load. -->
         <link href="<?php echo base_url() . 'assets/admin/dist/css/skins/_all-skins.min.css' ?>" rel="stylesheet" type="text/css" />
 
+        <!-- Select2 -->
+        <link href="<?php echo base_url() . 'assets/admin/plugins/select2/select2.min.css' ?>" rel="stylesheet" type="text/css" />
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

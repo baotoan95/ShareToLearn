@@ -17,9 +17,14 @@ class MTerm extends Base_Model {
     }
 
     public function addTerm($term, $taxonomy_name) {
+        // If term is tag then it not have parent
+        $parent = -1;
+        if($term instanceof ECategory) {
+            $parent = $term->getParent();
+        }
         // Check tag have not exist in DB
         $term_id = 0;
-        if (empty($this->getTerm($term->getName(), $taxonomy_name, $term->getParent()))) {
+        if (empty($this->getTerm($term->getName(), $taxonomy_name, $parent))) {
             $this->db->trans_start();
             $data = array(
                 "t_name" => $term->getName(),

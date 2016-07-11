@@ -1,5 +1,5 @@
 <section id="content" class="eight column row pull-left singlepost">
-    <a href="#" class="featured-img"><img src="<?php echo base_url() . "assets/upload/images/" . $post->getBanner(); ?>" alt=""></a>
+    <a class="featured-img"><img src="<?php echo base_url() . "assets/upload/images/" . $post->getBanner(); ?>" alt=""></a>
 
     <h1 class="post-title"><?php echo $post->getTitle(); ?></h1>
 
@@ -11,7 +11,7 @@
 
     <div class="post-meta">
         <span class="comments"><a href="#"><?php echo $post->getComments(); ?></a></span>
-        <span class="author"><a href="#">nextwpthemes</a></span>
+        <span class="author"><a href="#"><?php echo $post->getAuthor()->getFull_name(); ?></a></span>
         <span class="date"><a href="#"><?php echo $post->getPublished(); ?></a></span>
     </div>
 
@@ -76,7 +76,7 @@
             <div class="comment-author">Faton</div>
             <div class="comment-date">May 17, 2012</div>
             <div class="comment-text"><p>First comment!</p></div>
-            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
+            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="1">reply</a></div>
 
             <ul class="children">
                 <li class="depth-2">
@@ -175,24 +175,64 @@
             <div class="comment-date">May 17, 2012</div>
             <div class="comment-text"><p>First comment!</p></div>
             <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
+            
         </li>
     </ol>
     <!-- End Comments -->
 
-    <div class="line"></div>
+    <div id="comment_part" class="line"></div>
 
-    <h4 class="post-title">Leave a reply</h4>
+    <h4 class="post-title">Gửi một bình luận</h4>
 
     <!-- Contact Form -->
     <div class="contact-form comment cleafix">
-        <form id="contact">
-            <input name="name" class="left" type="text" data-value="Name" value="Name">
-            <input name="mail" class="right" type="text" data-value="E-mail" value="E-mail">
-            <input name="website" class="right" type="text" data-value="Website" value="Website">
-            <textarea name="comment" class="twelve column" data-value="Comment">Comment</textarea>
-            <div id="msg" class="message"></div>
-            <input id="submit" type="submit" value="Post a comment">
+        <form id="contact" action="<?php echo base_url() . "comment/addComment"; ?>" method="POST">
+            <input tabindex="1" name="name" class="left" type="text" data-value="Name" value="Name"/>
+            <input tabindex="3" name="website" class="right" type="text" data-value="Website" value="Website"/>
+            <input tabindex="2" name="mail" class="right" type="text" data-value="E-mail" value="E-mail"/>
+            <textarea tabindex="4" name="content" class="twelve column" data-value="Comment">Comment</textarea>
+            <input type="hidden" name="postId" value="<?php echo $post->getId(); ?>">
+            <input tabindex="5" id="submit" type="submit" value="Gửi">
         </form>
     </div>
     <!-- End Contact Form -->
+    
+    <script lang="javascript">
+        $(document).ready(function() {
+            $('#submit').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: <?php echo "\"" . base_url() . "comment/addComment\""?>,
+                    type: "POST",
+                    dataType: "text",
+                    data: {
+                        postId: $('input[name=postId]').val(),
+                        name: $('input[name=name]').val(),
+                        website: $('input[name=website]').val(),
+                        content: $('textarea[name=content]').val(),
+                        parent: $(this).attr('data-value'),
+                        email: $('input[name=mail]').val()
+                    },
+                    success: function(res){
+                        alert(res);
+                    },
+                    failure: function(error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
+    
+    <script lang="javascript">
+        $(document).ready(function() {
+            $('.comment-reply-link').click(function(e) {
+                e.preventDefault();
+                $('body, html').animate({
+                    scrollTop: $('#comment_part').offset().top
+                }, 800);
+                $('#submit').attr('data-value', $(this).attr('href'));
+            });
+        });
+    </script>
 </section>

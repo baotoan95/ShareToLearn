@@ -20,6 +20,7 @@ class MPost extends Base_Model {
         $this->load->model('mTermRelationships');
         $this->load->model('mCategory');
         $this->load->model('mTag');
+        $this->load->model('mUser');
     }
 
     public function addPost($post) {
@@ -47,7 +48,6 @@ class MPost extends Base_Model {
             "p_menu_order" => $post->getOrder(),
             "p_parent" => $post->getParent()
         );
-        print_r($data);
         $post_id = $this->insert($data);
         
         // Add tags for post
@@ -62,7 +62,6 @@ class MPost extends Base_Model {
             }
         }
         
-        echo count($post->getCategories());
         // Add categories for post
         if (!empty($post->getCategories())) {
             foreach ($post->getCategories() as $category) {
@@ -90,7 +89,7 @@ class MPost extends Base_Model {
         $post->setId($postTemp['p_id']);
         $post->setTitle($postTemp['p_title']);
         $post->setContent($postTemp['p_content']);
-        $post->setAuthor($postTemp['p_author']);
+        $post->setAuthor($this->mUser->getUserById($postTemp['p_author']));
         $post->setViews($postTemp['p_view_count']);
         $post->setComments($postTemp['p_comment_count']);
         $post->setExcerpt($postTemp['p_excerpt']);
@@ -104,6 +103,11 @@ class MPost extends Base_Model {
         $post->setBanner($postTemp['p_banner']);
         $post->setPassword($postTemp['p_password']);
         $post->setParent($postTemp['p_parent']);
+        
+        if($post->getType() == "page") {
+            return $post;
+        }
+        
         // Set categories for post
         if($inc_cates) {
             $categories = array();
@@ -199,40 +203,38 @@ class MPost extends Base_Model {
     
     /**
      * 
-     * @param string $status
-     * @param array $paginationConfig (records, begin) 
-     * @param int $taxonomy (index of term)
-     * @param date $fromDate
+     * @param array $condition type and status are required (taxonomy, fromDate, title are optional)
+     * @param array $limitConfig (records, begin)
      * @return array includes posts and total records before limit
      */
-    public function getPosts($status, $paginationConfig, $taxonomy = '', $fromDate = '', $title = '') {
+    public function getPosts($condition, $limitConfig) {
         $this->db->select('SQL_CALC_FOUND_ROWS p_id', FALSE);
         $this->db->from($this->_table['table_name']);
         // If specific taxonomy then join, else...
-        if($taxonomy != '') {
+        if(isset($condition['taxonomy']) && $condition['taxonomy'] != '') {
             $this->db->join('term_relationships', 'tr_object_id = p_id');
             $this->db->join('term_taxonomy', 'tr_term_taxonomy_id = tt_id');
-            $this->db->where('tt_term_id = ' . $taxonomy);
+            $this->db->where('tt_term_id = ' . $condition['taxonomy']);
         }
         
-        if($fromDate != '') {
-            $this->db->where('month(p_published) <= month("' . date_format(date_create($fromDate), 'y-m-d') . '")');
-            $this->db->where('year(p_published) <= year("' . date_format(date_create($fromDate), 'y-m-d') . '")');
+        if(isset($condition['fromDate']) && $condition['fromDate'] != '') {
+            $this->db->where('month(p_published) <= month("' . date_format(date_create($condition['fromDate']), 'y-m-d') . '")');
+            $this->db->where('year(p_published) <= year("' . date_format(date_create($condition['fromDate']), 'y-m-d') . '")');
         }
         
-        $this->db->where('p_type', 'post');
-        $this->db->where_in('p_status', $status);
+        $this->db->where('p_type', $condition['type']);
+        $this->db->where_in('p_status', $condition['status']);
         
-        if($title != '') {
+        if(isset($condition['title']) && $condition['title'] != '') {
             $this->db->group_start();
-            $this->db->like('p_title', $title, 'before');
-            $this->db->or_like('p_title', $title);
-            $this->db->or_like('p_title', $title, 'after');
+            $this->db->like('p_title', $condition['title'], 'before');
+            $this->db->or_like('p_title', $condition['title']);
+            $this->db->or_like('p_title', $condition['title'], 'after');
             $this->db->group_end();
         }
         
         $this->db->order_by('p_published', 'DESC');
-        $this->db->limit($paginationConfig['records'], $paginationConfig['begin']);
+        $this->db->limit($limitConfig['records'], $limitConfig['begin']);
         $postIds = $this->db->get()->result_array();
         $total = $this->db->query('select FOUND_ROWS() count')->row()->count;
         
@@ -247,12 +249,27 @@ class MPost extends Base_Model {
         );
     }
     
+    public function deletePost($post_id) {
+        $this->db->trans_start();
+        $this->delete($post_id);
+        $this->mTermRelationships->deleteTermRelationshipByObjectId($post_id);
+        $this->db->trans_complete();
+        if($this->db->trans_status() == FALSE) {
+            $this->db->trans_rollback();
+            return FALSE;
+        } else {
+            $this->db->trans_commit();
+            return TRUE;
+        }
+    }
+    
     /**
      * Calc total of each post status type
      * @return array (list count post status type and last element is total of all)
      */
-    public function countByStatus() {
+    public function countByStatus($type) {
         $this->db->select("p_status as name, count(p_status) as value");
+        $this->db->where("p_type", $type);
         $this->db->group_by("p_status");
         $count = $this->db->get($this->_table['table_name'])->result_array();
         

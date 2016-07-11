@@ -67,6 +67,8 @@ class Post extends CI_Controller {
         $data["title"] = "Thêm bài viết mới";
         $data['action'] = "addpost";
         $data['categories'] = $this->getCategoriesBox(0, array());
+        $type = $this->input->get('type', TRUE);
+        $data['type'] = (isset($type) && $type != "post") ? "page" : "post";
         $this->load->view('admin/template/main', $data);
     }
 
@@ -78,6 +80,7 @@ class Post extends CI_Controller {
         $data["title"] = "Thêm bài viết mới";
         $data["action"] = "addpost";
         $data['categories'] = $this->getCategoriesBox(0, array());
+        $data['type'] = $this->input->post('type');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('admin/template/main', $data);
@@ -132,7 +135,7 @@ class Post extends CI_Controller {
         $post->setGuid($this->input->post('guid'));
         $post->setCmt_allow(empty($this->input->post('comment_allowed')) ? FALSE : TRUE);
         $post->setOrder(0);
-        $post->setType('post');
+        $post->setType($this->input->post('type'));
         $post->setBanner($avatar);
         $post->setPassword($this->input->post('password'));
         $post->setParent(0);
@@ -154,6 +157,11 @@ class Post extends CI_Controller {
         $this->load->library("pagination");
 
         // Init data receive from client
+        $type = $this->input->get('type', TRUE);
+        if(!isset($type) || $type != 'page') {
+            $type = "post";
+        }
+        
         $segment = trim($this->input->get('p', TRUE));
         $page = isset($segment) ? $segment : 0;
 
@@ -175,22 +183,30 @@ class Post extends CI_Controller {
         $search = trim($this->input->get('search', TRUE));
 
         // Get list count by status
-        $count = $this->mPost->countByStatus();
+        $count = $this->mPost->countByStatus($type);
 
         // Config for pagination
-        $config["base_url"] = base_url() . "adminredirect";
+        $config["base_url"] = base_url() . "post";
         $config["prefix"] = "posts?status=" . (is_array($status) ? "all" : $status) .
                 "&category=$category&date=$date&search=$search&p=";
         $config["per_page"] = 2;
         $config["cur_page"] = $segment;
 
-        // Init data response client
-        $result = $this->mPost->getPosts($status, array('records' => $config['per_page'], 'begin' => $page), $category, $date, $search);
+        // GET data response client
+        $condition = array(
+            "type" => $type,
+            "status" => $status,
+            "taxonomy" => $category,
+            "fromDate" => $date,
+            "title" => $search
+        );
+        $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $page));
         $config["total_rows"] = $result['total'];
 
         // Call pagination helper to make links
         $pagination = pagination($config, $this->pagination);
         $data = array(
+            "title" => $type == 'post' ? "Danh Sách Bài Viết" : "Danh Sách Trang",
             "content" => "admin/posts",
             "posts" => $result['posts'],
             "links" => $pagination,
@@ -198,7 +214,8 @@ class Post extends CI_Controller {
             "dates" => $this->mPost->groupDateOfPosts(),
             "categories" => $this->mCategory->getCategoriesParentBox(0, "", array(intval($category))),
             "status" => (is_array($status) ? "all" : $status),
-            "totalResult" => $result['total']
+            "totalResult" => $result['total'],
+            "type" => $type
         );
 
         $this->load->view('admin/template/main', $data);
@@ -257,7 +274,7 @@ class Post extends CI_Controller {
         $post->setGuid($this->input->post('guid'));
         $post->setCmt_allow(empty($this->input->post('comment_allowed')) ? FALSE : TRUE);
         $post->setOrder(0);
-        $post->setType('post');
+        $post->setType($this->input->post('type'));
         // When have request change avatar then update it
         if ($_FILES['avatar']['error'] == 0) {
             // Upload avatar
@@ -296,6 +313,15 @@ class Post extends CI_Controller {
 
         // When update success redirect to itself
         header('Location: ' . base_url() . 'post/edit/' . $post->getId(), TRUE, 301);
+    }
+    
+    public function deletePost() {
+        $post_id = $this->input->post('id');
+        if($this->mPost->deletePost($post_id)) {
+            echo "success";
+        } else {
+            echo "failure";
+        }
     }
 
 }

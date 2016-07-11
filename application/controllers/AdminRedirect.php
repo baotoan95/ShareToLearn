@@ -22,25 +22,9 @@ class AdminRedirect extends CI_Controller {
         $this->load->view('admin/template/main', $data);
     }
 
-    
-
-    public function tags() {
-        $data = array(
-            "content" => "admin/tags"
-        );
-        $this->load->view('admin/template/main', $data);
-    }
-
     public function menus() {
         $data = array(
             "content" => "admin/menus"
-        );
-        $this->load->view('admin/template/main', $data);
-    }
-
-    public function categories() {
-        $data = array(
-            "content" => "admin/categories"
         );
         $this->load->view('admin/template/main', $data);
     }
@@ -52,23 +36,16 @@ class AdminRedirect extends CI_Controller {
         $this->load->view('admin/template/main', $data);
     }
 
-    public function users() {
-        $data = array(
-            "content" => "admin/comments"
-        );
-        $this->load->view('admin/template/main', $data);
-    }
-
-    public function newuser() {
-        $data = array(
-            "content" => "admin/user"
-        );
-        $this->load->view('admin/template/main', $data);
-    }
-
     public function profile() {
         $data = array(
             "content" => "admin/user"
+        );
+        $this->load->view('admin/template/main', $data);
+    }
+    
+    public function setting() {
+        $data = array(
+            "content" => "admin/setting"
         );
         $this->load->view('admin/template/main', $data);
     }

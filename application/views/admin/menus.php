@@ -11,7 +11,7 @@
                     <ul class="treeview-menu">
                         <li>
                             <form role="form">
-                                <div class="box-body">
+                                <div class="box-body box-default">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Liên kết</label>
                                         <input class="form-control" placeholder="" type="text">
@@ -21,14 +21,16 @@
                                         <input class="form-control" placeholder="" type="text">
                                     </div>
                                     <div class="form-group">
-                                        <label>Select</label>
-                                        <select class="form-control">
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
+                                        <select class="form-control select2" style="width: 100%;">
+                                            <option selected="selected">Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
                                         </select>
-                                    </div>
+                                    </div><!-- /.form-group -->
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Thêm</button>
                                     </div>
@@ -224,3 +226,11 @@
         </div>
     </div>
 </div>
+
+<script src="<?php echo base_url() . 'assets/admin/plugins/select2/select2.full.min.js' ?>" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+    });
+</script>

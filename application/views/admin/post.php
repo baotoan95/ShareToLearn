@@ -21,6 +21,7 @@
 <div class="row">
     <form id="post" action="<?php echo base_url() . 'post/' . $action ?>" method="post" enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?php echo isset($post) ? $post->getId() : "" ?>"/>
+        <input type="hidden" name="type" value="<?php echo isset($post) ? $post->getType() : $type; ?>"/>
         <div class="col-md-9">
             <?php
             if ($this->session->has_userdata('flash_message') || $this->session->has_userdata('flash_error')) {
@@ -196,10 +197,17 @@
                     </script>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">
+                        <?php
+                            echo $action == 'update' ? "Cập Nhật" : "Thêm";
+                        ?>
+                    </button>
                 </div>
             </div><!-- /.box -->
 
+            <?php
+                if(isset($post) ? $post->getType() == "post" : $type == "post") {
+            ?>
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
@@ -370,6 +378,9 @@
                     });
                 </script>
             </div><!-- /.box -->
+            <?php
+                }
+            ?>
         </div>
     </form>
 </div>
