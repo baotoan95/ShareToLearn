@@ -5,7 +5,7 @@
  *
  * @author BaoToan
  */
-class EComment {
+class EComment implements JsonSerializable {
 
     private $id;
     private $postId;
@@ -128,6 +128,16 @@ class EComment {
 
     public function setPrev_status($prev_status) {
         $this->prev_status = $prev_status;
+    }
+    
+    public function jsonSerialize() {
+        return [
+            "id" => $this->getId(),
+            "author" => $this->getAuthor(),
+            "content" => $this->getContent(),
+            "date" => $this->getDate(),
+            "status" => $this->getStatus()
+        ];
     }
 
 }

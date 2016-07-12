@@ -87,13 +87,15 @@
             <!-- Body show data -->
             <div class="box-body table-responsive no-padding">
                 <table class="table table-hover">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>Tác Giả</th>
                             <th>Nội Dung</th>
                             <th>Ngày</th>
                             <th></th>
                         </tr>
+                    </thead>
+                    <tbody>
                         <?php
                         foreach ($comments as $comment) {
                             ?>
@@ -106,11 +108,11 @@
                                         switch($comment->getStatus()) {
                                             case 'pending':
                                                 echo "<a class='approved'>Duyệt</a> | <a class='reply'>Trả lời</a> | "
-                                                . "<a class='edit'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                                . "<a href='".base_url().'comment/editComment/'. $comment->getId() . "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
                                                 break;
                                             case 'approved':
                                                 echo "<a class='restore'>Bỏ duyệt</a> | <a class='reply'>Trả lời</a> | "
-                                                . "<a class='edit'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                                . "<a href='".base_url().'comment/editComment/'. $comment->getId() . "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
                                                 break;
                                             case 'spam':
                                                 echo "<a class='restore'>Bỏ Rác</a> | <a class='delete'>Xóa vĩnh viễn</a>";
@@ -153,7 +155,24 @@
                 <script lang="javascript">
                     // Delete
                     $('.delete').click(function() {
-                        
+                        var element = $(this);
+                        $.ajax({
+                            url: <?php echo "\"" . base_url() . "comment/deleteComment\""; ?>,
+                            type: "POST",
+                            dataType: "text",
+                            data: {
+                                id: element.parent().parent().attr('id')
+                            },
+                            success: function (res) {
+                                if (res !== 'failure') {
+                                    alert(res);
+                                    element.parent().parent().remove();
+                                }
+                            },
+                            failure: function (error) {
+                                alert(error);
+                            }
+                        });
                     });
                     
                     // Reply
@@ -171,12 +190,34 @@
                                 content: $('textarea[name=content]').val()
                             },
                             success: function (res) {
+                                alert(res);
                                 if (res !== 'failure') {
                                     $('#replyrow').remove();
+                                    var cmt = $.parseJSON(res);
+                                    var action = '';
+                                    alert(cmt.status);
+                                    switch(cmt.status) {
+                                        case 'pending':
+                                            action = "<a class='approved'>Duyệt</a> | <a class='reply'>Trả lời</a> | "
+                                            + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                            break;
+                                        case 'approved':
+                                            action = "<a class='restore'>Bỏ duyệt</a> | <a class='reply'>Trả lời</a> | "
+                                            + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                            break;
+                                    }
+                                    $('tbody').append(
+                                        '<tr id="' + cmt.id + '">' +
+                                            '<td>' + cmt.author + '</td>' +
+                                            '<td>' + cmt.content + '</td>' +
+                                            '<td>' + cmt.date + '</td>' +
+                                            '<td id="action">' + action + '</td>' +
+                                        '</tr>'
+                                    );
                                 }
                             },
                             failure: function (error) {
-                                alert(err);
+                                alert(error);
                             }
                         });
                     });
@@ -194,13 +235,12 @@
                                 status: element.attr('class').trim()
                             },
                             success: function (res) {
-                                alert(res);
                                 if (res !== 'failure') {
                                     element.parent().parent().remove();
                                 }
                             },
                             failure: function (error) {
-                                alert(err);
+                                alert(error);
                             }
                         });
                     });

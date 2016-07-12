@@ -48,7 +48,7 @@ class Comment extends CI_Controller {
         $comment->setPrev_status('');
 
         if ($this->mComment->addComment($comment)) {
-            echo "success";
+            echo json_encode($comment);
         } else {
             echo "failure";
         }
