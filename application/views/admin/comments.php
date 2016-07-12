@@ -10,7 +10,7 @@
     }
     ?>
     <form action="" method="get">
-        <input type="hidden" name="type" value="<?php // echo $type; ?>"/>
+        <input type="hidden" name="type" value="<?php // echo $type;    ?>"/>
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><?php echo $title; ?></h3><br/>
@@ -34,37 +34,34 @@
                                 <input type="hidden" value="<?php echo $status; ?>" name="status"/>
                                 <?php $uri = base_url() . 'comment/comments'; ?>
                                 <a href="<?php echo $uri . "?type=$type" ?>" 
-                                   class="btn btn-sm btn-default <?php if (empty($_GET['status']) || 
+                                   class="btn btn-sm btn-default <?php
+                                   if (empty($_GET['status']) ||
                                            $_GET['status'] == 'all') {
-                                    echo 'active';
-                                } ?>">
+                                       echo 'active';
+                                   }
+                                   ?>">
                                     Tất cả (<?php echo array_pop($count); ?>)
                                 </a>
                                 <?php
-                                foreach ($count as $key => $value) {
-                                    switch ($key) {
-                                        case 'pending': echo "<a href='$uri?status=$key&type=$type' "
-                                            . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
-                                                $_GET['status'] == 'pending') ? "active" : "") . "'>"
-                                            . "Chờ duyệt ($value)</a>";
-                                            break;
-                                        case 'approved': echo "<a href='$uri?status=$key&type=$type' "
-                                            . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
-                                                $_GET['status'] == 'approved') ? "active" : "") . "'>"
-                                            . "Đã duyệt ($value)</a>";
-                                            break;
-                                        case 'spam': echo "<a href='$uri?status=$key&type=$type' "
-                                            . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
-                                                $_GET['status'] == 'spam') ? "active" : "") . "'>"
-                                            . "Rác ($value)</a>";
-                                            break;
-                                        case 'trash': echo "<a href='$uri?status=$key&type=$type' "
-                                            . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
-                                                $_GET['status'] == 'trash') ? "active" : "") . "'>"
-                                            . "Thùng rác ($value)</a>";
-                                            break;
-                                    }
-                                }
+                                echo "<a href='$uri?status=pending&type=$type' "
+                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
+                                $_GET['status'] == 'pending') ? "active" : "") . "'>"
+                                . "Chờ duyệt (". (array_key_exists('pending', $count) ? $count['pending'] : '0') .")</a>";
+                                
+                                echo "<a href='$uri?status=approved&type=$type' "
+                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
+                                $_GET['status'] == 'approved') ? "active" : "") . "'>"
+                                . "Đã duyệt (". (array_key_exists('approved', $count) ? $count['approved'] : '0') .")</a>";
+                                
+                                echo "<a href='$uri?status=spam&type=$type' "
+                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
+                                $_GET['status'] == 'spam') ? "active" : "") . "'>"
+                                . "Rác (". (array_key_exists('spam', $count) ? $count['spam'] : '0') .")</a>";
+                                
+                                echo "<a href='$uri?status=trash&type=$type' "
+                                . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
+                                $_GET['status'] == 'trash') ? "active" : "") . "'>"
+                                . "Thùng rác (". (array_key_exists('trash', $count) ? $count['trash'] : '0') .")</a>";
                                 ?>
                             </div>
                         </div>
@@ -74,14 +71,14 @@
                     <div class="col-lg-3">
                         <select class="form-control" name="type">
                             <option value="all">Tất cả các loại</option>
-                            <option value="comment" <?php echo isset($_GET['type']) && $_GET['type'] 
-                                    == 'comment' ? "selected" : ""?>>Bình luận</option>
-                            <option value="contact" <?php echo isset($_GET['type']) && $_GET['type'] 
-                                    == 'contact' ? "selected" : ""?>>Liên hệ</option>
+                            <option value="comment" <?php echo isset($_GET['type']) && $_GET['type'] == 'comment' ? "selected" : ""
+                                ?>>Bình luận</option>
+                            <option value="contact" <?php echo isset($_GET['type']) && $_GET['type'] == 'contact' ? "selected" : ""
+                                ?>>Liên hệ</option>
                         </select>
                     </div>
                     <div class="col-lg-1">
-                        <button class="btn btn-sm btn-default">Lọc</button>
+                        <button style="margin-top: 2px;" class="btn btn-sm btn-default">Lọc</button>
                     </div>
                 </div>
             </div>
@@ -95,20 +92,35 @@
                             <th>Tác Giả</th>
                             <th>Nội Dung</th>
                             <th>Ngày</th>
-                            <th>Trạng Thái</th>
-                            <th>Sửa</th>
-                            <th>Xóa</th>
+                            <th></th>
                         </tr>
                         <?php
                         foreach ($comments as $comment) {
                             ?>
-                            <tr>
+                            <tr id="<?php echo $comment->getId(); ?>">
                                 <td><?php echo $comment->getAuthor(); ?></td>
                                 <td><?php echo $comment->getContent(); ?></td>
                                 <td><?php echo $comment->getDate(); ?></td>
-                                <td><span class="label label-success"><?php echo $comment->getStatus(); ?></span></td>
-                                <td><a href="<?php echo base_url() . "comment/editComment/" . $comment->getId(); ?>" class="fa fa-pencil-square-o"></a></td>
-                                <td><i class="fa fa-fw fa-trash trash_comment" id="<?php echo $comment->getId(); ?>"></i></td>
+                                <td id="action">
+                                    <?php
+                                        switch($comment->getStatus()) {
+                                            case 'pending':
+                                                echo "<a class='approved'>Duyệt</a> | <a class='reply'>Trả lời</a> | "
+                                                . "<a class='edit'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                                break;
+                                            case 'approved':
+                                                echo "<a class='restore'>Bỏ duyệt</a> | <a class='reply'>Trả lời</a> | "
+                                                . "<a class='edit'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                                break;
+                                            case 'spam':
+                                                echo "<a class='restore'>Bỏ Rác</a> | <a class='delete'>Xóa vĩnh viễn</a>";
+                                                break;
+                                            case 'trash':
+                                                echo "<a class='restore'>Khôi phục</a> | <a class='delete'>Xóa vĩnh viễn</a>";
+                                                break;
+                                        }
+                                    ?>
+                                </td>
                             </tr>
                             <?php
                         }
@@ -116,15 +128,70 @@
                     </tbody>
                 </table>
                 <script lang="javascript">
-                    // DELETE comment
-                    $('.trash_comment').click(function () {
+                    $('.reply').click(function () {
+                        if($('#replyrow').length) {
+                            $('#replyrow').remove();
+                        } else {
+                        $(this).parent().parent().after(
+                                '<tr id="replyrow">' +
+                                '<td colspan="4">' +
+                                '<div class="box-body">' +
+                                '<div class="form-group">' +
+                                '<textarea name="content" class="form-control"></textarea>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="box-footer">' +
+                                '<a id="btnReply" data-value="' + 
+                                $(this).parent().parent().attr('id') +
+                                '" class="btn btn-primary pull-right">Trả Lời</a>' +
+                                '</div>' +
+                                '</td>' +
+                                '</tr>');
+                        }
+                    });
+                </script>
+                <script lang="javascript">
+                    // Delete
+                    $('.delete').click(function() {
+                        
+                    });
+                    
+                    // Reply
+                    $('.table').on('click', "#btnReply", function() {
+                        var element = $(this);
+                        if($('textarea[name=content]').val().trim().length === 0) {
+                            return;
+                        }
+                        $.ajax({
+                            url: <?php echo "\"" . base_url() . "comment/reply\""; ?>,
+                            type: "POST",
+                            dataType: "text",
+                            data: {
+                                id: element.attr('data-value'),
+                                content: $('textarea[name=content]').val()
+                            },
+                            success: function (res) {
+                                if (res !== 'failure') {
+                                    $('#replyrow').remove();
+                                }
+                            },
+                            failure: function (error) {
+                                alert(err);
+                            }
+                        });
+                    });
+                    
+                    // Change status and restore status
+                    $('.pending, .approved, .spam, .trash, .restore').click(function () {
+                        alert($(this).attr('class').trim());
                         var element = $(this);
                         $.ajax({
-                            url: <?php echo "\"" . base_url() . "comment/moveToTrash\""; ?>,
+                            url: <?php echo "\"" . base_url() . "comment/changeStatus\""; ?>,
                             type: "GET",
                             dataType: "text",
                             data: {
-                                id: element.attr('id')
+                                id: element.parent().parent().attr('id'),
+                                status: element.attr('class').trim()
                             },
                             success: function (res) {
                                 alert(res);

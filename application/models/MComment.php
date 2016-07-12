@@ -40,10 +40,12 @@ class MComment extends Base_Model {
     public function getCommentById($cmtId) {
         $cmtTemp = $this->getByKey($cmtId);
         if(!empty($cmtTemp)) {
-            return new EComment($cmtTemp['cmt_id'], $cmtTemp['cmt_post_id'], 
+            $comment = new EComment($cmtTemp['cmt_id'], $cmtTemp['cmt_post_id'], 
                         $cmtTemp['cmt_author'], $cmtTemp['cmt_email'], $cmtTemp['cmt_website'], $cmtTemp['cmt_user_id'], 
                         $cmtTemp['cmt_date'], $cmtTemp['cmt_status'], $cmtTemp['cmt_type'], 
                         $cmtTemp['cmt_content'], $cmtTemp['cmt_parent']);
+            $comment->setPrev_status($cmtTemp['cmt_prev_status']);
+            return $comment;
         }
         return null;
     }
@@ -63,6 +65,9 @@ class MComment extends Base_Model {
         }
         if(isset($condition['status']) && $condition['status'] != '' && $condition['status'] != 'all') {
             $this->db->where('cmt_status', $condition['status']);
+        } else {
+            $status = array("pending", "approved");
+            $this->db->where_in('cmt_status', $status);
         }
         if(isset($condition['search']) && $condition['status'] != '') {
             $this->db->group_start();
@@ -78,10 +83,12 @@ class MComment extends Base_Model {
         
         $comments = array();
         foreach($data as $item) {
-            $comments[] = new EComment($item['cmt_id'], $item['cmt_post_id'], 
+            $comment = new EComment($item['cmt_id'], $item['cmt_post_id'], 
                     $item['cmt_author'], $item['cmt_email'], $item['cmt_website'], $item['cmt_user_id'], 
                     $item['cmt_date'], $item['cmt_status'], $item['cmt_type'], 
                     $item['cmt_content'], $item['cmt_parent']);
+            $comment->setPrev_status($item['cmt_prev_status']);
+            $comments[] = $comment;
         }
         return array(
             "comments" => $comments,
@@ -99,7 +106,9 @@ class MComment extends Base_Model {
         $total = 0;
         foreach($data as $i) {
             $result[$i['name']] = $i['value'];
-            $total += intval($i['value']);
+            if($i['name'] != 'trash' && $i['name'] != 'spam') {
+                $total += intval($i['value']);
+            }
         }
         $result['total'] = $total;
         return $result;
