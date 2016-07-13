@@ -103,7 +103,7 @@ class Comment extends CI_Controller {
         $cmt_id = $this->input->post('id');
 
         if ($this->mComment->deleteComment($cmt_id)) {
-            echo 'success';
+            echo json_encode($this->mComment->countByStatus());
         } else {
             echo 'failure';
         }
@@ -163,7 +163,7 @@ class Comment extends CI_Controller {
                 !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
                 strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             if ($this->mComment->updateComment($comment)) {
-                echo "success";
+                echo json_encode($this->mComment->countByStatus());
             } else {
                 echo "failure";
             }

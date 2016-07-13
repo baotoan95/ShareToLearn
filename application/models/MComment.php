@@ -96,7 +96,7 @@ class MComment extends Base_Model {
         );
     }
     
-    public function countByStatus($status = '') {
+    public function countByStatus() {
         $this->db->select('cmt_status as name, count(cmt_id) as value');
         $this->db->group_by("cmt_status");
         $data = $this->db->get($this->_table['table_name'])->result_array();

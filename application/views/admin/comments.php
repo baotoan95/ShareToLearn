@@ -33,7 +33,7 @@
                             <div class="input-group-btn">
                                 <input type="hidden" value="<?php echo $status; ?>" name="status"/>
                                 <?php $uri = base_url() . 'comment/comments'; ?>
-                                <a href="<?php echo $uri . "?type=$type" ?>" 
+                                <a id="all" href="<?php echo $uri . "?type=$type" ?>" 
                                    class="btn btn-sm btn-default <?php
                                    if (empty($_GET['status']) ||
                                            $_GET['status'] == 'all') {
@@ -43,22 +43,22 @@
                                     Tất cả (<?php echo array_pop($count); ?>)
                                 </a>
                                 <?php
-                                echo "<a href='$uri?status=pending&type=$type' "
+                                echo "<a id='pending' href='$uri?status=pending&type=$type' "
                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
                                 $_GET['status'] == 'pending') ? "active" : "") . "'>"
                                 . "Chờ duyệt (". (array_key_exists('pending', $count) ? $count['pending'] : '0') .")</a>";
                                 
-                                echo "<a href='$uri?status=approved&type=$type' "
+                                echo "<a id='approved' href='$uri?status=approved&type=$type' "
                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
                                 $_GET['status'] == 'approved') ? "active" : "") . "'>"
                                 . "Đã duyệt (". (array_key_exists('approved', $count) ? $count['approved'] : '0') .")</a>";
                                 
-                                echo "<a href='$uri?status=spam&type=$type' "
+                                echo "<a id='spam' href='$uri?status=spam&type=$type' "
                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
                                 $_GET['status'] == 'spam') ? "active" : "") . "'>"
                                 . "Rác (". (array_key_exists('spam', $count) ? $count['spam'] : '0') .")</a>";
                                 
-                                echo "<a href='$uri?status=trash&type=$type' "
+                                echo "<a id='trash' href='$uri?status=trash&type=$type' "
                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
                                 $_GET['status'] == 'trash') ? "active" : "") . "'>"
                                 . "Thùng rác (". (array_key_exists('trash', $count) ? $count['trash'] : '0') .")</a>";
@@ -99,7 +99,7 @@
                         <?php
                         foreach ($comments as $comment) {
                             ?>
-                            <tr id="<?php echo $comment->getId(); ?>">
+                            <tr class="data-row" id="<?php echo $comment->getId(); ?>">
                                 <td><?php echo $comment->getAuthor(); ?></td>
                                 <td><?php echo $comment->getContent(); ?></td>
                                 <td><?php echo $comment->getDate(); ?></td>
@@ -165,8 +165,8 @@
                             },
                             success: function (res) {
                                 if (res !== 'failure') {
-                                    alert(res);
                                     element.parent().parent().remove();
+                                    updateCounts(res);
                                 }
                             },
                             failure: function (error) {
@@ -224,7 +224,6 @@
                     
                     // Change status and restore status
                     $('.pending, .approved, .spam, .trash, .restore').click(function () {
-                        alert($(this).attr('class').trim());
                         var element = $(this);
                         $.ajax({
                             url: <?php echo "\"" . base_url() . "comment/changeStatus\""; ?>,
@@ -237,6 +236,7 @@
                             success: function (res) {
                                 if (res !== 'failure') {
                                     element.parent().parent().remove();
+                                    updateCounts(res);
                                 }
                             },
                             failure: function (error) {
@@ -244,12 +244,25 @@
                             }
                         });
                     });
+                    
+                    function updateCounts(count) {
+                        count = $.parseJSON(count);
+                        $('#total').html('Tất cả (' + count.total + ')');
+                        $('#pending').html('Chờ duyệt (' + ((typeof count.pending !== 'undefined') ? count.pending : '0') + ')');
+                        $('#approved').html('Đã duyệt (' + ((typeof count.approved !== 'undefined') ? count.approved : '0') + ')');
+                        $('#spam').html('Rác (' + ((typeof count.spam !== 'undefined') ? count.spam : '0') + ')');
+                        $('#trash').html('Thùng rác (' + ((typeof count.trash !== 'undefined') ? count.trash : '0') + ')');
+                        
+                        // Update result (at last of table)
+                        $('#numerator').html(parseInt($('#numerator').text()) - 1);
+                        $('#denominator').html(parseInt($('#denominator').text()) - 1);
+                    }
                 </script>
             </div>
             <!-- End body show data -->
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-                Kết quả: <?php echo count($comments) . '/' . $total; ?>
+                Kết quả: <?php echo "<i id='numerator'>" . count($comments) . "</i>/<i id='denominator'>" . $total . "</i>"; ?>
                 <!-- Pagination -->
                 <?php echo $links ?>
             </div>

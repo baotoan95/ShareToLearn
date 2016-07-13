@@ -3,20 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Redirect.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/config/config.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/helpers/Object_Helper.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/.htaccess</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/comment.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Comment.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/.htaccess</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/template/sidebar.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/config/routes.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/index.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/MPost.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/ETag.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/EComment.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/MComment.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/comments.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/config/index.html</file>
         </group>
     </open-files>
 </project-private>
