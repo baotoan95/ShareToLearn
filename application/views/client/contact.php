@@ -8,7 +8,7 @@
     <!-- End Map -->
 
     <br>
-
+    
     <h3 class="post-title">Send us a message</h3>
 
     <!-- Contact Form -->
@@ -16,13 +16,13 @@
         <form id="contact">
             <input name="name" class="left" type="text" data-value="Name" value="Name">
             <input name="mail" class="right" type="text" data-value="E-mail" value="E-mail">
-            <textarea name="comment" class="twelve column" data-value="Message">Message</textarea>
+            <textarea id="comment" name="comment" class="twelve column" data-value="Message"></textarea>
             <div id="msg" class="message"></div>
             <input id="submit" type="submit" value="Send">
         </form>
     </div>
     <!-- End Contact Form -->
-    
+
     <br>
     <br>
     <br>
