@@ -60,16 +60,16 @@ class MComment extends Base_Model {
         $this->db->select('SQL_CALC_FOUND_ROWS *', FALSE);
         
         // Check condition
-        if(isset($condition['type']) && $condition['type'] != '' && $condition['type'] != 'all') {
+        if(array_key_exists('type', $condition) && $condition['type'] != '' && $condition['type'] != 'all') {
             $this->db->where('cmt_type', $condition['type']);
         }
-        if(isset($condition['status']) && $condition['status'] != '' && $condition['status'] != 'all') {
+        if(array_key_exists('status', $condition) && $condition['status'] != '' && $condition['status'] != 'all') {
             $this->db->where('cmt_status', $condition['status']);
         } else {
             $status = array("pending", "approved");
             $this->db->where_in('cmt_status', $status);
         }
-        if(isset($condition['search']) && $condition['status'] != '') {
+        if(array_key_exists('search', $condition) && $condition['status'] != '') {
             $this->db->group_start();
             $this->db->like('cmt_content', $condition['search'], 'before');
             $this->db->or_like('cmt_content', $condition['search']);
@@ -125,6 +125,18 @@ class MComment extends Base_Model {
             "cmt_date" => $comment->getDate()
         );
         return $this->update($data);
+    }
+    
+    function getCommentsByPostId($parentId = 0, $space = "", $categoryIdsNeeedSelect = array(), $trees = "") {
+        $categories = $this->getCategoriesByParent($parentId);
+        foreach ($categories as $category) {
+            $trees .= "<option value='" . $category->getId() . "' " .
+                    (in_array($category->getId(), $categoryIdsNeeedSelect) ? "selected" : "") . ">" 
+                    . $space . $category->getName() . "</option>" .
+                    $this->getCategoriesParentBox($category->getId(), 
+                            $space . '&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;', $categoryIdsNeeedSelect);
+        }
+        return $trees;
     }
     
 }

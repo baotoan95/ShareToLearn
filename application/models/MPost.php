@@ -211,13 +211,13 @@ class MPost extends Base_Model {
         $this->db->select('SQL_CALC_FOUND_ROWS p_id', FALSE);
         $this->db->from($this->_table['table_name']);
         // If specific taxonomy then join, else...
-        if(isset($condition['taxonomy']) && $condition['taxonomy'] != '') {
+        if(array_key_exists('taxonomy', $condition) && $condition['taxonomy'] != '') {
             $this->db->join('term_relationships', 'tr_object_id = p_id');
             $this->db->join('term_taxonomy', 'tr_term_taxonomy_id = tt_id');
             $this->db->where('tt_term_id = ' . $condition['taxonomy']);
         }
         
-        if(isset($condition['fromDate']) && $condition['fromDate'] != '') {
+        if(array_key_exists('fromDate', $condition) && $condition['fromDate'] != '') {
             $this->db->where('month(p_published) <= month("' . date_format(date_create($condition['fromDate']), 'y-m-d') . '")');
             $this->db->where('year(p_published) <= year("' . date_format(date_create($condition['fromDate']), 'y-m-d') . '")');
         }
@@ -225,7 +225,7 @@ class MPost extends Base_Model {
         $this->db->where('p_type', $condition['type']);
         $this->db->where_in('p_status', $condition['status']);
         
-        if(isset($condition['title']) && $condition['title'] != '') {
+        if(array_key_exists('title', $condition) && $condition['title'] != '') {
             $this->db->group_start();
             $this->db->like('p_title', $condition['title'], 'before');
             $this->db->or_like('p_title', $condition['title']);
@@ -233,7 +233,11 @@ class MPost extends Base_Model {
             $this->db->group_end();
         }
         
-        $this->db->order_by('p_published', 'DESC');
+        if(!array_key_exists('order_by', $condition) || $condition['order_by'] == '') {
+            $this->db->order_by('p_published', 'DESC');
+        } else {
+            $this->db->order_by($condition['order_by'], 'DESC');
+        }
         $this->db->limit($limitConfig['records'], $limitConfig['begin']);
         $postIds = $this->db->get()->result_array();
         $total = $this->db->query('select FOUND_ROWS() count')->row()->count;

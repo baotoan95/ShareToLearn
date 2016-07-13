@@ -706,7 +706,7 @@ footer .widget-title {
 .tabs-widget > div li {
     overflow: hidden;
     padding: 14px;
-    border: 1px solid #d8d8d8;
+    border-bottom: 1px dashed #d8d8d8;
     border-top: none;
     background: #fff;
 }
@@ -2076,4 +2076,10 @@ input[type="submit"]:hover {
     background: #000;
     background: rgba(0, 0, 0, .8);
     background: url(http://www.htmltocss.com/rgbatopng.php?rgba=0,0,0,0.8);
+}
+
+.tab {
+    height: 400px;
+    border: 1px solid #d8d8d8;
+    overflow: auto;
 }

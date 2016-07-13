@@ -26,6 +26,11 @@
         <!-- Select2 -->
         <link href="<?php echo base_url() . 'assets/admin/plugins/select2/select2.min.css' ?>" rel="stylesheet" type="text/css" />
 
+        <!-- Ckeditor -->
+        <script lang="javascript" src="<?php echo base_url() . 'assets/js/ckeditor/ckeditor.js'?>"></script>
+        
+        <!-- Ckeditor -->
+        <script lang="javascript" src="<?php echo base_url() . 'assets/js/ckfinder/ckfinder.js'?>"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

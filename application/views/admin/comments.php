@@ -139,7 +139,7 @@
                                 '<td colspan="4">' +
                                 '<div class="box-body">' +
                                 '<div class="form-group">' +
-                                '<textarea name="content" class="form-control"></textarea>' +
+                                '<textarea id="content" name="content" class="form-control"></textarea>' +
                                 '</div>' +
                                 '</div>' +
                                 '<div class="box-footer">' +
@@ -150,6 +150,7 @@
                                 '</td>' +
                                 '</tr>');
                         }
+                        CKEDITOR.replace('content');
                     });
                 </script>
                 <script lang="javascript">

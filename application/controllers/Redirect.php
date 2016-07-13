@@ -12,6 +12,7 @@ class Redirect extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('mPost');
+        $this->load->model('mComment');
     }
 
     public function index() {
@@ -24,19 +25,33 @@ class Redirect extends CI_Controller {
             "per_page" => 1,
             "cur_page" => $segment
         );
+        
         $condition = array(
             "type" => "post",
             "status" => "public"
         );
-        // GET result (return list of posts)
+        // GET list post order by date
         $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
         $config['total_rows'] = $result['total'];
+        
+        // GET list post popular
+        $condition = array(
+            "order_by" => "p_view_count",
+            "type" => 'post',
+            "status" => 'public',
+        );
+        $populars = $this->mPost->getPosts($condition, array('records' => 10, 'begin' => 0));
+        
+        // GET list comment latest
+        $latests = $this->mComment->getComments(array(), array('records' => 10, 'begin' => 0));
         
         // Init data to response client
         $data = array(
             "sidebar" => 'client/template/sidebar',
             "content" => 'client/index',
             "post_latest" => $result['posts'],
+            "populars" => $populars['posts'],
+            "latests" => $latests['comments'],
             "links" => pagination($config, $this->pagination) // Init pagination
         );
         
@@ -52,9 +67,22 @@ class Redirect extends CI_Controller {
     }
 
     public function single($p) {
+        // GET list post popular
+        $condition = array(
+            "order_by" => "p_view_count",
+            "type" => 'post',
+            "status" => 'public',
+        );
+        $populars = $this->mPost->getPosts($condition, array('records' => 10, 'begin' => 0));
+        
+        // GET list comment latest
+        $latests = $this->mComment->getComments(array(), array('records' => 10, 'begin' => 0));
+        
         $data = array(
             "sidebar" => 'client/template/sidebar',
             "content" => 'client/single',
+            "populars" => $populars['posts'],
+            "latests" => $latests['comments'],
             "post" => $this->mPost->getPostById($p)
         );
         $this->load->view('client/template/main', $data);

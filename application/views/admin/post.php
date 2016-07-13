@@ -382,5 +382,9 @@
                 }
             ?>
         </div>
+        
+        <script type="text/javascript">
+            CKEDITOR.replaceAll();
+        </script>
     </form>
 </div>

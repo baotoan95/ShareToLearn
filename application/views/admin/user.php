@@ -124,6 +124,9 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
+            <script type="text/javascript">
+                CKEDITOR.replaceAll();
+            </script>
         </div><!-- /.box -->
     </div>
 </div>

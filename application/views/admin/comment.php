@@ -31,8 +31,10 @@
                     <div class="form-group">
                         <label for="content">Nội dung</label>
                         <textarea id="content" class="form-control" rows="5" 
-                                  name="content"><?php echo isset($comment) ? $comment->getContent() : "";
-            ?></textarea>
+                                  name="content"><?php echo isset($comment) ? $comment->getContent() : "";?></textarea>
+                        <script type="text/javascript">
+                            CKEDITOR.replace('content');
+                        </script>
                     </div>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
