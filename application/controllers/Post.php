@@ -189,7 +189,7 @@ class Post extends CI_Controller {
         $config["base_url"] = base_url() . "post";
         $config["prefix"] = "posts?status=" . (is_array($status) ? "all" : $status) .
                 "&category=$category&date=$date&search=$search&p=";
-        $config["per_page"] = 2;
+        $config["per_page"] = 10;
         $config["cur_page"] = $segment;
 
         // GET data response client

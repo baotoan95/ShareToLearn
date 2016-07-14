@@ -26,7 +26,8 @@ class MComment extends Base_Model {
             "cmt_status" => $comment->getStatus(),
             "cmt_type" => $comment->getType(),
             "cmt_content" => $comment->getContent(),
-            "cmt_parent" => $comment->getParent()
+            "cmt_parent" => $comment->getParent(),
+            "cmt_prev_status" => $comment->getPrev_status()
         );
         return $this->insert($data);
     }
@@ -127,16 +128,22 @@ class MComment extends Base_Model {
         return $this->update($data);
     }
     
-    function getCommentsByPostId($parentId = 0, $space = "", $categoryIdsNeeedSelect = array(), $trees = "") {
-        $categories = $this->getCategoriesByParent($parentId);
-        foreach ($categories as $category) {
-            $trees .= "<option value='" . $category->getId() . "' " .
-                    (in_array($category->getId(), $categoryIdsNeeedSelect) ? "selected" : "") . ">" 
-                    . $space . $category->getName() . "</option>" .
-                    $this->getCategoriesParentBox($category->getId(), 
-                            $space . '&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;', $categoryIdsNeeedSelect);
+    public function getCommentsByPostId($postId) {
+        $this->db->where('cmt_post_id', $postId);
+        $this->db->order_by('cmt_date', 'DESC');
+        $data = $this->db->get($this->_table['table_name'])->result_array();
+        
+        $comments = array(); // Store result
+        foreach($data as $item) {
+            $comment = new EComment($item['cmt_id'], $item['cmt_post_id'], 
+                    $item['cmt_author'], $item['cmt_email'], $item['cmt_website'], $item['cmt_user_id'], 
+                    $item['cmt_date'], $item['cmt_status'], $item['cmt_type'], 
+                    $item['cmt_content'], $item['cmt_parent']);
+            $comment->setPrev_status($item['cmt_prev_status']);
+            $comments[] = $comment;
         }
-        return $trees;
+        
+        return $comments;
     }
     
 }

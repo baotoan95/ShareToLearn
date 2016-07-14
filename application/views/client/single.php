@@ -66,117 +66,12 @@
 
     <div class="line"></div>
 
-    <h4 class="post-title">13 Comments</h4>
+    <h4 class="post-title">Bình luận</h4>
 
     <br>
 
     <ol id="comments">
-        <li class="depth-1">
-            <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-            <div class="comment-author">Faton</div>
-            <div class="comment-date">May 17, 2012</div>
-            <div class="comment-text"><p>First comment!</p></div>
-            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="1">reply</a></div>
-
-            <ul class="children">
-                <li class="depth-2">
-                    <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                    <div class="comment-author">Doni</div>
-                    <div class="comment-date">May 17, 2012</div>
-                    <div class="comment-text"><p>First comment!</p></div>
-                    <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-
-                    <ul class="children">
-                        <li class="depth-3">
-                            <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                            <div class="comment-author">Faton</div>
-                            <div class="comment-date">May 17, 2012</div>
-                            <div class="comment-text"><p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p></div>
-                            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-
-                            <ul class="children">
-                                <li class="depth-4">
-                                    <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                                    <div class="comment-author"><a href="#">Vedat</a></div>
-                                    <div class="comment-date">May 17, 2012</div>
-                                    <div class="comment-text"><p>First comment!</p></div>
-                                    <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="depth-3">
-                            <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                            <div class="comment-author"><a href="#">Sami</a></div>
-                            <div class="comment-date">May 17, 2012</div>
-                            <div class="comment-text"><p>First comment!</p></div>
-                            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-                        </li>
-
-                        <li class="depth-3">
-                            <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                            <div class="comment-author">Faton</div>
-                            <div class="comment-date">May 17, 2012</div>
-                            <div class="comment-text"><p>First comment!</p></div>
-                            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-
-                            <ul class="children">
-                                <li class="depth-4">
-                                    <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                                    <div class="comment-author"><a href="#">Vedat</a></div>
-                                    <div class="comment-date">May 17, 2012</div>
-                                    <div class="comment-text"><p>First comment!</p></div>
-                                    <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-                                </li>
-
-                                <li class="depth-4">
-                                    <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                                    <div class="comment-author"><a href="#">Vedat</a></div>
-                                    <div class="comment-date">May 17, 2012</div>
-                                    <div class="comment-text"><p>First comment!</p></div>
-                                    <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-
-                                    <ul class="children">
-                                        <li class="depth-5">
-                                            <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                                            <div class="comment-author"><a href="#">Vedat</a></div>
-                                            <div class="comment-date">May 17, 2012</div>
-                                            <div class="comment-text"><p>First comment!</p></div>
-                                            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="depth-2">
-                    <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-                    <div class="comment-author">Faton</div>
-                    <div class="comment-date">May 17, 2012</div>
-                    <div class="comment-text"><p>First comment!</p></div>
-                    <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-                </li>
-            </ul>
-        </li>
-
-        <li class="depth-1">
-            <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-            <div class="comment-author"><a href="#">Fisi</a></div>
-            <div class="comment-date">May 17, 2012</div>
-            <div class="comment-text"><p>First comment!</p></div>
-            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-        </li>
-
-        <li class="depth-1">
-            <div class="author-avatar"><img alt="" src="<?php echo base_url() . 'assets/client/images/avatar.jpg' ?>"></div>
-            <div class="comment-author">Besi</div>
-            <div class="comment-date">May 17, 2012</div>
-            <div class="comment-text"><p>First comment!</p></div>
-            <div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="#reply">reply</a></div>
-            
-        </li>
+        <?php echo $comments; ?>
     </ol>
     <!-- End Comments -->
 
@@ -192,46 +87,90 @@
             <input tabindex="2" name="mail" class="right" type="text" data-value="E-mail" value="E-mail"/>
             <textarea tabindex="4" name="content" class="twelve column" data-value="Comment">Comment</textarea>
             <input type="hidden" name="postId" value="<?php echo $post->getId(); ?>">
-            <input tabindex="5" id="submit" type="submit" value="Gửi">
+            <input tabindex="5" data-value="0" id="submit" type="submit" value="Gửi">
         </form>
     </div>
     <!-- End Contact Form -->
-    
+
     <script lang="javascript">
-        $(document).ready(function() {
-            $('#submit').click(function(e) {
-                e.preventDefault();
-                $.ajax({
-                    url: <?php echo "\"" . base_url() . "comment/addComment\""?>,
-                    type: "POST",
-                    dataType: "text",
-                    data: {
-                        postId: $('input[name=postId]').val(),
-                        name: $('input[name=name]').val(),
-                        website: $('input[name=website]').val(),
-                        content: $('textarea[name=content]').val(),
-                        parent: $(this).attr('data-value'),
-                        email: $('input[name=mail]').val()
-                    },
-                    success: function(res){
-                        alert(res);
-                    },
-                    failure: function(error) {
-                        alert(error);
-                    }
-                });
-            });
-        });
-    </script>
-    
-    <script lang="javascript">
-        $(document).ready(function() {
-            $('.comment-reply-link').click(function(e) {
+        $(document).ready(function () {
+            // Scroll
+            $('.comment-reply-link').click(function (e) {
                 e.preventDefault();
                 $('body, html').animate({
                     scrollTop: $('#comment_part').offset().top
                 }, 800);
                 $('#submit').attr('data-value', $(this).attr('href'));
+            });
+            
+            // Submit form
+            $('#submit').click(function (e) {
+                e.preventDefault();
+                var author_name = $('input[name=name]').val();
+                var cmt_content = $('textarea[name=content]').val();
+                var parent_id = $(this).attr('data-value');
+                
+                $.ajax({
+                    url: <?php echo "\"" . base_url() . "comment/addComment\"" ?>,
+                    type: "POST",
+                    dataType: "text",
+                    data: {
+                        postId: $('input[name=postId]').val(),
+                        name: author_name,
+                        website: $('input[name=website]').val(),
+                        content: cmt_content,
+                        parent: parent_id,
+                        email: $('input[name=mail]').val()
+                    },
+                    success: function (res) {
+                        if(res !== 'failure' && parent_id !== '0') {
+                            if($('#cmt_' + parent_id).has('ul').length) {
+                                $('#cmt_' + parent_id + ' ul').prepend(
+                                    '<li id="cmt_'+ res +'">' +
+                                        '<div class="author-avatar"><img alt="" src ="<?php echo base_url(); ?>assets/client/images/avatar.jpg"/></div>' +
+                                        '<div class="comment-author"><a>' + author_name + '</a></div>' +
+                                        '<div class="comment-date">Mới đây</div>' +
+                                        '<div class="comment-text"><p>' + cmt_content + '</p></div>' +
+                                        '<div class="comment-reply">Đang chờ duyệt...</div>' +
+                                    '</li>'
+                                );
+                            } else {
+                                $('#cmt_' + parent_id).append(
+                                    '<ul class="children"><li id="cmt_'+ res +'">' +
+                                        '<div class="author-avatar"><img alt="" src ="<?php echo base_url(); ?>assets/client/images/avatar.jpg"/></div>' +
+                                        '<div class="comment-author"><a>' + author_name + '</a></div>' +
+                                        '<div class="comment-date">Mới đây</div>' +
+                                        '<div class="comment-text"><p>' + cmt_content + '</p></div>' +
+                                        '<div class="comment-reply">Đang chờ duyệt...</div>' +
+                                    '</li></ul>'
+                                );
+                            }
+                            
+                            // Delete comment parent id
+                            $('#submit').attr('data-value', '0');
+                        } else {
+                            $('#comments').prepend(
+                                    '<li id="cmt_'+ res +'">' +
+                                        '<div class="author-avatar"><img alt="" src ="<?php echo base_url(); ?>assets/client/images/avatar.jpg"/></div>' +
+                                        '<div class="comment-author"><a>' + author_name + '</a></div>' +
+                                        '<div class="comment-date">Mới đây</div>' +
+                                        '<div class="comment-text"><p>' + cmt_content + '</p></div>' +
+                                        '<div class="comment-reply">Đang chờ duyệt...</div>' +
+                                    '</li>'
+                            );
+                        }
+                        
+                        // Scroll to recent comment
+                        $('body, html').animate({
+                            scrollTop: $('#cmt_' + res).offset().top
+                        }, 800);
+                    },
+                    failure: function (error) {
+                        alert(error);
+                        // Delete comment parent id
+                        $('#submit').attr('data-value', '0');
+                    }
+                });
             });
         });
     </script>

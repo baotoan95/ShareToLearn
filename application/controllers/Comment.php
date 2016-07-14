@@ -25,9 +25,10 @@ class Comment extends CI_Controller {
 
         $comment = new EComment(0, $postId, $author, $email, $website, 1, date('y-m-d H:i:s'), 'pending', 'comment', $content, $parent);
         $comment->setPrev_status('pending');
-
-        if ($this->mComment->addComment($comment)) {
-            echo "success";
+        
+        $id_last_insert = $this->mComment->addComment($comment); // Get id after insert
+        if ($id_last_insert) {
+            echo $id_last_insert;
         } else {
             echo "failure";
         }

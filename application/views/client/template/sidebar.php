@@ -9,21 +9,20 @@
             <div id="popular-tab" class="tab">
                 <ul>
                     <?php
-                        foreach($populars as $post) {
+                        foreach($populars as $popular) {
                     ?>
                     <li>
-                        <a href="<?php echo base_url() . 'redirect/single/' . $post->getId(); ?>">
-                            <img alt="<?php echo $post->getTitle(); ?>" src="<?php echo base_url() . "upload/images/" . $post->getBanner(); ?>">
+                        <a href="<?php echo base_url() . 'redirect/single/' . $popular->getId(); ?>">
+                            <img alt="<?php echo $popular->getTitle(); ?>" src="<?php echo base_url() . "assets/upload/images/" . $post->getBanner(); ?>">
                         </a>
                         <h3>
-                            <a href="<?php echo base_url() . 'redirect/single/' . $post->getId(); ?>"><?php echo $post->getTitle(); ?></a>
+                            <a href="<?php echo base_url() . 'redirect/single/' . $popular->getId(); ?>"><?php echo $popular->getTitle(); ?></a>
                         </h3>
-                        <div class="post-date"><?php echo $post->getPublished(); ?></div>
+                        <div class="post-date"><?php echo $popular->getPublished(); ?></div>
                     </li>
                     <?php
                         }
                     ?>
-                    
                 </ul>
             </div>
 
@@ -165,17 +164,13 @@
         <li class="widget widget_tag_cloud clearfix">
             <h3 class="widget-title">Tags</h3>
             <div class="tagcloud">
-                <a href="#" title="3 topics" style="font-size: 22pt;">business</a> <a
-                    href="#" title="1 topic" style="font-size: 8pt;">Computers</a> <a
-                    href="#" title="2 topics" style="font-size: 16.4pt;">css</a> <a
-                    href="#" title="2 topics" style="font-size: 16.4pt;">design</a> <a
-                    href="#" title="2 topics" style="font-size: 16.4pt;">graphics</a> <a
-                    href="#" title="1 topic" style="font-size: 8pt;">html</a> <a
-                    href="#" title="2 topics" style="font-size: 16.4pt;">jQuery</a> <a
-                    href="#" title="2 topics" style="font-size: 16.4pt;">themes</a> <a
-                    href="#" title="2 topics" style="font-size: 16.4pt;">Video</a> <a
-                    href="#" title="1 topic" style="font-size: 8pt;">video</a> <a
-                    href="#" title="1 topic" style="font-size: 8pt;">website</a>
+                <?php
+                    if(isset($post)) {
+                        foreach($post->getTags() as $tag) {
+                            echo "<a href='" . base_url() . "tag/{$tag->getSlug()}' style='font-size: 22pt;'>{$tag->getName()}</a>";
+                        }
+                    }
+                ?>
             </div>
         </li>
     </ul>

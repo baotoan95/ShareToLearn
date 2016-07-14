@@ -83,7 +83,7 @@ class MPost extends Base_Model {
         }
     }
 
-    public function getPostById($id, $inc_cates = false, $inc_tags = false) {
+    public function getPostById($id, $inc_cates = FALSE, $inc_tags = TRUE) {
         $postTemp = $this->getByKey($id);
         $post = new EPost();
         $post->setId($postTemp['p_id']);
@@ -121,7 +121,7 @@ class MPost extends Base_Model {
             $post->setCategories($categories);
         }
         // Set tags for post
-        if($inc_cates) {
+        if($inc_tags) {
             $tags = array();
             $term_relates = $this->mTermRelationships
                     ->getTermRelationshipByObjectId($post->getId(), 'tag');
