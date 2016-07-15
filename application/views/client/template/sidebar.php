@@ -13,7 +13,7 @@
                     ?>
                     <li>
                         <a href="<?php echo base_url() . 'redirect/single/' . $popular->getId(); ?>">
-                            <img alt="<?php echo $popular->getTitle(); ?>" src="<?php echo base_url() . "assets/upload/images/" . $post->getBanner(); ?>">
+                            <img alt="<?php echo $popular->getTitle(); ?>" src="<?php echo base_url() . "assets/upload/images/" . $popular->getBanner(); ?>">
                         </a>
                         <h3>
                             <a href="<?php echo base_url() . 'redirect/single/' . $popular->getId(); ?>"><?php echo $popular->getTitle(); ?></a>

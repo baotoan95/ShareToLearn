@@ -13,4 +13,5 @@ CKEDITOR.editorConfig = function( config ) {
         config.filebrowserUploadUrl = 'http://localhost/ShareToLearn/assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files';
         config.filebrowserImageUploadUrl = 'http://localhost/ShareToLearn/assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images';
         config.filebrowserFlashUploadUrl = 'http://localhost/ShareToLearn/assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
+        config.enterMode = CKEDITOR.ENTER_BR;
 };

@@ -373,68 +373,90 @@ body > header .inner-header {
 }
 
 .post {
+    position: relative;
     margin-bottom: 20px;
+    background: #F0F0F0;
+    padding: 10px;
 }
 
-.post-image img {
-    min-width: 100%;
+.post-info {
+    width: 100%;
+    border-bottom: 1px solid gray;
 }
 
-.post-container {
-    margin: 10px 0 15px 0;
-    height: 104px;
-    overflow: hidden;
-}
-
-.post-container .post-title {
+.post-info .post-title {
     font-family: 'PT Sans';
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     line-height: 20px;
-    margin: 0 0 8px 0;
+    margin: 0 0 10px 0;
     color: #535353;
+    border-bottom: 1px dashed gray;
 }
 
-.post-container .post-content {
-    color: #999;
-    line-height: 18px;
-    font-size: 13px;
-}
-
-.post-meta {
+.post-info .post-meta {
     font-family: 'Georgia';
     font-size: 11px;
-    line-height: 16px;
+    line-height: 10px;
     font-style: italic;
     color: #999;
+    padding-top: 9px;
     margin-bottom: 15px;
 }
 
-.post-meta a, span.date a {
+.post-info .post-meta a, span.date a {
     color: #999;
 }
 
-.post-meta .comments {
+.post-info .post-meta .comments {
     background: url(../images/comments-icon.png) no-repeat left center;
+    background-size: 20px;
     padding: 5px 0 5px 30px;
     margin-right: 10px;
 }
 
-.post-meta .author {
+.post-info .post-meta .author {
     background: url(../images/author-icon.png) no-repeat left center;
     padding: 5px 0 5px 20px;
     margin-right: 10px;
 }
 
-.post-meta .date, .date {
+.post-info .post-meta .date, .date {
     background: url(../images/date-icon.png) no-repeat left center;
     padding: 5px 0 5px 20px;
 }
 
-.other-posts {
+.post-container {
+    height: auto;
+    position: relative;
+    margin-top: 10px;
+}
 
-	border-top: 1px solid #eaeaea;
-	padding-top: 15px;
+.post-container .post-image {
+    width: 150px;
+    height: 100px;
+    background: red;
+    float: left;
+    margin-right: 9px;
+}
+
+.post-container .post-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.post-container .post-desc {
+    margin: 0px;
+    color: black;
+}
+
+.post-container .clear {
+    clear: both;
+}
+
+.other-posts {
+    border-top: 1px solid #eaeaea;
+    padding-top: 15px;
 }
 .other-posts .date {
     font-size: 11px;
@@ -530,16 +552,27 @@ body > header .inner-header {
 
 .pagenation li a {
     display: block;
-    color: #fff;
+    color: #fff !important;
     font-size: 12px;
     font-weight: bold;
     padding: 4px 11px;
+    border-radius: 3px;
 }
 
 .pagenation li:not(.active):hover {
     opacity: 0.90;
     -moz-opacity: 0.90;
     filter:alpha(opacity=90);
+}
+
+.pagenation li.active a {
+    background: black;
+    color: white;
+}
+
+.pagenation li.active:hover a {
+    /*background: black;*/
+    color: white;
 }
 
 /*-------------------------------------------------*/

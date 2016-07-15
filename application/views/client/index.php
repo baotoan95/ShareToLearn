@@ -8,24 +8,30 @@
             foreach($post_latest as $post) {
         ?>
         <!-- post -->
-        <article class="post six column">
-            <div class="post-image">
-                <a href="<?php echo base_url() . 'redirect/single/' . $post->getId(); ?>"><img src="<?php echo base_url() . 'assets/upload/images/' . $post->getBanner(); ?>" alt=""></a>
-            </div>
-
-            <div class="post-container">
-                <h2 class="post-title"><?php echo $post->getTitle(); ?></h2>
-                <div class="post-content">
-                    <p><?php echo $post->getExcerpt(); ?></p>
+        <div class="twelve column">
+            <article class="post">
+                <div class="post-info">
+                    <h2 class="post-title">
+                        <a href="<?php echo base_url() . 'redirect/single/' . $post->getId(); ?>">
+                            <?php echo $post->getTitle(); ?>
+                        </a>
+                    </h2>
+                    <div class="post-meta">
+                        <span class="comments"><a href="#"><?php echo $post->getComments(); ?></a></span>
+                        <span class="author"><a href="#"><?php echo $post->getAuthor()->getFull_name(); ?></a></span>
+                        <span class="date"><a href="#"><?php echo $post->getPublished(); ?></a></span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="post-meta">
-                <span class="comments"><a href="#"><?php echo $post->getComments(); ?></a></span>
-                <span class="author"><a href="#"><?php echo $post->getAuthor()->getFull_name(); ?></a></span>
-                <span class="date"><a href="#"><?php echo $post->getPublished(); ?></a></span>
-            </div>
-        </article>
+                
+                <div class="post-container">
+                    <div class="post-image">
+                        <a href="<?php echo base_url() . 'redirect/single/' . $post->getId(); ?>"><img src="<?php echo base_url() . 'assets/upload/images/' . $post->getBanner(); ?>" alt=""></a>
+                    </div>
+                    <p class="post-desc"><?php echo $post->getExcerpt(); ?></p>
+                    <div class="clear"></div>
+                </div>
+            </article>
+        </div>
         <!-- End post -->
         <?php
             }

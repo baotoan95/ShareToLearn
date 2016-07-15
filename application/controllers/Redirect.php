@@ -22,7 +22,7 @@ class Redirect extends CI_Controller {
         $config = array(
             "base_url" => base_url(),
             "prefix" => "redirect?p=",
-            "per_page" => 1,
+            "per_page" => 10,
             "cur_page" => $segment
         );
 
