@@ -9,7 +9,7 @@
         ?>
         <!-- post -->
         <div class="twelve column">
-            <article class="post">
+            <article class="post-horizontal">
                 <div class="post-info">
                     <h2 class="post-title">
                         <a href="<?php echo base_url() . 'redirect/single/' . $post->getId(); ?>">

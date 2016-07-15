@@ -372,19 +372,84 @@ body > header .inner-header {
     color: #fff;
 }
 
+/*Post vertical*/
 .post {
+    margin-bottom: 20px;
+    border: 1px solid gray;
+}
+
+.post-image img {
+    min-width: 100%;
+}
+
+.post-container {
+    margin: 10px 0 15px 0;
+    height: 104px;
+    overflow: hidden;
+    padding: 0px 10px;
+}
+
+.post-container .post-title {
+    font-family: 'PT Sans';
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 0 0 8px 0;
+    color: #535353;
+}
+
+.post-container .post-content {
+    color: #999;
+    line-height: 18px;
+    font-size: 13px;
+}
+
+.post-meta {
+    font-family: 'Georgia';
+    font-size: 11px;
+    line-height: 16px;
+    font-style: italic;
+    color: #999;
+    margin-bottom: 15px;
+    padding: 0px 10px;
+}
+
+.post-meta a, span.date a {
+    color: #999;
+}
+
+.post-meta .comments {
+    background: url(../images/comments-icon.png) no-repeat left center;
+    padding: 5px 0 5px 30px;
+    margin-right: 10px;
+}
+
+.post-meta .author {
+    background: url(../images/author-icon.png) no-repeat left center;
+    padding: 5px 0 5px 20px;
+    margin-right: 10px;
+}
+
+.post-meta .date, .date {
+    background: url(../images/date-icon.png) no-repeat left center;
+    padding: 5px 0 5px 20px;
+}
+/*End post vertical*/
+
+/*Post horizontal*/
+.post-horizontal {
     position: relative;
     margin-bottom: 20px;
     background: #F0F0F0;
     padding: 10px;
 }
 
-.post-info {
+.post-horizontal .post-info {
     width: 100%;
     border-bottom: 1px solid gray;
 }
 
-.post-info .post-title {
+.post-horizontal .post-info .post-title {
     font-family: 'PT Sans';
     font-size: 18px;
     font-weight: bold;
@@ -394,7 +459,7 @@ body > header .inner-header {
     border-bottom: 1px dashed gray;
 }
 
-.post-info .post-meta {
+.post-horizontal .post-info .post-meta {
     font-family: 'Georgia';
     font-size: 11px;
     line-height: 10px;
@@ -404,35 +469,35 @@ body > header .inner-header {
     margin-bottom: 15px;
 }
 
-.post-info .post-meta a, span.date a {
+.post-horizontal .post-info .post-meta a, span.date a {
     color: #999;
 }
 
-.post-info .post-meta .comments {
+.post-horizontal .post-info .post-meta .comments {
     background: url(../images/comments-icon.png) no-repeat left center;
     background-size: 20px;
     padding: 5px 0 5px 30px;
     margin-right: 10px;
 }
 
-.post-info .post-meta .author {
+.post-horizontal .post-info .post-meta .author {
     background: url(../images/author-icon.png) no-repeat left center;
     padding: 5px 0 5px 20px;
     margin-right: 10px;
 }
 
-.post-info .post-meta .date, .date {
+.post-horizontal .post-info .post-meta .date, .date {
     background: url(../images/date-icon.png) no-repeat left center;
     padding: 5px 0 5px 20px;
 }
 
-.post-container {
+.post-horizontal .post-container {
     height: auto;
     position: relative;
     margin-top: 10px;
 }
 
-.post-container .post-image {
+.post-horizontal .post-container .post-image {
     width: 150px;
     height: 100px;
     background: red;
@@ -440,19 +505,20 @@ body > header .inner-header {
     margin-right: 9px;
 }
 
-.post-container .post-image img {
+.post-horizontal .post-container .post-image img {
     width: 100%;
     height: 100%;
 }
 
-.post-container .post-desc {
+.post-horizontal .post-container .post-desc {
     margin: 0px;
     color: black;
 }
 
-.post-container .clear {
+.post-horizontal .post-container .clear {
     clear: both;
 }
+/*End post horizontal*/
 
 .other-posts {
     border-top: 1px solid #eaeaea;

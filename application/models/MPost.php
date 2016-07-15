@@ -204,12 +204,16 @@ class MPost extends Base_Model {
     /**
      * 
      * @param array $condition type and status are required (taxonomy, fromDate, title are optional)
-     * @param array $limitConfig (records, begin)
+     * @param array $limitConfig (records, begin) -optional
      * @return array includes posts and total records before limit
      */
-    public function getPosts($condition, $limitConfig) {
+    public function getPosts($condition, $limitConfig = array()) {
         $this->db->select('SQL_CALC_FOUND_ROWS p_id', FALSE);
         $this->db->from($this->_table['table_name']);
+        
+        $this->db->where('p_type', $condition['type']);
+        $this->db->where_in('p_status', $condition['status']);
+        
         // If specific taxonomy then join, else...
         if(array_key_exists('taxonomy', $condition) && $condition['taxonomy'] != '') {
             $this->db->join('term_relationships', 'tr_object_id = p_id');
@@ -221,9 +225,6 @@ class MPost extends Base_Model {
             $this->db->where('month(p_published) <= month("' . date_format(date_create($condition['fromDate']), 'y-m-d') . '")');
             $this->db->where('year(p_published) <= year("' . date_format(date_create($condition['fromDate']), 'y-m-d') . '")');
         }
-        
-        $this->db->where('p_type', $condition['type']);
-        $this->db->where_in('p_status', $condition['status']);
         
         if(array_key_exists('title', $condition) && $condition['title'] != '') {
             $this->db->group_start();
@@ -238,7 +239,9 @@ class MPost extends Base_Model {
         } else {
             $this->db->order_by($condition['order_by'], 'DESC');
         }
-        $this->db->limit($limitConfig['records'], $limitConfig['begin']);
+        if(!empty($limitConfig)) {
+            $this->db->limit($limitConfig['records'], $limitConfig['begin']);
+        }
         $postIds = $this->db->get()->result_array();
         $total = $this->db->query('select FOUND_ROWS() count')->row()->count;
         

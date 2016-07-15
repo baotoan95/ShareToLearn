@@ -6,39 +6,48 @@
  * @author BaoToan
  */
 class EMenuItem {
-
+    private $id;
     private $name;
-    private $link;
-    private $order;
-
-    function __construct($name, $link, $order) {
+    private $slug;
+    private $parent;
+   
+    public function __construct($id = 0, $name = '', $slug = '', $parent = '') {
+        $this->id = $id;
         $this->name = $name;
-        $this->link = $link;
-        $this->order = $order;
+        $this->slug = $slug;
+        $this->parent = $parent;
+    }
+    public function getId() {
+        return $this->id;
     }
 
-    function getName() {
+    public function getName() {
         return $this->name;
     }
 
-    function getLink() {
-        return $this->link;
+    public function getSlug() {
+        return $this->slug;
     }
 
-    function getOrder() {
-        return $this->order;
+    public function getParent() {
+        return $this->parent;
     }
 
-    function setName($name) {
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function setName($name) {
         $this->name = $name;
     }
 
-    function setLink($link) {
-        $this->link = $link;
+    public function setSlug($slug) {
+        $this->slug = $slug;
     }
 
-    function setOrder($order) {
-        $this->order = $order;
+    public function setParent($parent) {
+        $this->parent = $parent;
     }
+
 
 }

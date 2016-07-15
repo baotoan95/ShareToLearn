@@ -13,6 +13,7 @@ class Redirect extends CI_Controller {
         parent::__construct();
         $this->load->model('mPost');
         $this->load->model('mComment');
+        $this->load->model('mUser');
     }
 
     public function index() {
@@ -43,7 +44,7 @@ class Redirect extends CI_Controller {
         $populars = $this->mPost->getPosts($condition, array('records' => 10, 'begin' => 0));
 
         // GET list comment latest
-        $latests = $this->mComment->getComments(array(), array('records' => 10, 'begin' => 0));
+        $lastest_comments = $this->mComment->getComments(array(), array('records' => 10, 'begin' => 0));
 
         // Init data to response client
         $data = array(
@@ -51,7 +52,7 @@ class Redirect extends CI_Controller {
             "content" => 'client/index',
             "post_latest" => $result['posts'],
             "populars" => $populars['posts'],
-            "latests" => $latests['comments'],
+            "latests" => $lastest_comments['comments'],
             "links" => pagination($config, $this->pagination) // Init pagination
         );
 
@@ -170,9 +171,24 @@ class Redirect extends CI_Controller {
     }
 
     public function authors() {
+        // GET list post popular
+        $condition = array(
+            "order_by" => "p_view_count",
+            "type" => 'post',
+            "status" => 'public',
+        );
+        $populars = $this->mPost->getPosts($condition, array('records' => 10, 'begin' => 0));
+
+        // GET list comment latest
+        $lastest_comments = $this->mComment->getComments(array(), array('records' => 10, 'begin' => 0));
+        
         $data = array(
+            "title" => 'Danh Sách Tác Giả',
             "sidebar" => 'client/template/sidebar',
-            "content" => 'client/authors'
+            "content" => 'client/authors',
+            "populars" => $populars['posts'],
+            "latests" => $lastest_comments['comments'],
+            "users" => $this->mUser->getUsers(array("records" => 100, "begin" => 0), 'writer')['users']
         );
         $this->load->view('client/template/main', $data);
     }

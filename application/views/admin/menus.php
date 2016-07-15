@@ -21,17 +21,6 @@
                                         <input class="form-control" placeholder="" type="text">
                                     </div>
                                     <div class="form-group">
-                                        <select class="form-control select2" style="width: 100%;">
-                                            <option selected="selected">Alabama</option>
-                                            <option>Alaska</option>
-                                            <option>California</option>
-                                            <option>Delaware</option>
-                                            <option>Tennessee</option>
-                                            <option>Texas</option>
-                                            <option>Washington</option>
-                                        </select>
-                                    </div><!-- /.form-group -->
-                                    <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Thêm</button>
                                     </div>
                                 </div>
@@ -50,27 +39,16 @@
                             <form role="form">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label>Thể Loại</label>
-                                        <select class="form-control">
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
+                                        <label for="exampleInputEmail1">Tìm kiếm</label>
+                                        <input class="form-control" placeholder="" type="text">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Parent</label>
-                                        <select class="form-control">
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Thêm</button>
-                                    </div>
+                                    <select multiple="" class="form-control">
+                                        <?php
+                                            echo $categories;
+                                        ?>
+                                    </select>
                                 </div>
+                                <button type="submit" class="btn btn-primary">Thêm</button>
                             </form>
                         </li>
                     </ul>
@@ -86,27 +64,18 @@
                             <form role="form">
                                 <div class="box-body">
                                     <div class="form-group">
-                                        <label>Trang</label>
-                                        <select class="form-control">
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
+                                        <label for="exampleInputEmail1">Tìm kiếm</label>
+                                        <input class="form-control" placeholder="" type="text">
                                     </div>
-                                    <div class="form-group">
-                                        <label>Parent</label>
-                                        <select class="form-control">
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
-                                            <option>option 5</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Thêm</button>
-                                    </div>
+                                    <select multiple="" class="form-control">
+                                        <?php
+                                        foreach($pages as $page) {
+                                            echo "<option value='{$page->getId()}'>{$page->getTitle()}</option>";
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
+                                <button type="submit" class="btn btn-primary">Thêm</button>
                             </form>
                         </li>
                     </ul>
@@ -123,105 +92,39 @@
             <!-- form start -->
             <form role="form">
                 <div class="box-body">
-                    <ul id="tree">
-                        <li><a href="#">TECH</a>
-                            <ul>
-                                <li>Company Maintenance</li>
-                                <li>Employees
-                                    <ul>
-                                        <li>Reports
-                                            <ul>
-                                                <li>Report1</li>
-                                                <li>Report2</li>
-                                                <li>Report3</li>
-                                            </ul>
-                                        </li>
-                                        <li>Employee Maint.</li>
-                                    </ul>
-                                </li>
-                                <li>Human Resources</li>
-                            </ul>
-                        </li>
-                        <li>XRP
-                            <ul>
-                                <li>Company Maintenance</li>
-                                <li>Employees
-                                    <ul>
-                                        <li>Reports
-                                            <ul>
-                                                <li>Report1</li>
-                                                <li>Report2</li>
-                                                <li>Report3</li>
-                                            </ul>
-                                        </li>
-                                        <li>Employee Maint.</li>
-                                    </ul>
-                                </li>
-                                <li>Human Resources</li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <div class="dd" id="nestable">
+                        <ol class="dd-list">
+                            <li class="dd-item" data-id="1">
+                                <div class="dd-handle">Item 1</div>
+                            </li>
+                            <li class="dd-item" data-id="2">
+                                <div class="dd-handle">Item 2</div>
+                                <ol class="dd-list">
+                                    <li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
+                                    <li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
+                                    <li class="dd-item" data-id="5">
+                                        <div class="dd-handle">Item 5</div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="6"><div class="dd-handle">Item 6</div></li>
+                                            <li class="dd-item" data-id="7"><div class="dd-handle">Item 7</div></li>
+                                            <li class="dd-item" data-id="8"><div class="dd-handle">Item 8</div></li>
+                                        </ol>
+                                    </li>
+                                    <li class="dd-item" data-id="9"><div class="dd-handle">Item 9</div></li>
+                                    <li class="dd-item" data-id="10"><div class="dd-handle">Item 10</div></li>
+                                </ol>
+                            </li>
+                            <li class="dd-item" data-id="11">
+                                <div class="dd-handle">Item 11</div>
+                            </li>
+                            <li class="dd-item" data-id="12">
+                                <div class="dd-handle">Item 12</div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <textarea id="nestable-output"></textarea>
                 </div><!-- /.box-body -->
-
-                <script lang="javascript">
-                    $.fn.extend({
-                        treed: function (o) {
-                            var openedClass = 'glyphicon-minus-sign';
-                            var closedClass = 'glyphicon-plus-sign';
-
-                            if (typeof o !== 'undefined') {
-                                if (typeof o.openedClass !== 'undefined') {
-                                    openedClass = o.openedClass;
-                                }
-                                if (typeof o.closedClass !== 'undefined') {
-                                    closedClass = o.closedClass;
-                                }
-                            }
-                            ;
-
-                            //initialize each of the top levels
-                            var tree = $(this);
-                            tree.addClass("tree");
-                            tree.find('li').has("ul").each(function () {
-                                var branch = $(this); //li with children ul
-                                branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
-                                branch.addClass('branch');
-                                branch.on('click', function (e) {
-                                    if (this === e.target) {
-                                        var icon = $(this).children('i:first');
-                                        icon.toggleClass(openedClass + " " + closedClass);
-                                        $(this).children().children().toggle();
-                                    }
-                                });
-                                branch.children().children().toggle();
-                            });
-                            //fire event from the dynamically added icon
-                            tree.find('.branch .indicator').each(function () {
-                                $(this).on('click', function () {
-                                    $(this).closest('li').click();
-                                });
-                            });
-                            //fire event to open branch if the li contains an anchor instead of text
-                            tree.find('.branch>a').each(function () {
-                                $(this).on('click', function (e) {
-                                    $(this).closest('li').click();
-                                    e.preventDefault();
-                                });
-                            });
-                            //fire event to open branch if the li contains a button instead of text
-                            tree.find('.branch>button').each(function () {
-                                $(this).on('click', function (e) {
-                                    $(this).closest('li').click();
-                                    e.preventDefault();
-                                });
-                            });
-                        }
-                    });
-
-                    //Initialization of treeviews
-
-                    $('#tree').treed();
-                </script>
             </form>
         </div>
     </div>
@@ -232,5 +135,40 @@
     $(function () {
         //Initialize Select2 Elements
         $(".select2").select2();
+    });
+</script>
+
+<!-- Nestabe -->
+<script src="<?php echo base_url(); ?>assets/admin/dist/js/nestable.js"></script>
+<script>
+    $(document).ready(function () {
+        var updateOutput = function (e) {
+            var list = e.length ? e : $(e.target),
+                    output = list.data('output');
+            if (window.JSON) {
+                output.val(window.JSON.stringify(list.nestable('serialize')));//, null, 2));
+            } else {
+                output.val('JSON browser support required for this demo.');
+            }
+        };
+
+        // activate Nestable for list 1
+        $('#nestable').nestable({
+            group: 1
+        })
+                .on('change', updateOutput);
+
+        // output initial serialised data
+        updateOutput($('#nestable').data('output', $('#nestable-output')));
+
+        $('#nestable-menu').on('click', function (e) {
+            var target = $(e.target), action = target.data('action');
+            if (action === 'expand-all') {
+                $('.dd').nestable('expandAll');
+            }
+            if (action === 'collapse-all') {
+                $('.dd').nestable('collapseAll');
+            }
+        });
     });
 </script>

@@ -23,8 +23,17 @@ class AdminRedirect extends CI_Controller {
     }
 
     public function menus() {
+        // GET pages
+        $condition = array(
+            "type" => 'page',
+            "status" => 'public'
+        );
+        $posts = $this->mPost->getPosts($condition)['posts'];
         $data = array(
-            "content" => "admin/menus"
+            "title" => "Quản lý menu",
+            "content" => "admin/menus",
+            "categories" => $this->mCategory->getCategoriesParentBox(0, ""),
+            "pages" => $posts
         );
         $this->load->view('admin/template/main', $data);
     }

@@ -32,7 +32,7 @@
                         foreach($latests as $comment) {
                     ?>
                     <li>
-                        <a href="#">
+                        <a href="<?php echo base_url() . 'redirect/single/' . $comment->getPostId() . '#cmt_' . $comment->getId(); ?>">
                             <img alt="" src="http://placehold.it/60x60">
                         </a>
                         <h3>

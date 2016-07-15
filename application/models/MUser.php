@@ -44,6 +44,7 @@ class MUser extends Base_Model {
      * @param array $limitConfig (records, begin)
      * @param string $role 
      * @param string $username
+     * @return array includes total before limit and list of result (users)
      */
     public function getUsers($limitConfig = array(), $role = NULL, $username = NULL) {
         $this->db->select('SQL_CALC_FOUND_ROWS *', FALSE);
