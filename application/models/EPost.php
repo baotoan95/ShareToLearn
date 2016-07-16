@@ -5,7 +5,7 @@
  *
  * @author BaoToan
  */
-class EPost {
+class EPost implements JsonSerializable {
 
     private $id;
     private $title;
@@ -200,6 +200,17 @@ class EPost {
 
     public function setTags($tags) {
         $this->tags = $tags;
+    }
+    
+    public function jsonSerialize() {
+        return array(
+            "id" => $this->getId(),
+            "title" => $this->getTitle(),
+            "author" => $this->getAuthor(),
+            "guid" => $this->getGuid(),
+            "excerpt" => $this->getExcerpt(),
+            "type" => $this->getType()
+        );
     }
 
 }

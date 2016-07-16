@@ -203,7 +203,7 @@ class MPost extends Base_Model {
     
     /**
      * 
-     * @param array $condition type and status are required (taxonomy, fromDate, title are optional)
+     * @param array $condition type and status are required (taxonomy, fromDate, title, 'array ids' are optional)
      * @param array $limitConfig (records, begin) -optional
      * @return array includes posts and total records before limit
      */
@@ -213,6 +213,10 @@ class MPost extends Base_Model {
         
         $this->db->where('p_type', $condition['type']);
         $this->db->where_in('p_status', $condition['status']);
+        
+        if(array_key_exists('ids', $condition) && !empty($condition['ids'])) {
+            $this->db->where_in('p_id', $condition['ids']);
+        }
         
         // If specific taxonomy then join, else...
         if(array_key_exists('taxonomy', $condition) && $condition['taxonomy'] != '') {

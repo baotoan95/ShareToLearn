@@ -323,5 +323,31 @@ class Post extends CI_Controller {
             echo "failure";
         }
     }
+    
+    public function searchPageAjax() {
+        $name = $this->input->post('name');
+        $condition = array(
+            "type" => "page",
+            "status" => "public"
+        );
+        if($name != '') {$condition['title'] = $name;}
+        echo json_encode($this->mPost->getPosts($condition)['posts']);
+    }
+    
+    public function getPagesAjax() {
+        $pageIds = $this->input->post('pageIds', TRUE);
+        if(empty($pageIds)) {
+            return;
+        }
+        
+//        echo json_encode($pageIds);
+        $condition = array(
+            "type" => "page",
+            "status" => "public",
+            "ids" => $pageIds
+        );
+        echo json_encode($this->mPost->getPosts($condition)['posts']);
+        
+    }
 
 }

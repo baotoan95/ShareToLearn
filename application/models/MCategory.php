@@ -41,15 +41,26 @@ class MCategory extends Base_Model {
         return $categories;
     }
 
+    /**
+     * 
+     * @param array $limitConfig Config for pagination (records, begin)
+     * @param string $term_name Category name
+     * @return array list of category result and total result before limit
+     */
     public function getCategories($limitConfig = array(), $term_name = '') {
         $result = $this->mTerm->getTermsByTaxonomy('category', $limitConfig, $term_name);
+        
+        // GET list term
+        $terms = array_key_exists('terms', $result) ? $result['terms'] : $result;
         $categories = array();
-        foreach ($result['terms'] as $term) {
+        foreach ($terms as $term) {
             $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']));
         }
+       
         return array(
             "categories" => $categories,
-            "total" => intval($result['total'])
+            // If require limit Then get total before limit, else count all result
+            "total" => array_key_exists('total', $result) ? $result['total'] : count($categories)
         );
     }
 

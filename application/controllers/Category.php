@@ -117,4 +117,13 @@ class Category extends CI_Controller {
             $this->load->view('admin/template/main', $data);
         }
     }
+    
+    public function searchCategoriesAjax() {
+        $name = $this->input->post('name');
+        if($name == '') {
+            echo $this->mCategory->getCategoriesParentBox(0, "");
+            return;
+        }
+        echo json_encode($this->mCategory->getCategories(array(), $name)['categories']);
+    }
 }
