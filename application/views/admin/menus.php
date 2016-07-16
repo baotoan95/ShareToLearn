@@ -249,6 +249,7 @@
                             '</li>'
                         );
                     });
+                    updateOutput($('#nestable').data('output', $('#nestable-output')));
                 },
                 failure: function(error) {
                     alert(error);
@@ -279,6 +280,7 @@
                             '</li>'
                         );
                     });
+                    updateOutput($('#nestable').data('output', $('#nestable-output')));
                 },
                 failure: function(error) {
                     alert(error);
