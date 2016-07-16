@@ -8,8 +8,11 @@
 class Menu extends CI_Controller {
     public function __construct() {
         parent::__construct();
+        $this->load->model('EMenuItem');
+        
         $this->load->model('mPost');
         $this->load->model('mCategory');
+        $this->load->model('mMenu');
     }
     
     public function menus() {
@@ -34,5 +37,12 @@ class Menu extends CI_Controller {
             "posts" => $posts
         );
         $this->load->view('admin/template/main', $data);
+    }
+    
+    public function addMenuItemAjax() {
+        $link_name = $this->input->post('name');
+        $link = $this->input->post('link');
+        $menuItem = new EMenuItem(0, $link_name, $link, 0);
+        echo $this->mMenu->addMenuItem($menuItem);
     }
 }

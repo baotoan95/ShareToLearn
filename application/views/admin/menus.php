@@ -23,7 +23,6 @@
                                     <div class="form-group">
                                         <button id="add_link" class="btn btn-primary">Thêm</button>
                                     </div>
-                                    
                                 </div>
                             </form>
                         </li>
@@ -272,12 +271,29 @@
                     $('#link_name').css({"border": "1px solid red"});
                     return;
                 }
-                $('#menus').append(
-                    '<li class="dd-item" data-id="'+$('#link_name').val() + '[-]' + $('#link').val() +'">' +
-                        '<div class="dd-handle">'+ $('#link_name').val() +' [LINK]</div>' +
-                    '</li>'
-                );
+                
+                $.ajax({
+                    url: "<?php echo base_url() . 'menu/addMenuItemAjax'?>",
+                    type: 'post',
+                    contextType: 'text',
+                    data: {
+                        name: $('#link_name').val(),
+                        link: $('#link').val()
+                    },
+                    success: function(res) {
+                        alert(res);
+                        $('#menus').append(
+                            '<li class="dd-item" data-id="'+ res + '-link">' +
+                                '<div class="dd-handle">'+ $('#link_name').val() +' [LINK]</div>' +
+                            '</li>'
+                        );
                 updateOutput($('#nestable').data('output', $('#nestable-output')));
+                    },
+                    failure: function(error) {
+                        alert(error);
+                    }
+                });
+                
         });
         // END add link
         
