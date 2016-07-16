@@ -18,11 +18,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="link_name">Tên liên kết</label>
-                                        <input if="link_name" class="form-control" placeholder="" type="text">
+                                        <input id="link_name" class="form-control" placeholder="" type="text">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Thêm</button>
+                                        <button id="add_link" class="btn btn-primary">Thêm</button>
                                     </div>
+                                    
                                 </div>
                             </form>
                         </li>
@@ -79,34 +80,7 @@
                                             });
                                         });
                                         
-                                        // Add category to menu
-                                        $('#add_cate').on('click', function(e) {
-                                            e.preventDefault();
-                                            if($('#cates').val() === null) {
-                                                return;
-                                            }
-                                            $.ajax({
-                                                url: "<?php echo base_url() . 'category/getCategoriesAjax'?>",
-                                                type: "post",
-                                                contextType: "text",
-                                                data: {
-                                                    cateIds: $('#cates').val()
-                                                },
-                                                success: function(res) {
-                                                    var cates = $.parseJSON(res);
-                                                    cates.forEach(function(cate) {
-                                                        $('#menus').append(
-                                                            '<li class="dd-item" data-id="' + cate.id + '">' +
-                                                                '<div class="dd-handle">'+ cate.name +'</div>' +
-                                                            '</li>'
-                                                        );
-                                                    });
-                                                },
-                                                failure: function(error) {
-                                                    alert(error);
-                                                }
-                                            });
-                                        });
+                                        
                                     </script>
                             </form>
                         </li>
@@ -160,34 +134,7 @@
                                             });
                                         });
                                         
-                                        // Add page to menu
-                                        $('#add_page').on('click', function(e) {
-                                            e.preventDefault();
-                                            if($('#pages').val() === null) {
-                                                return;
-                                            }
-                                            $.ajax({
-                                                url: "<?php echo base_url() . 'post/getPagesAjax'?>",
-                                                type: "post",
-                                                contextType: "text",
-                                                data: {
-                                                    pageIds: $('#pages').val()
-                                                },
-                                                success: function(res) {
-                                                    var pages = $.parseJSON(res);
-                                                    pages.forEach(function(page) {
-                                                        $('#menus').append(
-                                                            '<li class="dd-item" data-id="' + page.id + '">' +
-                                                                '<div class="dd-handle">'+ page.title +'</div>' +
-                                                            '</li>'
-                                                        );
-                                                    });
-                                                },
-                                                failure: function(error) {
-                                                    alert(error);
-                                                }
-                                            });
-                                        });
+                                        
                                     </script>
                             </form>
                         </li>
@@ -207,32 +154,6 @@
                 <div class="box-body">
                     <div class="dd" id="nestable">
                         <ol id="menus" class="dd-list">
-                            <li class="dd-item" data-id="1">
-                                <div class="dd-handle">Item 1</div>
-                            </li>
-                            <li class="dd-item" data-id="2">
-                                <div class="dd-handle">Item 2</div>
-                                <ol class="dd-list">
-                                    <li class="dd-item" data-id="3"><div class="dd-handle">Item 3</div></li>
-                                    <li class="dd-item" data-id="4"><div class="dd-handle">Item 4</div></li>
-                                    <li class="dd-item" data-id="5">
-                                        <div class="dd-handle">Item 5</div>
-                                        <ol class="dd-list">
-                                            <li class="dd-item" data-id="6"><div class="dd-handle">Item 6</div></li>
-                                            <li class="dd-item" data-id="7"><div class="dd-handle">Item 7</div></li>
-                                            <li class="dd-item" data-id="8"><div class="dd-handle">Item 8</div></li>
-                                        </ol>
-                                    </li>
-                                    <li class="dd-item" data-id="9"><div class="dd-handle">Item 9</div></li>
-                                    <li class="dd-item" data-id="10"><div class="dd-handle">Item 10</div></li>
-                                </ol>
-                            </li>
-                            <li class="dd-item" data-id="11">
-                                <div class="dd-handle">Item 11</div>
-                            </li>
-                            <li class="dd-item" data-id="12">
-                                <div class="dd-handle">Item 12</div>
-                            </li>
                         </ol>
                     </div>
 
@@ -255,6 +176,7 @@
 <script src="<?php echo base_url(); ?>assets/admin/dist/js/nestable.js"></script>
 <script>
     $(document).ready(function () {
+        // Create menu view
         var updateOutput = function (e) {
             var list = e.length ? e : $(e.target),
                     output = list.data('output');
@@ -268,8 +190,7 @@
         // activate Nestable for list 1
         $('#nestable').nestable({
             group: 1
-        })
-                .on('change', updateOutput);
+        }).on('change', updateOutput);
 
         // output initial serialised data
         updateOutput($('#nestable').data('output', $('#nestable-output')));
@@ -283,5 +204,87 @@
                 $('.dd').nestable('collapseAll');
             }
         });
+        // End create menu view
+        
+        // ADD link
+        $('#add_link').on('click', function(e) {
+            e.preventDefault();
+            $('#link, #link_name').css({"border": "1px solid #D2D6DE"});
+                if($('#link').val() === '') {
+                    $('#link').css({"border": "1px solid red"});
+                    return;
+                }
+                if($('#link_name').val() === '') {
+                    $('#link_name').css({"border": "1px solid red"});
+                    return;
+                }
+                $('#menus').append(
+                    '<li class="dd-item" data-id="0">' +
+                        '<div class="dd-handle">'+ $('#link_name').val() +'</div>' +
+                    '</li>'
+                );
+                updateOutput($('#nestable').data('output', $('#nestable-output')));
+        });
+        // END add link
+        
+        // ADD category to menu
+        $('#add_cate').on('click', function(e) {
+            e.preventDefault();
+            if($('#cates').val() === null) {
+                return;
+            }
+            $.ajax({
+                url: "<?php echo base_url() . 'category/getCategoriesAjax'?>",
+                type: "post",
+                contextType: "text",
+                data: {
+                    cateIds: $('#cates').val()
+                },
+                success: function(res) {
+                    var cates = $.parseJSON(res);
+                    cates.forEach(function(cate) {
+                        $('#menus').append(
+                            '<li class="dd-item" data-id="' + cate.id + '">' +
+                                '<div class="dd-handle">'+ cate.name +'</div>' +
+                            '</li>'
+                        );
+                    });
+                },
+                failure: function(error) {
+                    alert(error);
+                }
+            });
+        });
+        // END add category to menu
+        
+        // ADD page to menu
+        $('#add_page').on('click', function(e) {
+            e.preventDefault();
+            if($('#pages').val() === null) {
+                return;
+            }
+            $.ajax({
+                url: "<?php echo base_url() . 'post/getPagesAjax'?>",
+                type: "post",
+                contextType: "text",
+                data: {
+                    pageIds: $('#pages').val()
+                },
+                success: function(res) {
+                    var pages = $.parseJSON(res);
+                    pages.forEach(function(page) {
+                        $('#menus').append(
+                            '<li class="dd-item" data-id="' + page.id + '">' +
+                                '<div class="dd-handle">'+ page.title +'</div>' +
+                            '</li>'
+                        );
+                    });
+                },
+                failure: function(error) {
+                    alert(error);
+                }
+            });
+        });
+        // END add page to menu
     });
 </script>
