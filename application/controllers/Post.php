@@ -340,7 +340,6 @@ class Post extends CI_Controller {
             return;
         }
         
-//        echo json_encode($pageIds);
         $condition = array(
             "type" => "page",
             "status" => "public",

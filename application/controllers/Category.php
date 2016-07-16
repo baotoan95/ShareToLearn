@@ -126,4 +126,9 @@ class Category extends CI_Controller {
         }
         echo json_encode($this->mCategory->getCategories(array(), $name)['categories']);
     }
+    
+    public function getCategoriesAjax() {
+        $cateIds = $this->input->post('cateIds');
+        echo json_encode($this->mCategory->getCategoriesByIds($cateIds));
+    }
 }

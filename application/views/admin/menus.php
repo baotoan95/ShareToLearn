@@ -80,24 +80,32 @@
                                         });
                                         
                                         // Add category to menu
-                                        // Add page to menu
                                         $('#add_cate').on('click', function(e) {
                                             e.preventDefault();
-                                            alert($('#cates').val());
-//                                            $.ajax({
-//                                                url: "<?php // echo base_url() . 'post/getPagesAjax'?>",
-//                                                type: "post",
-//                                                contextType: "text",
-//                                                data: {
-//                                                    pageIds: $('#pages').val()
-//                                                },
-//                                                success: function(res) {
-//                                                    alert(res);
-//                                                },
-//                                                failure: function(error) {
-//                                                    alert(error);
-//                                                }
-//                                            });
+                                            if($('#cates').val() === null) {
+                                                return;
+                                            }
+                                            $.ajax({
+                                                url: "<?php echo base_url() . 'category/getCategoriesAjax'?>",
+                                                type: "post",
+                                                contextType: "text",
+                                                data: {
+                                                    cateIds: $('#cates').val()
+                                                },
+                                                success: function(res) {
+                                                    var cates = $.parseJSON(res);
+                                                    cates.forEach(function(cate) {
+                                                        $('#menus').append(
+                                                            '<li class="dd-item" data-id="' + cate.id + '">' +
+                                                                '<div class="dd-handle">'+ cate.name +'</div>' +
+                                                            '</li>'
+                                                        );
+                                                    });
+                                                },
+                                                failure: function(error) {
+                                                    alert(error);
+                                                }
+                                            });
                                         });
                                     </script>
                             </form>
