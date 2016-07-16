@@ -324,24 +324,27 @@ class Post extends CI_Controller {
         }
     }
     
-    public function searchPageAjax() {
+    public function searchPostsAjax() {
         $name = $this->input->post('name');
+        $type = $this->input->post('type');
         $condition = array(
-            "type" => "page",
+            "type" => $type,
             "status" => "public"
         );
         if($name != '') {$condition['title'] = $name;}
         echo json_encode($this->mPost->getPosts($condition)['posts']);
     }
     
-    public function getPagesAjax() {
-        $pageIds = $this->input->post('pageIds', TRUE);
+    public function getPostsAjax() {
+        $pageIds = $this->input->post('pageIds');
+        $type = $this->input->post('type');
+        
         if(empty($pageIds)) {
             return;
         }
         
         $condition = array(
-            "type" => "page",
+            "type" => $type,
             "status" => "public",
             "ids" => $pageIds
         );

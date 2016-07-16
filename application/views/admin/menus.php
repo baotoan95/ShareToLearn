@@ -113,18 +113,19 @@
                                         // Search page
                                         $('#search-page').on('keyup', function() {
                                             $.ajax({
-                                                url: "<?php echo base_url() . 'post/searchPageAjax'?>",
+                                                url: "<?php echo base_url() . 'post/searchPostsAjax'?>",
                                                 type: "post",
                                                 contextType: "text",
                                                 data: {
-                                                    name: $('#search-page').val()
+                                                    name: $('#search-page').val(),
+                                                    type: 'page'
                                                 },
                                                 success: function(res) {
-                                                    var posts = $.parseJSON(res);
+                                                    var pages = $.parseJSON(res);
                                                     $('#pages').empty();
-                                                    posts.forEach(function(post) {
+                                                    pages.forEach(function(page) {
                                                         $('#pages').append(
-                                                            "<option value='" + post.id + "'>" + post.title + "</option>"
+                                                            "<option value='" + page.id + "'>" + page.title + "</option>"
                                                         );
                                                     });
                                                 },
@@ -136,6 +137,59 @@
                                         
                                         
                                     </script>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-edit"></i> 
+                        <span>Bài viết</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li>
+                            <form role="form">
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="search-post">Tìm kiếm</label>
+                                        <input id="search-post" class="form-control" placeholder="" type="text">
+                                    </div>
+                                    <select id="posts" multiple="true" class="form-control">
+                                        <?php
+                                        foreach($posts as $post) {
+                                            echo "<option value='{$post->getId()}'>{$post->getTitle()}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <button id='add_post' class="btn btn-primary">Thêm</button>
+                                <script type="text/javascript">
+                                        // Search page
+                                        $('#search-post').on('keyup', function() {
+                                            $.ajax({
+                                                url: "<?php echo base_url() . 'post/searchPostsAjax'?>",
+                                                type: "post",
+                                                contextType: "text",
+                                                data: {
+                                                    name: $('#search-post').val(),
+                                                    type: 'post'
+                                                },
+                                                success: function(res) {
+                                                    var posts = $.parseJSON(res);
+                                                    $('#posts').empty();
+                                                    posts.forEach(function(post) {
+                                                        $('#posts').append(
+                                                            "<option value='" + post.id + "'>" + post.title + "</option>"
+                                                        );
+                                                    });
+                                                },
+                                                failure: function(error) {
+                                                    alert(error);
+                                                }
+                                            });
+                                        });
+                                </script>
                             </form>
                         </li>
                     </ul>
@@ -219,8 +273,8 @@
                     return;
                 }
                 $('#menus').append(
-                    '<li class="dd-item" data-id="0">' +
-                        '<div class="dd-handle">'+ $('#link_name').val() +'</div>' +
+                    '<li class="dd-item" data-id="'+$('#link_name').val() + '[-]' + $('#link').val() +'">' +
+                        '<div class="dd-handle">'+ $('#link_name').val() +' [LINK]</div>' +
                     '</li>'
                 );
                 updateOutput($('#nestable').data('output', $('#nestable-output')));
@@ -244,8 +298,8 @@
                     var cates = $.parseJSON(res);
                     cates.forEach(function(cate) {
                         $('#menus').append(
-                            '<li class="dd-item" data-id="' + cate.id + '">' +
-                                '<div class="dd-handle">'+ cate.name +'</div>' +
+                            '<li class="dd-item" data-id="' + cate.id + '-category">' +
+                                '<div class="dd-handle">'+ cate.name +' [CATEGORY]</div>' +
                             '</li>'
                         );
                     });
@@ -265,18 +319,19 @@
                 return;
             }
             $.ajax({
-                url: "<?php echo base_url() . 'post/getPagesAjax'?>",
+                url: "<?php echo base_url() . 'post/getPostsAjax'?>",
                 type: "post",
                 contextType: "text",
                 data: {
-                    pageIds: $('#pages').val()
+                    pageIds: $('#pages').val(),
+                    type: 'page'
                 },
                 success: function(res) {
                     var pages = $.parseJSON(res);
                     pages.forEach(function(page) {
                         $('#menus').append(
-                            '<li class="dd-item" data-id="' + page.id + '">' +
-                                '<div class="dd-handle">'+ page.title +'</div>' +
+                            '<li class="dd-item" data-id="' + page.id + '-page">' +
+                                '<div class="dd-handle">'+ page.title +' [PAGE]</div>' +
                             '</li>'
                         );
                     });
@@ -288,5 +343,37 @@
             });
         });
         // END add page to menu
+        
+        // ADD post to menu
+        $('#add_post').on('click', function(e) {
+            e.preventDefault();
+            if($('#posts').val() === null) {
+                return;
+            }
+            $.ajax({
+                url: "<?php echo base_url() . 'post/getPostsAjax'?>",
+                type: "post",
+                contextType: "text",
+                data: {
+                    pageIds: $('#posts').val(),
+                    type: 'post'
+                },
+                success: function(res) {
+                    var posts = $.parseJSON(res);
+                    posts.forEach(function(post) {
+                        $('#menus').append(
+                            '<li class="dd-item" data-id="' + post.id + '-post">' +
+                                '<div class="dd-handle">'+ post.title +' [POST]</div>' +
+                            '</li>'
+                        );
+                    });
+                    updateOutput($('#nestable').data('output', $('#nestable-output')));
+                },
+                failure: function(error) {
+                    alert(error);
+                }
+            });
+        });
+        // END add post to menu
     });
 </script>
