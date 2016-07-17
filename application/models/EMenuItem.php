@@ -6,17 +6,21 @@
  * @author BaoToan
  */
 class EMenuItem {
+
     private $id;
     private $name;
     private $slug;
     private $parent;
-   
-    public function __construct($id = 0, $name = '', $slug = '', $parent = '') {
+    private $type;
+
+    public function __construct($id = 0, $name = '', $slug = '', $parent = 0, $type = '') {
         $this->id = $id;
         $this->name = $name;
         $this->slug = $slug;
         $this->parent = $parent;
+        $this->type = $type;
     }
+
     public function getId() {
         return $this->id;
     }
@@ -31,6 +35,10 @@ class EMenuItem {
 
     public function getParent() {
         return $this->parent;
+    }
+
+    public function getType() {
+        return $this->type;
     }
 
     public function setId($id) {
@@ -49,5 +57,8 @@ class EMenuItem {
         $this->parent = $parent;
     }
 
+    public function setType($type) {
+        $this->type = $type;
+    }
 
 }

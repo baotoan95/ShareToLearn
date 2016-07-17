@@ -34,7 +34,8 @@ class Menu extends CI_Controller {
             "content" => "admin/menus",
             "categories" => $this->mCategory->getCategoriesParentBox(0, ""),
             "pages" => $pages,
-            "posts" => $posts
+            "posts" => $posts,
+            "menu" => $this->mMenu->generateMenu($this->mMenu->getMenus(), array("tag_name"=>"div", "tag_container_name" => "ol"))
         );
         $this->load->view('admin/template/main', $data);
     }
@@ -52,9 +53,11 @@ class Menu extends CI_Controller {
         
         $this->mMenu->addMenu(json_decode($menu, TRUE));
         
-        echo "<pre>";
-        var_dump(json_decode($menu, TRUE));
-        echo "</pre>";
+        $config = array(
+            "tag_name" => "a",
+            "tag_container_name" => "ol"
+        );
+        header('Location: ' . base_url() . 'menu/menus', 301);
     }
     
     

@@ -207,6 +207,7 @@
                 <div class="box-body">
                     <div class="dd" id="nestable">
                         <ol id="menus" class="dd-list">
+                            <?php echo $menu; ?>
                         </ol>
                     </div>
                     <!-- DATA -->

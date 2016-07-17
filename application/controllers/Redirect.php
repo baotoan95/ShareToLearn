@@ -85,23 +85,23 @@ class Redirect extends CI_Controller {
         if(empty($subCmts)) {
             return "";
         } else {
-        $html = ($parentId == 0 ? "" : '<ul class = "children">');
-        foreach ($subCmts as $cmt) {
-            if($cmt->getParent() == 0) {
-                $level = 0;
+            $html = ($parentId == 0 ? "" : '<ul class = "children">');
+            foreach ($subCmts as $cmt) {
+                if($cmt->getParent() == 0) {
+                    $level = 0;
+                }
+                $html .=
+                            '<li id="cmt_'. $cmt->getId() .'" class="depth-' . $level .'">' .
+                                '<div class="author-avatar"><img alt="" src ="'.base_url().'assets/client/images/avatar.jpg"/></div>' .
+                                '<div class="comment-author"><a>' . $cmt->getAuthor() . '</a></div>' .
+                                '<div class="comment-date">' . $cmt->getDate() . '</div>' .
+                                '<div class="comment-text"><p>' . $cmt->getContent() . '</p></div>' .
+                                '<div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="' . $cmt->getId() . '">reply</a></div>' .
+                                $this->generateCommentLevel($comments, $cmt->getId(), ++$level, $html) .
+                            '</li>';
+                $level--;
             }
-            $html .=
-                        '<li id="cmt_'. $cmt->getId() .'" class="depth-' . $level .'">' .
-                            '<div class="author-avatar"><img alt="" src ="'.base_url().'assets/client/images/avatar.jpg"/></div>' .
-                            '<div class="comment-author"><a>' . $cmt->getAuthor() . '</a></div>' .
-                            '<div class="comment-date">' . $cmt->getDate() . '</div>' .
-                            '<div class="comment-text"><p>' . $cmt->getContent() . '</p></div>' .
-                            '<div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="' . $cmt->getId() . '">reply</a></div>' .
-                            $this->generateCommentLevel($comments, $cmt->getId(), ++$level, $html) .
-                        '</li>';
-            $level--;
-        }
-        return $html .= ($parentId == 0 ? "" : "</ul>");
+            return $html .= ($parentId == 0 ? "" : "</ul>");
         }
     }
 
