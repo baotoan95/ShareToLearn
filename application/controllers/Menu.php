@@ -45,4 +45,17 @@ class Menu extends CI_Controller {
         $menuItem = new EMenuItem(0, $link_name, $link, 0);
         echo $this->mMenu->addMenuItem($menuItem);
     }
+    
+    public function addAndUpdateMenu() {
+        // GET menu (json) from client
+        $menu = $this->input->post('menu');
+        
+        $this->mMenu->addMenu(json_decode($menu, TRUE));
+        
+        echo "<pre>";
+        var_dump(json_decode($menu, TRUE));
+        echo "</pre>";
+    }
+    
+    
 }

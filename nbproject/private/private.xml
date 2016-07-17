@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/EMenu.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/EMenuItem.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/MPost.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Menu.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/MMenu.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/menus.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Post.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/models/EPost.php</file>
         </group>
     </open-files>
 </project-private>

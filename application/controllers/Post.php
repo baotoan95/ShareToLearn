@@ -349,7 +349,25 @@ class Post extends CI_Controller {
             "ids" => $pageIds
         );
         echo json_encode($this->mPost->getPosts($condition)['posts']);
+    }
+    
+    public function addLink() {
+        $name = $this->input->post('name');
+        $link = $this->input->post('link');
         
+        $post = new EPost();
+        $post->setTitle($name);
+        $post->setGuid($link);
+        $post->setType('navigation');
+        $post->setStatus('public');
+        $post->setPublished(date('y-m-d H:i:s'));
+        
+        $post_id = $this->mPost->addPost($post);
+        if($post_id) {
+            echo $post_id;
+        } else {
+            echo "failure";
+        }
     }
 
 }

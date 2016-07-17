@@ -24,8 +24,8 @@ class EPost implements JsonSerializable {
     private $banner;
     private $password;
     private $parent;
-    private $categories;
-    private $tags;
+    private $categories = array();
+    private $tags = array();
 
     public function __construct($id = 0, $title = '', $content = '', $author = 0, 
             $views = 0, $comments = 0, $excerpt = '', $catalogue = '', 

@@ -23,6 +23,11 @@ class MPost extends Base_Model {
         $this->load->model('mUser');
     }
 
+    /**
+     * 
+     * @param object $post
+     * @return boolean postId or FALSE if not success
+     */
     public function addPost($post) {
         // Add tags to DB if them is new
         $tags = $post->getTags();
@@ -40,7 +45,6 @@ class MPost extends Base_Model {
             "p_catalogue" => $post->getCatalogue(),
             "p_status" => $post->getStatus(),
             "p_published" => $post->getPublished(),
-            "p_guid" => $post->getGuid(),
             "p_comment_allow" => $post->getCmt_allow(),
             "p_type" => $post->getType(),
             "p_banner" => $post->getBanner(),
@@ -48,10 +52,12 @@ class MPost extends Base_Model {
             "p_menu_order" => $post->getOrder(),
             "p_parent" => $post->getParent()
         );
+        // Avoid duplicate slug
+        $data['p_guid'] = $post->getGuid() . $this->checkDuplicateGuid($post->getGuid());
         $post_id = $this->insert($data);
         
-        // Add tags for post
-        if (!empty($tags)) {
+        // Add tags for post (not for page and navigation)
+        if ($post->getType() == 'post' && !empty($tags)) {
             foreach ($tags as $tag) {
                 $term = $this->mTerm->getTerm($tag->getName(), 'tag');
                 $termRelationship = array(
@@ -62,8 +68,8 @@ class MPost extends Base_Model {
             }
         }
         
-        // Add categories for post
-        if (!empty($post->getCategories())) {
+        // Add categories for post (not for page and navigation)
+        if ($post->getType() == 'post' && !empty($post->getCategories())) {
             foreach ($post->getCategories() as $category) {
                 $term = $this->mTerm->getTerm($category->getName(), 'category');
                 $termRelationship = array(
@@ -79,7 +85,25 @@ class MPost extends Base_Model {
             return FALSE;
         } else {
             $this->db->trans_commit();
-            return $post_id;
+            return intval($post_id);
+        }
+    }
+    
+    /*
+     * @param string guid of post
+     * @return string
+     */
+    private function checkDuplicateGuid($guid) {
+        $this->db->select('count(p_id) as count');
+        $count = $this->db->get_where($this->_table['table_name'], 
+                array('p_guid' => $guid))->row()->count;
+        if($count > 0) {
+            $this->db->select("count(p_id) as count");
+            $count = $this->db->get_where($this->_table['table_name'], 
+                    array('p_guid like' => "$guid-%"))->row()->count;
+            return "-" . (++$count);
+        } else {
+            return "";
         }
     }
 

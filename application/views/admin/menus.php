@@ -203,15 +203,18 @@
                 <h3 class="box-title">Cấu trúc menu</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form">
+            <form role="form" action="<?php echo base_url() . 'menu/addAndUpdateMenu'?>" method="post">
                 <div class="box-body">
                     <div class="dd" id="nestable">
                         <ol id="menus" class="dd-list">
                         </ol>
                     </div>
-
-                    <textarea id="nestable-output"></textarea>
+                    <!-- DATA -->
+                    <input type="hidden" id="nestable-output" name="menu"/>
                 </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-info pull-right">Lưu</button>
+                </div>
             </form>
         </div>
     </div>
@@ -263,37 +266,38 @@
         $('#add_link').on('click', function(e) {
             e.preventDefault();
             $('#link, #link_name').css({"border": "1px solid #D2D6DE"});
-                if($('#link').val() === '') {
-                    $('#link').css({"border": "1px solid red"});
-                    return;
-                }
-                if($('#link_name').val() === '') {
-                    $('#link_name').css({"border": "1px solid red"});
-                    return;
-                }
+            if($('#link').val() === '') {
+                $('#link').css({"border": "1px solid red"});
+                return;
+            }
+            if($('#link_name').val() === '') {
+                $('#link_name').css({"border": "1px solid red"});
+                return;
+            }
                 
-                $.ajax({
-                    url: "<?php echo base_url() . 'menu/addMenuItemAjax'?>",
-                    type: 'post',
-                    contextType: 'text',
-                    data: {
-                        name: $('#link_name').val(),
-                        link: $('#link').val()
-                    },
-                    success: function(res) {
-                        alert(res);
+            $.ajax({
+                url: "<?php echo base_url() . 'post/addLink'?>",
+                type: 'post',
+                contextType: 'text',
+                data: {
+                    name: $('#link_name').val(),
+                    link: $('#link').val()
+                },
+                success: function(res) {
+                    alert(res);
+                    if(res !== 'failure') {
                         $('#menus').append(
-                            '<li class="dd-item" data-id="'+ res + '-link">' +
+                            '<li class="dd-item" data-id="'+ res + '-navigation">' +
                                 '<div class="dd-handle">'+ $('#link_name').val() +' [LINK]</div>' +
                             '</li>'
                         );
-                updateOutput($('#nestable').data('output', $('#nestable-output')));
-                    },
-                    failure: function(error) {
-                        alert(error);
+                        updateOutput($('#nestable').data('output', $('#nestable-output')));
                     }
-                });
-                
+                },
+                failure: function(error) {
+                    alert(error);
+                }
+            });
         });
         // END add link
         

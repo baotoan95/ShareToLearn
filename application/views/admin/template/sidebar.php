@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url() . 'adminredirect/menus'?>">
+                <a href="<?php echo base_url() . 'menu/menus'?>">
                     <i class="fa fa-book"></i> <span>Quản lý thực đơn</span>
                 </a>
             </li>
