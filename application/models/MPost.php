@@ -106,9 +106,11 @@ class MPost extends Base_Model {
             return "";
         }
     }
-
-    public function getPostById($id, $inc_cates = FALSE, $inc_tags = TRUE) {
-        $postTemp = $this->getByKey($id);
+    
+    private function createAPost($postTemp, $inc_cates = FALSE, $inc_tags = TRUE) {
+        if(empty($postTemp)) {
+            return NULL;
+        }
         $post = new EPost();
         $post->setId($postTemp['p_id']);
         $post->setTitle($postTemp['p_title']);
@@ -157,6 +159,18 @@ class MPost extends Base_Model {
             $post->setTags($tags);
         }
         return $post;
+    }
+    
+    public function getPostByGuid($guid, $type, $inc_cates = FALSE, $inc_tags = TRUE) {
+        $this->db->where('p_guid', $guid);
+        $this->db->where('p_type', $type);
+        $postTemp = $this->db->get($this->_table['table_name'])->row();
+        return $this->createAPost($postTemp, $inc_cates, $inc_tags);
+    }
+
+    public function getPostById($id, $inc_cates = FALSE, $inc_tags = TRUE) {
+        $postTemp = $this->getByKey($id);
+        return $this->createAPost($postTemp, $inc_cates, $inc_tags);
     }
 
     public function updatePost($post) {
@@ -227,7 +241,7 @@ class MPost extends Base_Model {
     
     /**
      * 
-     * @param array $condition type and status are required (taxonomy, fromDate, title, 'array ids' are optional)
+     * @param array $condition type(array) and status(array) are required (taxonomy, fromDate, title, 'array ids' are optional)
      * @param array $limitConfig (records, begin) -optional
      * @return array includes posts and total records before limit
      */
@@ -235,7 +249,7 @@ class MPost extends Base_Model {
         $this->db->select('SQL_CALC_FOUND_ROWS p_id', FALSE);
         $this->db->from($this->_table['table_name']);
         
-        $this->db->where('p_type', $condition['type']);
+        $this->db->where_in('p_type', $condition['type']);
         $this->db->where_in('p_status', $condition['status']);
         
         if(array_key_exists('ids', $condition) && !empty($condition['ids'])) {

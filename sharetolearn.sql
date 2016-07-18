@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2016-07-17 21:48:28
+Date: 2016-07-18 19:50:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,16 +58,20 @@ CREATE TABLE `menu` (
   `mn_name` varchar(200) DEFAULT NULL,
   `mn_slug` varchar(200) DEFAULT NULL,
   `mn_parent` int(11) DEFAULT NULL,
+  `mn_meta_value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`mn_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
-INSERT INTO `menu` VALUES ('48', 'A', 'addsf', '0');
-INSERT INTO `menu` VALUES ('49', 'Giải trí', 'Giai-tri', '48');
-INSERT INTO `menu` VALUES ('50', 'Trang thứ 11', 'trang-thu-11', '49');
-INSERT INTO `menu` VALUES ('51', 'Ngô Bảo Toàn', 'ngo-bao-toan', '0');
+INSERT INTO `menu` VALUES ('214', 'Trang Chủ', 'http://localhost/ShareToLearn/', '0', '{\"id\":\"224\",\"type\":\"navigation\"}');
+INSERT INTO `menu` VALUES ('215', 'Giải trí', 'Giai-tri', '0', '{\"id\":\"215\",\"type\":\"category\"}');
+INSERT INTO `menu` VALUES ('216', 'Doremon', 'doremon', '215', '{\"id\":\"140\",\"type\":\"post\"}');
+INSERT INTO `menu` VALUES ('217', 'Tản mạn', 'Tan-man', '215', '{\"id\":\"221\",\"type\":\"category\"}');
+INSERT INTO `menu` VALUES ('218', 'Thể thao', 'the_thao.html', '215', '{\"id\":\"243\",\"type\":\"category\"}');
+INSERT INTO `menu` VALUES ('219', 'abc', 'abc', '218', '{\"id\":\"223\",\"type\":\"navigation\"}');
+INSERT INTO `menu` VALUES ('220', 'Trang thứ 11', 'trang-thu-11', '218', '{\"id\":\"139\",\"type\":\"page\"}');
 
 -- ----------------------------
 -- Table structure for options
@@ -121,7 +125,7 @@ CREATE TABLE `posts` (
   `p_parent` int(11) DEFAULT NULL,
   PRIMARY KEY (`p_id`),
   UNIQUE KEY `p_guid` (`p_guid`)
-) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=225 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of posts
@@ -138,6 +142,8 @@ INSERT INTO `posts` VALUES ('219', '$name', '', '0', '0', '0', '', '', 'public',
 INSERT INTO `posts` VALUES ('220', '$name', '', '0', '0', '0', '', '', 'public', '2016-07-17 15:39:41', '$linddk-1', '0', '0', 'navigation', '', '', '0');
 INSERT INTO `posts` VALUES ('221', '$name', '', '0', '0', '0', '', '', 'public', '2016-07-17 15:39:45', '$linddk-2', '0', '0', 'navigation', '', '', '0');
 INSERT INTO `posts` VALUES ('222', 'A', '', '0', '0', '0', '', '', 'public', '2016-07-17 15:42:18', 'addsf', '0', '0', 'navigation', '', '', '0');
+INSERT INTO `posts` VALUES ('223', 'abc', '', '0', '0', '0', '', '', 'public', '2016-07-18 08:13:57', 'abc', '0', '0', 'navigation', '', '', '0');
+INSERT INTO `posts` VALUES ('224', 'Trang Chủ', '', '0', '0', '0', '', '', 'public', '2016-07-18 08:58:45', 'http://localhost/ShareToLearn/', '0', '0', 'navigation', '', '', '0');
 
 -- ----------------------------
 -- Table structure for terms

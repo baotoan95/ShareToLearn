@@ -20,5 +20,22 @@ class My_Controller extends CI_Controller {
         );
     }
     
+    public function createListPostsPopular() {
+        // GET list post popular
+        $condition = array(
+            "order_by" => "p_view_count",
+            "type" => 'post',
+            "status" => 'public',
+        );
+        $this->_data['populars'] = $this->mPost->getPosts($condition, 
+                array('records' => 10, 'begin' => 0))['posts'];
+    }
+    
+    protected function createListCmtsLatest() {
+        // GET list comment latest
+        $this->_data['cmt_latests'] = $this->mComment->getComments(array(), 
+                array('records' => 10, 'begin' => 0))['comments'];
+    }
+    
     
 }

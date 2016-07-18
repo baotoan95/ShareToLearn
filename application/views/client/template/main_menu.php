@@ -6,9 +6,9 @@
     </nav>
 
     <div class="search-bar right clearfix">
-        <form action="http://www.example.com">
-            <input name="s" type="text" data-value="search" value="search">
-            <input name="submit" type="submit" value="">
+        <form action="<?php echo base_url() . 'redirect/search'; ?>">
+            <input name="s" type="text" data-value="search" value="">
+            <input type="submit" value="">
         </form>
     </div>
 </header>

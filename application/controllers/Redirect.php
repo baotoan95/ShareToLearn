@@ -12,7 +12,7 @@ class Redirect extends My_Controller {
     public function index() {
         $this->load->library('pagination');
         $segment = $this->input->get('p');
-
+        // Config for pagination
         $config = array(
             "base_url" => base_url(),
             "prefix" => "redirect?p=",
@@ -24,38 +24,144 @@ class Redirect extends My_Controller {
             "type" => "post",
             "status" => "public"
         );
-        // GET list post order by date
+        // GET list post order by date (latest)
         $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
         $config['total_rows'] = $result['total'];
 
-        // GET list post popular
-        $condition = array(
-            "order_by" => "p_view_count",
-            "type" => 'post',
-            "status" => 'public',
-        );
-        $populars = $this->mPost->getPosts($condition, array('records' => 10, 'begin' => 0));
-
-        // GET list comment latest
-        $lastest_comments = $this->mComment->getComments(array(), array('records' => 10, 'begin' => 0));
-
         // Init data to response client
-        $data = array(
-            "sidebar" => 'client/template/sidebar',
-            "content" => 'client/index',
-            "post_latest" => $result['posts'],
-            "populars" => $populars['posts'],
-            "latests" => $lastest_comments['comments'],
-            "links" => pagination($config, $this->pagination) // Init pagination
-        );
+        $this->createListPostsPopular();
+        $this->createListCmtsLatest();
+        $this->_data['boxTitle'] = "Bài Viết Mới";
+        $this->_data['sidebar'] = 'client/template/sidebar';
+        $this->_data['content'] = 'client/index';
+        $this->_data['posts'] = $result['posts'];
+        // Init pagination for post latest
+        $this->_data['links'] = pagination($config, $this->pagination);
 
         $this->load->view('client/template/main', $this->_data);
     }
 
-    public function category() {
+    public function single($guid, $id) {
+        // Init data to response client
+        $this->createListPostsPopular();
+        $this->createListCmtsLatest();
+        $this->_data['sidebar'] = 'client/template/sidebar';
+        $this->_data['comments'] = $this->generateCommentLevel($this->mComment->getCommentsByPostId($id), 0, 0);
+        // GET post include tags itself
+        $post = NULL;
+        if($id == 0) { // url: [guid].html
+            $post = $this->mPost->getPostByGuid($guid, 'page', FALSE, TRUE);
+        } else { // url: [guid]-[id].html
+            $post = $this->mPost->getPostById($id, FALSE, TRUE);
+        }
+        // Check post is existed
+        if(NULL == $post) {
+            $this->_data['content'] = 'client/404';
+            $this->load->view('client/template/main', $this->_data);
+            return;
+        }
+        $this->_data['post'] = $post;
+        $this->_data['title'] = $post->getTitle();
+        $this->_data['content'] = 'client/single';
+        if($guid == $post->getGuid()) {
+            $this->load->view('client/template/main', $this->_data);
+        } else {
+            header('Location: ' . base_url() . $post->getGuid() . '-' . $id . '.html');
+        }
+    }
+
+    public function contact() {
+        $this->createListPostsPopular();
+        $this->createListCmtsLatest();
+        $this->_data['title'] = 'Liên hệ';
+        $this->_data['sidebar'] = 'client/template/sidebar';
+        $this->_data['content'] = 'client/contact';
+        
+        $this->load->view('client/template/main', $this->_data);
+    }
+    
+    public function authors() {
+        $this->createListPostsPopular();
+        $this->createListCmtsLatest();
+        $this->_data['title'] = 'Danh sách tác giả';
+        $this->_data['sidebar'] = 'client/template/sidebar';
+        $this->_data['content'] = 'client/authors';
+        $this->_data['users'] = $this->mUser->getUsers(array("records" => 100, "begin" => 0), 'writer')['users'];
+        $this->load->view('client/template/main', $this->_data);
+    }
+    
+    public function search() {
+        $this->load->library('pagination');
+        
+        $s = $this->input->get('s');
+        $segment = intval($this->input->get('p'));
+        
+        // Config pagination
+        $config = array(
+            "base_url" => base_url() . 'redirect',
+            "prefix" => "search?s={$s}&p=",
+            "per_page" => 10,
+            "cur_page" => $segment
+        );
+
+        $condition = array(
+            "type" => ["post", "page"],
+            "status" => "public",
+            "title" => $s
+        );
+        // GET list post order by date (latest)
+        $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
+        $config['total_rows'] = $result['total'];
+        
+        // Init pagination for post latest
+        $this->createListPostsPopular();
+        $this->createListCmtsLatest();
+        $this->_data['title'] = 'Kết quả tìm kiếm';
+        $this->_data['boxTitle'] = "Kết quả cho \"$s\"";
+        $this->_data['sidebar'] = 'client/template/sidebar';
+        $this->_data['content'] = 'client/index';
+        $this->_data['posts'] = $result['posts'];
+        $this->_data['links'] = pagination($config, $this->pagination);
+        
+        $this->load->view('client/template/main', $this->_data);
+    }
+    
+    /**
+     * GET list post by category or tag
+     * @param string $slug
+     */
+    public function byClassify($classify, $slug) {
+        $this->createListPostsPopular();
+        $this->createListCmtsLatest();
+        $this->_data['title'] = 'Kết quả tìm kiếm';
+        $this->_data['sidebar'] = 'client/template/sidebar';
+        $this->_data['content'] = 'client/category';
+        
+        $this->load->view('client/template/main', $this->_data);
+    }
+
+    public function video() {
         $data = array(
-            "sidebar" => 'client/template/sidebar',
-            "content" => 'client/category'
+            "content" => 'client/video'
+        );
+        $this->load->view('client/template/main', $data);
+    }
+
+    public function underconstruct() {
+        $this->load->view('client/underconstruction');
+    }
+
+    public function youtube() {
+        $data = array(
+            "sidebar" => 'client/template/sidebar2',
+            "content" => 'client/youtube'
+        );
+        $this->load->view('client/template/main', $data);
+    }
+
+    public function shortcodes() {
+        $data = array(
+            "content" => 'client/shortcodes'
         );
         $this->load->view('client/template/main', $data);
     }
@@ -96,86 +202,6 @@ class Redirect extends My_Controller {
             }
             return $html .= ($parentId == 0 ? "" : "</ul>");
         }
-    }
-
-    public function single($id) {
-        // GET list post popular
-        $condition = array(
-            "order_by" => "p_view_count",
-            "type" => 'post',
-            "status" => 'public',
-        );
-        $populars = $this->mPost->getPosts($condition, array('records' => 10, 'begin' => 0));
-
-        // GET list comment latest
-        $lastest_comments = $this->mComment->getComments(array(), array('records' => 10, 'begin' => 0));
-
-        $data = array(
-            "sidebar" => 'client/template/sidebar',
-            "content" => 'client/single',
-            "populars" => $populars['posts'],
-            "latests" => $lastest_comments['comments'],
-            "comments" => $this->generateCommentLevel($this->mComment->getCommentsByPostId($id), 0, 0),
-            "post" => $this->mPost->getPostById($id, FALSE, TRUE) // GET post by id include tags itself
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
-    public function contact() {
-        $data = array(
-            "sidebar" => 'client/template/sidebar2',
-            "content" => 'client/contact'
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
-    public function video() {
-        $data = array(
-            "content" => 'client/video'
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
-    public function underconstruct() {
-        $this->load->view('client/underconstruction');
-    }
-
-    public function youtube() {
-        $data = array(
-            "sidebar" => 'client/template/sidebar2',
-            "content" => 'client/youtube'
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
-    public function shortcodes() {
-        $data = array(
-            "content" => 'client/shortcodes'
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
-    public function authors() {
-        // GET list post popular
-        $condition = array(
-            "order_by" => "p_view_count",
-            "type" => 'post',
-            "status" => 'public',
-        );
-        $populars = $this->mPost->getPosts($condition, array('records' => 10, 'begin' => 0));
-
-        // GET list comment latest
-        $lastest_comments = $this->mComment->getComments(array(), array('records' => 10, 'begin' => 0));
-        
-        $data = array(
-            "title" => 'Danh Sách Tác Giả',
-            "sidebar" => 'client/template/sidebar',
-            "content" => 'client/authors',
-            "populars" => $populars['posts'],
-            "latests" => $lastest_comments['comments'],
-            "users" => $this->mUser->getUsers(array("records" => 100, "begin" => 0), 'writer')['users']
-        );
-        $this->load->view('client/template/main', $data);
     }
 
 }

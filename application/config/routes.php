@@ -52,3 +52,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'redirect';
 $route['404_override'] = 'error';
 $route['translate_uri_dashes'] = FALSE;
+
+/* MY ROUTING */
+
+$route['(:any)-(:num).html'] = 'redirect/single/$1/$2';
+$route['(:any).html'] = 'redirect/single/$1/0';
+
