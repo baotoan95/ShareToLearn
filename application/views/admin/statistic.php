@@ -634,3 +634,6 @@
         </div><!-- /.box -->
     </div><!-- /.col -->
 </div><!-- /.row -->
+
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+        <script src="<?php echo base_url() . 'assets/admin/dist/js/pages/dashboard2.js' ?>" type="text/javascript"></script>

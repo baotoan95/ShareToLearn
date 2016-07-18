@@ -11,14 +11,14 @@ class EMenuItem {
     private $name;
     private $slug;
     private $parent;
-    private $type;
+    private $meta;
 
-    public function __construct($id = 0, $name = '', $slug = '', $parent = 0, $type = '') {
+    public function __construct($id = 0, $name = '', $slug = '', $parent = 0, $meta = '') {
         $this->id = $id;
         $this->name = $name;
         $this->slug = $slug;
         $this->parent = $parent;
-        $this->type = $type;
+        $this->meta = $meta;
     }
 
     public function getId() {
@@ -37,8 +37,8 @@ class EMenuItem {
         return $this->parent;
     }
 
-    public function getType() {
-        return $this->type;
+    public function getMeta() {
+        return $this->meta;
     }
 
     public function setId($id) {
@@ -57,8 +57,8 @@ class EMenuItem {
         $this->parent = $parent;
     }
 
-    public function setType($type) {
-        $this->type = $type;
+    public function setMeta($meta) {
+        $this->meta = $meta;
     }
 
 }

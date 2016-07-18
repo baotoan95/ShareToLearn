@@ -1,5 +1,5 @@
 <?php
-
+require_once 'Base_Model.php';
 /**
  * Description of MMenu
  *
@@ -8,15 +8,24 @@
 class MMenu extends Base_Model {
     public function __construct() {
         parent::__construct();
+        // Import class
+        $this->load->model('EMenuItem');
+        
+        // Set default value
         $this->set_table('menu', 'mn_id');
     }
     
+    /**
+     * 
+     * @param object $menu
+     * @return int index of record just inserted
+     */
     public function addMenuItem($menu) {
         $data = array(
             "mn_name" => $menu->getName(),
             "mn_slug" => $menu->getSlug(),
             "mn_parent" => $menu->getParent(),
-            "mn_type" => $menu->getType()
+            "mn_meta_value" => $menu->getMeta()
         );
         return $this->insert($data);
     }
@@ -26,7 +35,7 @@ class MMenu extends Base_Model {
         $menu = array();
         foreach($menuTemps as $menuItem) {
             $menu[] = new EMenuItem($menuItem['mn_id'], $menuItem['mn_name'], 
-                    $menuItem['mn_slug'], $menuItem['mn_parent'], $menuItem['mn_type']);
+                    $menuItem['mn_slug'], $menuItem['mn_parent'], $menuItem['mn_meta_value']);
         }
         return $menu;
     }
@@ -37,35 +46,50 @@ class MMenu extends Base_Model {
         $menu = array();
         foreach($menuItems as $item) {
             $menu[] = new EMenuItem($menuItem['mn_id'], $menuItem['mn_name'], 
-                    $menuItem['mn_slug'], $menuItem['mn_parent'], $menuItem['mn_type']);
+                    $menuItem['mn_slug'], $menuItem['mn_parent'], $menuItem['mn_meta_value']);
         }
         return $menu;
     }
     
+    /**
+     * 
+     * @param array $menuItems List of EMenuItem
+     * @param array $config includes tag_name: tag name before menuItem name. 
+     *                               tag_container_name: tag name before tag_name
+     * @param int $parentId
+     * @param string $html
+     * @return string
+     */
     public function generateMenu($menuItems, $config, $parentId = 0, $html = '') {
         // Create a temp list
-        $cmtTemps = $menuItems;
+        $menuTemps = $menuItems;
         // GET list sub comment by parentId search in comments list
-        $subCmts = array();
-        for ($i = 0; $i < count($cmtTemps); $i ++) {
+        $subMenu = array();
+        for ($i = 0; $i < count($menuTemps); $i ++) {
             // If found: remove it from $comments and add to subCmts
             if ($menuItems[$i]->getParent() == $parentId) {
                 unset($menuItems[$i]);
-                $subCmts[] = $cmtTemps[$i];
+                $subMenu[] = $menuTemps[$i];
             }
         }
         $menuItems = array_values($menuItems);
         
         // Add list sub comment to html and recursive
-        if(empty($subCmts)) {
+        if(empty($subMenu)) {
             return "";
         } else {
-            $html = ($parentId == 0) ? "" : "<{$config['tag_container_name']} class='dd-list'>";
-            foreach ($subCmts as $cmt) {
-                $html .= "<li class='dd-item' data-id='{$cmt->getId()}-{$cmt->getType()}'><{$config['tag_name']} class='dd-handle'>" .
-                        $cmt->getName() . "</{$config['tag_name']}>" .
-                                $this->generateMenu($menuItems, $config, $cmt->getId(), $html) .
-                            "</li>";
+            $html = ($parentId == 0) ? "" : "<{$config['tag_container_name']} class='dd-list sub-menu'>";
+            foreach ($subMenu as $item) {
+                // Parse meta value to get id and type of menu item
+                $meta = json_decode($item->getMeta(), TRUE);
+                $html .= "<li class='dd-item' data-id='{$meta['id']}-{$meta['type']}'>"
+                            . "<{$config['tag_name']} class='dd-handle' href='" . $item->getSlug() . "'>" .
+                                $item->getName() . 
+                                        // If client side (tag name is <a>) then don't add type
+                                        (($config['tag_name'] != 'a') ? " [" . strtoupper($meta['type']) . "]" : "")
+                            . "</{$config['tag_name']}>" .
+                              $this->generateMenu($menuItems, $config, $item->getId(), $html) .
+                          "</li>";
             }
             return $html. (($parentId == 0) ? "" : "</{$config['tag_container_name']}>");
         }
@@ -91,14 +115,12 @@ class MMenu extends Base_Model {
     public function store($menuItems, $parentId = 0) {
         foreach($menuItems as $item) {
             $menuItem = $this->createMenuItemByType($item['id'], $parentId);
-            var_dump($menuItem);
+            var_dump($menuItem) . "<br/>";
             $parent = $this->mMenu->addMenuItem($menuItem);
             // If have any child: recursive
             if(array_key_exists('children', $item)) {
-                echo "child<br/>";
+                echo "child<br/><br/><br/>";
                 $this->store($item['children'], $parent);
-            } else {
-                $parentId = 0;
             }
         }
     }
@@ -110,15 +132,17 @@ class MMenu extends Base_Model {
      */
     private function createMenuItemByType($str, $parentId) {
         $data = explode("-", $str); // GET id and type
+        // Create meta value for menuItem {"id":"id","type":"type"}
+        $meta_value = '{"id":"' . trim($data[0]) . '","type":"' . trim($data[1]) . '"}';
         switch (trim($data[1])) {
             case 'post':
             case 'page':
             case 'navigation': 
                 $post = $this->mPost->getPostById($data[0]);
-                return new EMenuItem(0, $post->getTitle(), $post->getGuid(), $parentId, trim($data[1]));
+                return new EMenuItem(0, $post->getTitle(), $post->getGuid(), $parentId, $meta_value);
             case 'category': 
                 $category = $this->mCategory->getCategoryById($data[0]);
-                return new EMenuItem(0, $category->getName(), $category->getSlug(), $parentId, trim($data[1]));
+                return new EMenuItem(0, $category->getName(), $category->getSlug(), $parentId, $meta_value);
         }
     }
 }

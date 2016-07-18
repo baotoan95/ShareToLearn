@@ -7,7 +7,7 @@
                 <img src="<?php echo base_url() . 'assets/admin/dist/img/user2-160x160.jpg' ?>" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p>Bảo Toàn</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
@@ -21,60 +21,60 @@
             </li>
             <li>
                 <a href="<?php echo base_url() . 'menu/menus'?>">
-                    <i class="fa fa-book"></i> <span>Quản lý thực đơn</span>
+                    <i class="fa fa-book"></i> <span>Menu</span>
                 </a>
             </li>
             <li class="treeview">
                 <a href="<?php echo base_url() . 'category/categories'?>">
                     <i class="fa fa-folder"></i>
-                    <span>Quản lý thể loại</span>
+                    <span>Categories</span>
                 </a>
             </li>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-files-o"></i>
-                    <span>Quản lý trang</span>
+                    <span>Pages</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'post/posts?type=page&status=all'?>"><i class="fa fa-circle-o"></i> Tất cả trang</a></li>
-                    <li><a href="<?php echo base_url() . 'post/newpost?type=page'?>"><i class="fa fa-circle-o"></i> Thêm trang</a></li>
+                    <li><a href="<?php echo base_url() . 'post/posts?type=page&status=all'?>"><i class="fa fa-circle-o"></i> All pages</a></li>
+                    <li><a href="<?php echo base_url() . 'post/newpost?type=page'?>"><i class="fa fa-circle-o"></i> Add a page</a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-files-o"></i>
-                    <span>Quản lý bài viết</span>
+                    <span>Posts</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'post/posts?status=all'?>"><i class="fa fa-circle-o"></i> Tất cả bài viết</a></li>
-                    <li class="active"><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Thêm bài viết</a></li>
+                    <li><a href="<?php echo base_url() . 'post/posts?status=all'?>"><i class="fa fa-circle-o"></i> All posts</a></li>
+                    <li class="active"><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Add a post</a></li>
                     <li><a href="<?php echo base_url() . 'tag/tags'?>"><i class="fa fa-circle-o"></i> Tags</a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="<?php echo base_url() . 'comment/comments'?>">
-                    <i class="fa fa-edit"></i> <span>Quản lý bình luận</span>
+                    <i class="fa fa-edit"></i> <span>Discussion</span>
                     <small class="label pull-right bg-yellow">12</small>
                 </a>
             </li>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-users"></i>
-                    <span>Quản lý người dùng</span>
+                    <span>Users</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="<?php echo base_url() . 'user/users?role=all'?>"><i class="fa fa-circle-o"></i> Tất cả người dùng</a></li>
-                    <li><a href="<?php echo base_url() . 'user/newuser'?>"><i class="fa fa-circle-o"></i> Thêm người dùng</a></li>
-                    <li><a href="<?php echo base_url() . 'adminredirect/profile'?>"><i class="fa fa-circle-o"></i> Hồ sơ của bạn</a></li>
+                    <li><a href="<?php echo base_url() . 'user/users?role=all'?>"><i class="fa fa-circle-o"></i> All users</a></li>
+                    <li><a href="<?php echo base_url() . 'user/newuser'?>"><i class="fa fa-circle-o"></i> Add a user</a></li>
+                    <li><a href="<?php echo base_url() . 'adminredirect/profile'?>"><i class="fa fa-circle-o"></i> Your profile</a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="<?php echo base_url() . 'adminredirect/setting'?>">
                     <i class="fa fa-cog"></i>
-                    <span>Cấu Hình</span>
+                    <span>Setting</span>
                 </a>
             </li>
         </ul>

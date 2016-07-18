@@ -7,14 +7,7 @@ defined('BASEPATH') or exit('No derect script access allowed');
  *
  * @author BaoToan
  */
-class Redirect extends CI_Controller {
-
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('mPost');
-        $this->load->model('mComment');
-        $this->load->model('mUser');
-    }
+class Redirect extends My_Controller {
 
     public function index() {
         $this->load->library('pagination');
@@ -56,7 +49,7 @@ class Redirect extends CI_Controller {
             "links" => pagination($config, $this->pagination) // Init pagination
         );
 
-        $this->load->view('client/template/main', $data);
+        $this->load->view('client/template/main', $this->_data);
     }
 
     public function category() {
@@ -139,14 +132,6 @@ class Redirect extends CI_Controller {
     public function video() {
         $data = array(
             "content" => 'client/video'
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
-    public function error404() {
-        $data = array(
-            "sidebar" => 'client/template/sidebar2',
-            "content" => 'client/404'
         );
         $this->load->view('client/template/main', $data);
     }

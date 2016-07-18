@@ -95,8 +95,6 @@
         <script src="<?php echo base_url() . 'assets/admin/plugins/slimScroll/jquery.slimscroll.min.js' ?>" type="text/javascript"></script>
         <!-- ChartJS 1.0.1 -->
         <script src="<?php echo base_url() . 'assets/admin/plugins/chartjs/Chart.min.js' ?>" type="text/javascript"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="<?php echo base_url() . 'assets/admin/dist/js/pages/dashboard2.js' ?>" type="text/javascript"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo base_url() . 'assets/admin/dist/js/demo.js' ?>" type="text/javascript"></script>
     </body>
