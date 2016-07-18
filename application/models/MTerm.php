@@ -64,6 +64,15 @@ class MTerm extends Base_Model {
         $this->db->limit(1, 0);
         return $this->db->get()->row_array();
     }
+    
+    public function getTermBySlug($slug, $taxonomy_name) {
+        $this->db->select('t_id, tt_id, t_name, t_slug, t_group, tt_taxonomy_name, tt_desc, tt_parent, tt_count');
+        $this->db->from($this->_table['table_name']);
+        $this->db->join('term_taxonomy', 'terms.t_id = term_taxonomy.tt_term_id');
+        $this->db->where("terms.t_slug = '$slug' and term_taxonomy.tt_taxonomy_name = '$taxonomy_name'");
+        $this->db->limit(1, 0);
+        return $this->db->get()->row_array();
+    }
 
     /**
      * 

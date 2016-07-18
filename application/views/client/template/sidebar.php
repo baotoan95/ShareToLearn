@@ -12,11 +12,11 @@
                         foreach($populars as $popular) {
                     ?>
                     <li>
-                        <a href="<?php echo base_url() . 'redirect/single/' . $popular->getId(); ?>">
+                        <a href="<?php echo base_url() . $popular->getGuid() . '-' . $popular->getId() . '.html'; ?>">
                             <img alt="<?php echo $popular->getTitle(); ?>" src="<?php echo base_url() . "assets/upload/images/" . $popular->getBanner(); ?>">
                         </a>
                         <h3>
-                            <a href="<?php echo base_url() . 'redirect/single/' . $popular->getId(); ?>"><?php echo $popular->getTitle(); ?></a>
+                            <a href="<?php echo base_url() . $popular->getGuid() . '-' . $popular->getId() . '.html'; ?>"><?php echo $popular->getTitle(); ?></a>
                         </h3>
                         <div class="post-date"><?php echo $popular->getPublished(); ?></div>
                     </li>
@@ -32,11 +32,15 @@
                         foreach($cmt_latests as $comment) {
                     ?>
                     <li>
-                        <a href="<?php echo base_url() . 'redirect/single/' . $comment->getPostId() . '#cmt_' . $comment->getId(); ?>">
+                        <a href="<?php echo base_url() . $comment->getPost()->getGuid() . '-' . 
+                                $comment->getPost()->getId() . '.html#cmt_' . $comment->getId(); ?>">
                             <img alt="" src="http://placehold.it/60x60">
                         </a>
                         <h3>
-                            <a href="#"><?php echo $comment->getAuthor(); ?> says:</a>
+                            <a href="<?php echo base_url() . $comment->getPost()->getGuid() . '-' . 
+                                    $comment->getPost()->getId() . '.html#cmt_' . $comment->getId(); ?>">
+                                        <?php echo $comment->getAuthor(); ?>
+                            </a>
                         </h3>
                         <div class="author-comment"><?php echo $comment->getContent(); ?></div>
                     </li>

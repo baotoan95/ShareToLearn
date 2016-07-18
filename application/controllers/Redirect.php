@@ -8,6 +8,10 @@ defined('BASEPATH') or exit('No derect script access allowed');
  * @author BaoToan
  */
 class Redirect extends My_Controller {
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('mTerm');
+    }
 
     public function index() {
         $this->load->library('pagination');
@@ -47,6 +51,7 @@ class Redirect extends My_Controller {
         $this->createListCmtsLatest();
         $this->_data['sidebar'] = 'client/template/sidebar';
         $this->_data['comments'] = $this->generateCommentLevel($this->mComment->getCommentsByPostId($id), 0, 0);
+        
         // GET post include tags itself
         $post = NULL;
         if($id == 0) { // url: [guid].html
@@ -110,7 +115,8 @@ class Redirect extends My_Controller {
             "title" => $s
         );
         // GET list post order by date (latest)
-        $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
+        $result = $this->mPost->getPosts($condition, 
+                array('records' => $config['per_page'], 'begin' => $segment));
         $config['total_rows'] = $result['total'];
         
         // Init pagination for post latest
@@ -130,12 +136,45 @@ class Redirect extends My_Controller {
      * GET list post by category or tag
      * @param string $slug
      */
-    public function byClassify($classify, $slug) {
+    public function category($cate, $slug) {
+        $this->load->library('pagination');
+        // Init data response to client
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
         $this->_data['title'] = 'Kết quả tìm kiếm';
         $this->_data['sidebar'] = 'client/template/sidebar';
-        $this->_data['content'] = 'client/category';
+        
+        $segment = intval($this->input->get('p'));
+        
+        // GET termTaxonomy id (category or tag)
+        $term = $this->mTerm->getTermBySlug($slug, $cate);
+        if(empty($term)) { // If not exist term taxonomy then error 404
+            $this->_data['content'] = 'client/404';
+            $this->load->view('client/template/main', $this->_data);
+            return;
+        }
+        
+        // Config pagination
+        $config = array(
+            "base_url" => base_url() . 'redirect',
+            "prefix" => "category&p=",
+            "per_page" => 10,
+            "cur_page" => $segment
+        );
+
+        $condition = array(
+            "type" => ["post", "page"],
+            "status" => "public",
+            "taxonomy" => $term['t_id']
+        );
+        // GET list post order by date (latest)
+        $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
+        $config['total_rows'] = $result['total'];
+        
+        $this->_data['content'] = 'client/index';
+        $this->_data['posts'] = $result['posts'];
+        $this->_data['boxTitle'] = $term['t_name'];
+        $this->_data['links'] = pagination($config, $this->pagination);
         
         $this->load->view('client/template/main', $this->_data);
     }

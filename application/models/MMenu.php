@@ -136,13 +136,20 @@ class MMenu extends Base_Model {
         $meta_value = '{"id":"' . trim($data[0]) . '","type":"' . trim($data[1]) . '"}';
         switch (trim($data[1])) {
             case 'post':
+                $post = $this->mPost->getPostById($data[0]);
+                return new EMenuItem(0, $post->getTitle(), base_url() . 
+                        $post->getGuid() . '-' . $post->getId() . '.html', $parentId, $meta_value);
             case 'page':
+                $post = $this->mPost->getPostById($data[0]);
+                return new EMenuItem(0, $post->getTitle(), base_url() . 
+                        $post->getGuid() . '.html', $parentId, $meta_value);
             case 'navigation': 
                 $post = $this->mPost->getPostById($data[0]);
                 return new EMenuItem(0, $post->getTitle(), $post->getGuid(), $parentId, $meta_value);
             case 'category': 
                 $category = $this->mCategory->getCategoryById($data[0]);
-                return new EMenuItem(0, $category->getName(), $category->getSlug(), $parentId, $meta_value);
+                return new EMenuItem(0, $category->getName(), base_url() . 
+                        'the-loai/' . $category->getSlug(), $parentId, $meta_value);
         }
     }
 }

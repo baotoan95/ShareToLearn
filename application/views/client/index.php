@@ -5,6 +5,7 @@
     <!-- Posts -->
     <section class="row">
         <?php
+            echo count($posts) == 0 ? "<div class='twelve column'>Không có kết quả nào</div>" : "";
             foreach($posts as $post) {
         ?>
         <!-- post -->

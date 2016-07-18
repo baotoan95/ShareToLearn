@@ -101,7 +101,7 @@ class MPost extends Base_Model {
             $this->db->select("count(p_id) as count");
             $count = $this->db->get_where($this->_table['table_name'], 
                     array('p_guid like' => "$guid-%"))->row()->count;
-            return "-" . (++$count);
+            return "-i" . (++$count);
         } else {
             return "";
         }
@@ -164,7 +164,7 @@ class MPost extends Base_Model {
     public function getPostByGuid($guid, $type, $inc_cates = FALSE, $inc_tags = TRUE) {
         $this->db->where('p_guid', $guid);
         $this->db->where('p_type', $type);
-        $postTemp = $this->db->get($this->_table['table_name'])->row();
+        $postTemp = $this->db->get($this->_table['table_name'])->row_array();
         return $this->createAPost($postTemp, $inc_cates, $inc_tags);
     }
 

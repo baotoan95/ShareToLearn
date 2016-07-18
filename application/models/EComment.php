@@ -19,6 +19,7 @@ class EComment implements JsonSerializable {
     private $content;
     private $parent;
     private $prev_status;
+    private $post;
 
     public function __construct($id = 0, $postId = 0, $author = '', $email = '', $website = '', $userId = 0, $date = '', $status = '', $type = '', $content = '', $parent = 0) {
         $this->id = $id;
@@ -129,7 +130,15 @@ class EComment implements JsonSerializable {
     public function setPrev_status($prev_status) {
         $this->prev_status = $prev_status;
     }
-    
+
+    public function getPost() {
+        return $this->post;
+    }
+
+    public function setPost($post) {
+        $this->post = $post;
+    }
+
     public function jsonSerialize() {
         return [
             "id" => $this->getId(),

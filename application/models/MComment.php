@@ -13,6 +13,8 @@ class MComment extends Base_Model {
         $this->load->model('EComment');
         
         $this->set_table('comments', 'cmt_id');
+        
+        $this->load->model('mPost');
     }
     
     public function addComment($comment) {
@@ -89,6 +91,7 @@ class MComment extends Base_Model {
                     $item['cmt_date'], $item['cmt_status'], $item['cmt_type'], 
                     $item['cmt_content'], $item['cmt_parent']);
             $comment->setPrev_status($item['cmt_prev_status']);
+            $comment->setPost($this->mPost->getPostById($item['cmt_post_id']));
             $comments[] = $comment;
         }
         return array(

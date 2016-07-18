@@ -285,11 +285,10 @@
                     link: $('#link').val()
                 },
                 success: function(res) {
-                    alert(res);
                     if(res !== 'failure') {
                         $('#menus').append(
                             '<li class="dd-item" data-id="'+ res + '-navigation">' +
-                                '<div class="dd-handle">'+ $('#link_name').val() +' [LINK]</div>' +
+                                '<div class="dd-handle">'+ $('#link_name').val() +' [NAVIGATION]</div>' +
                             '</li>'
                         );
                         updateOutput($('#nestable').data('output', $('#nestable-output')));
