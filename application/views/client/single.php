@@ -1,4 +1,18 @@
 <section id="content" class="eight column row pull-left singlepost">
+    <?php
+    if(strlen($post->getPassword()) > 0) {
+    ?>
+    <div id="password_required">
+        This content is password protected. To view it please enter your password below:
+        <form action="<?php echo base_url() . 'user/checkLogin?action=passpost'?>" method="post">
+            <input type="hidden" name="id" value="<?php echo $post->getId(); ?>"/>
+            <br/><input type="password" placeholder="Enter password" style="width: 200px; display: inline;" name="password"/>
+        </form>
+    </div>
+    <?php
+    } else {
+    ?>
+    <!-- =========================================================== -->
     <a class="featured-img"><img src="<?php echo base_url() . "assets/upload/images/" . $post->getBanner(); ?>" alt=""></a>
 
     <h1 class="post-title"><?php echo $post->getTitle(); ?></h1>
@@ -174,4 +188,7 @@
             });
         });
     </script>
+    <?php
+    }
+    ?>
 </section>

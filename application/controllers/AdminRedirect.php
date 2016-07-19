@@ -28,13 +28,6 @@ class AdminRedirect extends CI_Controller {
         );
         $this->load->view('admin/template/main', $data);
     }
-
-    public function profile() {
-        $data = array(
-            "content" => "admin/user"
-        );
-        $this->load->view('admin/template/main', $data);
-    }
     
     public function setting() {
         $data = array(

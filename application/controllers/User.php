@@ -13,6 +13,78 @@ class User extends CI_Controller {
         $this->load->model('EUser');
 
         $this->load->model('mUser');
+        $this->load->model('mPost');
+    }
+    
+    public function logout() {
+        $this->session->unset_userdata('cur_user');
+        header('Location: ' . base_url() . 'user/login', 301);
+    }
+    
+    public function login() {
+        // Logged in
+        if($this->session->userdata('cur_user')) {
+           header('Location: ' . base_url() . 'adminredirect', 301);
+            return;
+        }
+        $this->load->view('admin/login');
+    }
+    
+    /**
+     * Check login, password post
+     */
+    public function checkLogin() {
+        $action = $this->input->get('action');
+        $password = $this->input->post('password');
+        
+        // Preperation data response to client
+        $data = array();
+            
+        if($action == 'passpost') {
+            $postId = $this->input->post('id');
+            $post = $this->mPost->getPostById($postId);
+            // If post does not existed: redirect to index page
+            if(NULL == $post) {
+                header('Location: ' . base_url());   
+                return;
+            }
+            // Check password post
+            if($post->getPassword() == '' || $post->getPassword() == $password) {
+                // Allowed is a string of json contains list {post_id:password}
+                $allowed = $this->session->userdata('passPosts') == NULL ? "[]" : $this->session->userdata('passPosts');
+                $data = json_decode($allowed);
+                $data[] = array()
+            }
+        } else {
+            // Check form input
+            $this->form_validation->set_rules('username', 'Username', 'required');
+            $this->form_validation->set_rules('password', 'Password', 'required');
+            
+            // Validation form
+            if($this->form_validation->run() == FALSE) {
+                $this->load->view('admin/login');
+                return;
+            }
+            
+            $username = $this->input->post('username');
+            
+            // GET user by username and password in DB
+            $user = $this->mUser->getUser($username, $password);
+            if(NULL == $user) {
+                // User does not exist
+                $this->session->set_flashdata('flash_error', 'Username or password incorrect');
+                header('Location: ' . base_url() . 'user/login', 301);
+            } else {
+                // Login successful
+                $userdata = array(
+                    "id" => $user->getId(),
+                    "fullName" => $user->getFull_name(),
+                    "avatar" => $user->getAvatar()
+                );
+                $this->session->set_userdata('cur_user', $userdata);
+                header('Location: ' . base_url() . 'adminredirect', 301);
+            }
+        }
     }
     
     private function upload_image($image, $dis, $config = array()) {

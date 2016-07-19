@@ -4,11 +4,11 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?php echo base_url() . 'assets/admin/dist/img/user2-160x160.jpg' ?>" class="img-circle" alt="User Image" />
+                <img src="<?php echo base_url() . 'assets/upload/images/avatars/' . $this->session->userdata('cur_user')['avatar']; ?>" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-                <p>Bảo Toàn</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <p><?php echo $this->session->userdata('cur_user')['fullName']; ?></p>
+                <a><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -68,7 +68,7 @@
                 <ul class="treeview-menu">
                     <li><a href="<?php echo base_url() . 'user/users?role=all'?>"><i class="fa fa-circle-o"></i> All users</a></li>
                     <li><a href="<?php echo base_url() . 'user/newuser'?>"><i class="fa fa-circle-o"></i> Add a user</a></li>
-                    <li><a href="<?php echo base_url() . 'adminredirect/profile'?>"><i class="fa fa-circle-o"></i> Your profile</a></li>
+                    <li><a href="<?php echo base_url() . 'user/edituser/' . $this->session->userdata('cur_user')['id']; ?>"><i class="fa fa-circle-o"></i> Your profile</a></li>
                 </ul>
             </li>
             <li class="treeview">

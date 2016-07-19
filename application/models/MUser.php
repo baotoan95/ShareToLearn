@@ -38,6 +38,22 @@ class MUser extends Base_Model {
         );
         return $this->insert($data);
     }
+    
+    public function getUser($username, $password) {
+        $this->db->where('u_username', $username);
+        $this->db->where('u_password', $password);
+        $this->db->limit(1, 0);
+        $userTemp = $this->db->get($this->_table['table_name'])->row_array();
+        if(empty($userTemp)) {
+            return NULL;
+        } else {
+            return new EUser($userTemp['u_id'], $userTemp['u_username'], $userTemp['u_password'], 
+                    $userTemp['u_fullname'], $userTemp['u_avatar'], $userTemp['u_desc'], $userTemp['u_bio'], 
+                    $userTemp['u_email'], $userTemp['u_phone'], $userTemp['u_facebook'], $userTemp['u_skype'], 
+                    $userTemp['u_google'], $userTemp['u_key'], $userTemp['u_actived'], $userTemp['u_role'], $userTemp['u_non_blocked'],
+                    $this->mPost->countPostByUserId($userTemp['u_id']));
+        }
+    }
 
     /**
      * 

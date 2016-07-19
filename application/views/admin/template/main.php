@@ -1,3 +1,9 @@
+<?php
+    if (!$this->session->userdata('cur_user')) {
+        header("location: " . base_url() . "user/login");
+    }
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
