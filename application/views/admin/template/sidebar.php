@@ -38,7 +38,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="<?php echo base_url() . 'post/posts?type=page&status=all'?>"><i class="fa fa-circle-o"></i> All pages</a></li>
-                    <li><a href="<?php echo base_url() . 'post/newpost?type=page'?>"><i class="fa fa-circle-o"></i> Add a page</a></li>
+                    <li><a href="<?php echo base_url() . 'post/newpost?type=page'?>"><i class="fa fa-circle-o"></i> Add new</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -49,7 +49,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="<?php echo base_url() . 'post/posts?status=all'?>"><i class="fa fa-circle-o"></i> All posts</a></li>
-                    <li class="active"><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Add a post</a></li>
+                    <li class="active"><a href="<?php echo base_url() . 'post/newpost'?>"><i class="fa fa-circle-o"></i> Add new</a></li>
                     <li><a href="<?php echo base_url() . 'tag/tags'?>"><i class="fa fa-circle-o"></i> Tags</a></li>
                 </ul>
             </li>

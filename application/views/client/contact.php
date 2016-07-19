@@ -16,11 +16,45 @@
         <form id="contact">
             <input name="name" class="left" type="text" data-value="Name" value="Name">
             <input name="mail" class="right" type="text" data-value="E-mail" value="E-mail">
-            <textarea id="comment" name="comment" class="twelve column" data-value="Message"></textarea>
+            <textarea id="comment" name="content" class="twelve column" data-value="Message"></textarea>
             <div id="msg" class="message"></div>
             <input id="submit" type="submit" value="Send">
         </form>
     </div>
+    <script lang="javascript">
+        $(document).ready(function () {
+            // Submit form
+            $('#submit').click(function (e) {
+                e.preventDefault();
+                $(this).val('Sending...');
+                var author_name = $('input[name=name]').val();
+                var cmt_content = $('textarea[name=content]').val();
+                
+                $.ajax({
+                    url: <?php echo "\"" . base_url() . "comment/addComment\"" ?>,
+                    type: "POST",
+                    dataType: "text",
+                    data: {
+                        postId: 0,
+                        name: author_name,
+                        website: $('input[name=website]').val(),
+                        content: cmt_content,
+                        parent: 0,
+                        email: $('input[name=mail]').val(), 
+                        type: 'contact'
+                    },
+                    success: function (res) {
+                        if(res !== 'failure') {
+                            $('#submit').val('Sent');
+                        }
+                    },
+                    failure: function (error) {
+                        alert(error);
+                    }
+                });
+            });
+        });
+    </script>
     <!-- End Contact Form -->
 
     <br>

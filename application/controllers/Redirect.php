@@ -179,32 +179,6 @@ class Redirect extends My_Controller {
         $this->load->view('client/template/main', $this->_data);
     }
 
-    public function video() {
-        $data = array(
-            "content" => 'client/video'
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
-    public function underconstruct() {
-        $this->load->view('client/underconstruction');
-    }
-
-    public function youtube() {
-        $data = array(
-            "sidebar" => 'client/template/sidebar2',
-            "content" => 'client/youtube'
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
-    public function shortcodes() {
-        $data = array(
-            "content" => 'client/shortcodes'
-        );
-        $this->load->view('client/template/main', $data);
-    }
-
     private function generateCommentLevel($comments, $parentId, $level, $html = '') {
         // Create a temp list
         $cmtTemps = $comments;

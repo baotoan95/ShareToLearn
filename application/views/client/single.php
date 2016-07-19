@@ -1,6 +1,9 @@
 <section id="content" class="eight column row pull-left singlepost">
     <?php
-    if(strlen($post->getPassword()) > 0) {
+    $allowed = $this->session->userdata('passPosts') == NULL ? array() : $this->session->userdata('passPosts');
+    if(strlen($post->getPassword()) > 0 && 
+            (!array_key_exists($post->getId(), $allowed) || 
+            $post->getPassword() != $allowed[$post->getId()])) {
     ?>
     <div id="password_required">
         This content is password protected. To view it please enter your password below:
@@ -78,6 +81,10 @@
 
     <div class="clear"></div>
 
+    <?php
+        if($post->getCmt_allow()) {
+    ?>
+    <!-- Comment -->
     <div class="line"></div>
 
     <h4 class="post-title">Bình luận</h4>
@@ -134,7 +141,8 @@
                         website: $('input[name=website]').val(),
                         content: cmt_content,
                         parent: parent_id,
-                        email: $('input[name=mail]').val()
+                        email: $('input[name=mail]').val(), 
+                        type: 'comment'
                     },
                     success: function (res) {
                         if(res !== 'failure' && parent_id !== '0') {
@@ -188,6 +196,9 @@
             });
         });
     </script>
+    <?php
+        }
+    ?>
     <?php
     }
     ?>

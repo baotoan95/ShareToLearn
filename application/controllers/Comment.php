@@ -22,8 +22,9 @@ class Comment extends CI_Controller {
         $content = $this->input->post('content');
         $postId = $this->input->post('postId');
         $parent = $this->input->post('parent');
+        $type = $this->input->post('type');
 
-        $comment = new EComment(0, $postId, $author, $email, $website, 1, date('y-m-d H:i:s'), 'pending', 'comment', $content, $parent);
+        $comment = new EComment(0, $postId, $author, $email, $website, 1, date('y-m-d H:i:s'), 'pending', $type, $content, $parent);
         $comment->setPrev_status('pending');
         
         $id_last_insert = $this->mComment->addComment($comment); // Get id after insert
@@ -34,6 +35,9 @@ class Comment extends CI_Controller {
         }
     }
 
+    /**
+     * admin
+     */
     public function reply() {
         $id = $this->input->post('id');
         $content = $this->input->post('content');
@@ -69,7 +73,7 @@ class Comment extends CI_Controller {
             "per_page" => 2,
             "cur_page" => $segment,
             "base_url" => base_url() . "comment",
-            "prefix" => "comments?p="
+            "prefix" => "comments?status=$status&type=$type&search=$search&p="
         );
 
         $condition = array(

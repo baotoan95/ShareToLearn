@@ -171,8 +171,8 @@
                         <label>
                             <input type="checkbox" name="comment_allowed"
                             <?php echo (isset($post) &&
-                             $post->getCmt_allow() == TRUE) ? "checked='checked'" : ""
-                            ?>>
+                             $post->getCmt_allow() == TRUE) ? "checked='checked'" : !isset($post) ? "checked" : ""
+                            ?>/>
                             Cho phép bình luận
                         </label>
                     </div>

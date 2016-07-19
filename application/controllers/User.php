@@ -17,7 +17,10 @@ class User extends CI_Controller {
     }
     
     public function logout() {
+        // Destroy user info
         $this->session->unset_userdata('cur_user');
+        // Destroy list allowed read protected post
+        $this->session->unset_userdata('passPosts');
         header('Location: ' . base_url() . 'user/login', 301);
     }
     
@@ -50,11 +53,12 @@ class User extends CI_Controller {
             }
             // Check password post
             if($post->getPassword() == '' || $post->getPassword() == $password) {
-                // Allowed is a string of json contains list {post_id:password}
-                $allowed = $this->session->userdata('passPosts') == NULL ? "[]" : $this->session->userdata('passPosts');
-                $data = json_decode($allowed);
-                $data[] = array()
+                // Allowed is a array of metadata post_id:password
+                $allowed = $this->session->userdata('passPosts') == NULL ? array() : $this->session->userdata('passPosts');
+                $allowed[$post->getId()] = $post->getPassword();
+                $this->session->set_userdata('passPosts', $allowed);
             }
+            header('Location: ' . base_url() . $post->getGuid() . '-' . $post->getId() . '.html');
         } else {
             // Check form input
             $this->form_validation->set_rules('username', 'Username', 'required');
