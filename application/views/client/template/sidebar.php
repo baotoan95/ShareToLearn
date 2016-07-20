@@ -64,6 +64,17 @@
                 ?>
             </div>
         </li>
+        <li class="widget widget_tag_cloud clearfix">
+            <h3 class="widget-title">Categories</h3>
+            <div class="tagcloud">
+                <?php
+                    foreach($post->getCategories() as $category) {
+                        echo "<a href='" . base_url() . "the-loai/{$category->getSlug()}' "
+                        . "style='font-size: 22pt;'>{$category->getName()}</a>";
+                    }
+                ?>
+            </div>
+        </li>
         <?php 
             }
         ?>

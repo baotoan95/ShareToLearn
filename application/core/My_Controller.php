@@ -33,7 +33,10 @@ class My_Controller extends CI_Controller {
     
     protected function createListCmtsLatest() {
         // GET list comment latest
-        $this->_data['cmt_latests'] = $this->mComment->getComments(array(), 
+        $condition = array(
+            "type" => "comment"
+        );
+        $this->_data['cmt_latests'] = $this->mComment->getComments($condition, 
                 array('records' => 10, 'begin' => 0))['comments'];
     }
     

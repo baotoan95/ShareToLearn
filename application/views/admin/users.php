@@ -12,7 +12,7 @@
     <form action="" method="get">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Danh Sách Bài Viết</h3><br/>
+                <h3 class="box-title">Users</h3><br/>
                 <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả tìm kiếm cho \"" . $_GET['search'] . "\"" : "" ?>
                 <div class="box-tools">
                     <div class="input-group" style="width: 150px;">
@@ -35,22 +35,22 @@
                                    class="btn btn-sm btn-default <?php if (empty($_GET['role']) || $_GET['role'] == 'all') {
                                     echo 'active';
                                 } ?>">
-                                    Tất cả (<?php echo array_pop($count); ?>)
+                                    All (<?php echo array_pop($count); ?>)
                                 </a>
                                 <?php
                                 foreach ($count as $key => $value) {
                                     switch ($key) {
                                         case 'admin': echo "<a href='$uri?role=$key' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['role']) && $_GET['role'] == 'admin') ? "active" : "") . "'>"
-                                            . "Quản trị ($value)</a>";
+                                            . "Administrator ($value)</a>";
                                             break;
                                         case 'writer': echo "<a href='$uri?role=$key' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['role']) && $_GET['role'] == 'writer') ? "active" : "") . "'>"
-                                            . "Tác giả ($value)</a>";
+                                            . "Writer ($value)</a>";
                                             break;
                                         case 'customer': echo "<a href='$uri?role=$key' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['role']) && $_GET['role'] == 'customer') ? "active" : "") . "'>"
-                                            . "Người dùng thường ($value)</a>";
+                                            . "Customer ($value)</a>";
                                             break;
                                     }
                                 }
@@ -67,12 +67,12 @@
                 <table class="table table-hover">
                     <tbody>
                         <tr>
-                            <th>Tên Tài Khoản</th>
-                            <th>Tên</th>
+                            <th>Username</th>
+                            <th>Name</th>
                             <th>Email</th>
-                            <th>Vai Trò</th>
-                            <th>Số Bài Viết</th>
-                            <th>Xóa</th>
+                            <th>Role</th>
+                            <th>Posts</th>
+                            <th>Delete</th>
                         </tr>
                         <?php
                         foreach ($users as $user) {
@@ -94,7 +94,7 @@
             <!-- End body show data -->
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-                Kết quả: <?php echo count($users) . '/' . $total; ?>
+                Total: <?php echo count($users) . '/' . $total; ?>
                 <!-- Pagination -->
 <?php echo $links ?>
             </div>

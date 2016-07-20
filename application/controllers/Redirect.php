@@ -41,7 +41,7 @@ class Redirect extends My_Controller {
         $this->_data['posts'] = $result['posts'];
         // Init pagination for post latest
         $this->_data['links'] = pagination($config, $this->pagination);
-
+        
         $this->load->view('client/template/main', $this->_data);
     }
 
@@ -57,7 +57,7 @@ class Redirect extends My_Controller {
         if($id == 0) { // url: [guid].html
             $post = $this->mPost->getPostByGuid($guid, 'page', FALSE, TRUE);
         } else { // url: [guid]-[id].html
-            $post = $this->mPost->getPostById($id, FALSE, TRUE);
+            $post = $this->mPost->getPostById($id, TRUE, TRUE);
         }
         // Check post is existed
         if(NULL == $post) {
@@ -98,8 +98,8 @@ class Redirect extends My_Controller {
     public function search() {
         $this->load->library('pagination');
         
-        $s = $this->input->get('s');
-        $segment = intval($this->input->get('p'));
+        $s = htmlentities($this->input->get('s'));
+        $segment = intval(intval($this->input->get('p')));
         
         // Config pagination
         $config = array(
@@ -141,13 +141,13 @@ class Redirect extends My_Controller {
         // Init data response to client
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
-        $this->_data['title'] = 'Kết quả tìm kiếm';
+        
         $this->_data['sidebar'] = 'client/template/sidebar';
         
         $segment = intval($this->input->get('p'));
         
         // GET termTaxonomy id (category or tag)
-        $term = $this->mTerm->getTermBySlug($slug, $cate);
+        $term = $this->mTerm->getTermBySlug($slug, htmlentities($cate));
         if(empty($term)) { // If not exist term taxonomy then error 404
             $this->_data['content'] = 'client/404';
             $this->load->view('client/template/main', $this->_data);
@@ -175,6 +175,7 @@ class Redirect extends My_Controller {
         $this->_data['posts'] = $result['posts'];
         $this->_data['boxTitle'] = $term['t_name'];
         $this->_data['links'] = pagination($config, $this->pagination);
+        $this->_data['title'] = $term['t_name'];
         
         $this->load->view('client/template/main', $this->_data);
     }

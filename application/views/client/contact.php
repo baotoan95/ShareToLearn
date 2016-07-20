@@ -13,9 +13,10 @@
 
     <!-- Contact Form -->
     <div class="contact-form cleafix">
+        <div id="form_error"></div>
         <form id="contact">
-            <input name="name" class="left" type="text" data-value="Name" value="Name">
-            <input name="mail" class="right" type="text" data-value="E-mail" value="E-mail">
+            <input name="name" class="left" type="text" data-value="Name" placeholder="Name">
+            <input name="mail" class="right" type="text" data-value="E-mail" placeholder="E-mail">
             <textarea id="comment" name="content" class="twelve column" data-value="Message"></textarea>
             <div id="msg" class="message"></div>
             <input id="submit" type="submit" value="Send">
@@ -44,9 +45,12 @@
                         type: 'contact'
                     },
                     success: function (res) {
-                        if(res !== 'failure') {
-                            $('#submit').val('Sent');
+                        if(res !== 'failure' && !$.isNumeric(res)) {
+                            $('#form_error').empty().prepend(res);
+                            $('#submit').val('Send');
+                            return;
                         }
+                        $('#submit').val('Sent. Thanks!');
                     },
                     failure: function (error) {
                         alert(error);

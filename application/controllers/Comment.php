@@ -16,13 +16,23 @@ class Comment extends CI_Controller {
     }
 
     public function addComment() {
-        $website = $this->input->post('website');
-        $author = $this->input->post('name');
-        $email = $this->input->post('email');
-        $content = $this->input->post('content');
-        $postId = $this->input->post('postId');
-        $parent = $this->input->post('parent');
-        $type = $this->input->post('type');
+        // Validation form
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('content', 'Content', 'required');
+        
+        if($this->form_validation->run() == FALSE) {
+            echo validation_errors();
+            return;
+        }
+        
+        $website = htmlentities($this->input->post('website'));
+        $author = htmlentities($this->input->post('name'));
+        $email = htmlentities($this->input->post('email'));
+        $content = htmlentities($this->input->post('content'));
+        $postId = intval($this->input->post('postId'));
+        $parent = intval($this->input->post('parent'));
+        $type = htmlentities($this->input->post('type'));
 
         $comment = new EComment(0, $postId, $author, $email, $website, 1, date('y-m-d H:i:s'), 'pending', $type, $content, $parent);
         $comment->setPrev_status('pending');

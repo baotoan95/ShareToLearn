@@ -14,7 +14,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><?php echo $title; ?></h3><br/>
-                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả tìm kiếm cho \"" . $_GET['search'] . "\"" : "" ?>
+                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Result for \"" . $_GET['search'] . "\"" : "" ?>
                 <div class="box-tools">
                     <div class="input-group" style="width: 150px;">
                         <input name="search" class="form-control input-sm pull-right"  placeholder="Tìm kiếm" type="text">
@@ -40,28 +40,28 @@
                                        echo 'active';
                                    }
                                    ?>">
-                                    Tất cả (<?php echo array_pop($count); ?>)
+                                    All (<?php echo array_pop($count); ?>)
                                 </a>
                                 <?php
                                 echo "<a id='pending' href='$uri?status=pending&type=$type' "
                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
                                 $_GET['status'] == 'pending') ? "active" : "") . "'>"
-                                . "Chờ duyệt (". (array_key_exists('pending', $count) ? $count['pending'] : '0') .")</a>";
+                                . "Pending (". (array_key_exists('pending', $count) ? $count['pending'] : '0') .")</a>";
                                 
                                 echo "<a id='approved' href='$uri?status=approved&type=$type' "
                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
                                 $_GET['status'] == 'approved') ? "active" : "") . "'>"
-                                . "Đã duyệt (". (array_key_exists('approved', $count) ? $count['approved'] : '0') .")</a>";
+                                . "Approved (". (array_key_exists('approved', $count) ? $count['approved'] : '0') .")</a>";
                                 
                                 echo "<a id='spam' href='$uri?status=spam&type=$type' "
                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
                                 $_GET['status'] == 'spam') ? "active" : "") . "'>"
-                                . "Rác (". (array_key_exists('spam', $count) ? $count['spam'] : '0') .")</a>";
+                                . "Spam (". (array_key_exists('spam', $count) ? $count['spam'] : '0') .")</a>";
                                 
                                 echo "<a id='trash' href='$uri?status=trash&type=$type' "
                                 . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) &&
                                 $_GET['status'] == 'trash') ? "active" : "") . "'>"
-                                . "Thùng rác (". (array_key_exists('trash', $count) ? $count['trash'] : '0') .")</a>";
+                                . "Trash (". (array_key_exists('trash', $count) ? $count['trash'] : '0') .")</a>";
                                 ?>
                             </div>
                         </div>
@@ -70,15 +70,15 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <select class="form-control" name="type">
-                            <option value="all">Tất cả các loại</option>
+                            <option value="all">Categories</option>
                             <option value="comment" <?php echo isset($_GET['type']) && $_GET['type'] == 'comment' ? "selected" : ""
-                                ?>>Bình luận</option>
+                                ?>>Comment</option>
                             <option value="contact" <?php echo isset($_GET['type']) && $_GET['type'] == 'contact' ? "selected" : ""
-                                ?>>Liên hệ</option>
+                                ?>>Contact</option>
                         </select>
                     </div>
                     <div class="col-lg-1">
-                        <button style="margin-top: 2px;" class="btn btn-sm btn-default">Lọc</button>
+                        <button style="margin-top: 2px;" class="btn btn-sm btn-default">Filter</button>
                     </div>
                 </div>
             </div>
@@ -89,9 +89,9 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Tác Giả</th>
-                            <th>Nội Dung</th>
-                            <th>Ngày</th>
+                            <th>Author</th>
+                            <th>Content</th>
+                            <th>Date</th>
                             <th></th>
                         </tr>
                     </thead>

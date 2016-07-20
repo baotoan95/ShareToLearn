@@ -39,7 +39,7 @@
                 <!-- Content -->
 
                 <!-- Sidebar -->
-                <?php isset($sidebar) ? $this->load->view($sidebar) : ""; ?>
+                <?php $this->load->view($sidebar) ?>
                 <!-- End Sidebar -->
 
                 <!-- Footer -->

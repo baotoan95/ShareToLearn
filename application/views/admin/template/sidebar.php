@@ -68,7 +68,7 @@
                 <ul class="treeview-menu">
                     <li><a href="<?php echo base_url() . 'user/users?role=all'?>"><i class="fa fa-circle-o"></i> All users</a></li>
                     <li><a href="<?php echo base_url() . 'user/newuser'?>"><i class="fa fa-circle-o"></i> Add a user</a></li>
-                    <li><a href="<?php echo base_url() . 'user/edituser/' . $this->session->userdata('cur_user')['id']; ?>"><i class="fa fa-circle-o"></i> Your profile</a></li>
+                    <li><a href="<?php echo base_url() . 'user/profile'; ?>"><i class="fa fa-circle-o"></i> Your profile</a></li>
                 </ul>
             </li>
             <li class="treeview">

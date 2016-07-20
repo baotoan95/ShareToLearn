@@ -5,7 +5,11 @@
         <group>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Redirect.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/User.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/client/single.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/template/header.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/AdminRedirect.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/template/sidebar.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/user.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/comments.php</file>
         </group>
     </open-files>
 </project-private>

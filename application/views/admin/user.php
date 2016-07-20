@@ -21,7 +21,7 @@
                 <input type="hidden" name="actived" value="<?php echo isset($user) ? $user->getActived() : ""; ?>"/>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="fullname">Họ Tên</label>
+                        <label for="fullname">Fullname</label>
                         <?php
                         if (form_error('fullname')) {
                             echo "<div class='has-error'>"
@@ -47,7 +47,7 @@
                         <input class="form-control" value="<?php echo isset($user) ? $user->getEmail() : set_value('email') ?>" id="email" name="email" type="email">
                     </div>
                     <div class="form-group">
-                        <label for="username">Tên tài khoản</label>
+                        <label for="username">Username</label>
                         <?php
                         if (form_error('username')) {
                             echo "<div class='has-error'>"
@@ -60,7 +60,7 @@
                         <input autocomplete="false" class="form-control" value="<?php echo isset($user) ? $user->getUsername() : set_value('username') ?>" id="username" name="username" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="password">Mật Khẩu</label>
+                        <label for="password">Password</label>
                         <?php
                         if (form_error('password')) {
                             echo "<div class='has-error'>"
@@ -73,7 +73,7 @@
                         <input class="form-control" value="<?php echo isset($user) ? $user->getPassword() : set_value('password') ?>" id="password" name="password" type="password">
                     </div>
                     <div class="form-group">
-                        <label for="phone">Điện thoại</label>
+                        <label for="phone">Phone</label>
                         <input class="form-control" value="<?php echo isset($user) ? $user->getPhone() : ""; ?>" id="phone" name="phone" type="text">
                     </div>
                     <div class="form-group">
@@ -89,7 +89,7 @@
                         <input class="form-control" value="<?php echo isset($user) ? $user->getPhone() : ""; ?>" id="google" name="google" type="text">
                     </div>
                     <div class="form-group">
-                        <label>Vai Trò</label>
+                        <label>Role</label>
                         <select class="form-control" name="role">
                             <option <?php echo (isset($user) && $user->getRole() == 'admin') ? "selected" : ""; ?> value="admin">Admin</option>
                             <option <?php echo (isset($user) && $user->getRole() == 'writer') ? "selected" : ""; ?> value="writer">Writer</option>
@@ -97,14 +97,14 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="avatar">Hình Đại Diện</label>
+                        <label for="avatar">Avatar</label>
                         <input id="avatar" type="file" name="avatar">
                         <img class="avatarPreview" src="<?php echo isset($user) ? base_url() .
                                     'assets/upload/images/avatars/' . $user->getAvatar() : "";
                             ?>"/>
                     </div>
                     <div class="form-group">
-                        <label>Mô tả</label>
+                        <label>Description</label>
                         <textarea class="form-control" name="desc" rows="3" 
                                   placeholder="Nhập ..."><?php echo isset($user) ? $user->getDesc() : ""; ?></textarea>
                     </div>

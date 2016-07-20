@@ -16,6 +16,17 @@ class User extends CI_Controller {
         $this->load->model('mPost');
     }
     
+    public function profile() {
+        $user = $this->mUser->getUserById($this->session->userdata['cur_user']['id']);
+        $data = array(
+            "title" => "Cập nhật người dùng",
+            "content" => "admin/user",
+            "user" => $user,
+            "action" => "updateUser"
+        );
+        $this->load->view('admin/template/main', $data);
+    }
+    
     public function logout() {
         // Destroy user info
         $this->session->unset_userdata('cur_user');
