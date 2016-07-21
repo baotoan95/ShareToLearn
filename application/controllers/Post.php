@@ -13,13 +13,13 @@ class Post extends CI_Controller {
         $this->load->model('ETag');
         $this->load->model('EPost');
         // Load model class
-        $this->load->model('mPost');
-        $this->load->model('mCategory');
+        $this->load->model('MPost');
+        $this->load->model('MCategory');
     }
 
     // util functions
     private function initPostView() {
-        $categoriesParentBox = $this->mCategory->getCategoriesParentBox(0);
+        $categoriesParentBox = $this->MCategory->getCategoriesParentBox(0);
         $data = array(
             "content" => "admin/post",
             "categoriesParentBox" => $categoriesParentBox
@@ -27,7 +27,7 @@ class Post extends CI_Controller {
         return $data;
     }
     private function getCategoriesBox($parentId, $categoriesNeedChecked) {
-        $categories = $this->mCategory->getCategoriesByParent($parentId, 'category');
+        $categories = $this->MCategory->getCategoriesByParent($parentId, 'category');
         // If not have any child return "" (it is condition to stop recursive)
         if ($categories) {
             $html = "<ul>";
@@ -111,7 +111,7 @@ class Post extends CI_Controller {
         $categories = array();
         if (!empty($category_ids = $this->input->post('categories'))) {
             foreach ($category_ids as $id) {
-                $categories[] = $this->mCategory->getCategoryById($id);
+                $categories[] = $this->MCategory->getCategoryById($id);
             }
         }
 
@@ -141,7 +141,7 @@ class Post extends CI_Controller {
         $post->setParent(0);
         $post->setCategories($categories);
         $post->setTags($tags);
-        $post_id = $this->mPost->addPost($post);
+        $post_id = $this->MPost->addPost($post);
         if ($post_id) {
             $this->session->set_flashdata("flash_message", "Đã thêm bài viết: " . $post->getTitle()
                     . " | <a href='" . base_url() . "post/view/" . $post->getGuid() . "'>Xem</a>");
@@ -183,13 +183,13 @@ class Post extends CI_Controller {
         $search = trim($this->input->get('search', TRUE));
 
         // Get list count by status
-        $count = $this->mPost->countByStatus($type);
+        $count = $this->MPost->countByStatus($type);
 
         // Config for pagination
         $config["base_url"] = base_url() . "post";
         $config["prefix"] = "posts?status=" . (is_array($status) ? "all" : $status) .
                 "&category=$category&date=$date&search=$search&p=";
-        $config["per_page"] = 10;
+        $config["per_page"] = 20;
         $config["cur_page"] = $segment;
 
         // GET data response client
@@ -200,7 +200,7 @@ class Post extends CI_Controller {
             "fromDate" => $date,
             "title" => $search
         );
-        $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $page));
+        $result = $this->MPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $page));
         $config["total_rows"] = $result['total'];
 
         // Call pagination helper to make links
@@ -211,8 +211,8 @@ class Post extends CI_Controller {
             "posts" => $result['posts'],
             "links" => $pagination,
             "count" => $count,
-            "dates" => $this->mPost->groupDateOfPosts(),
-            "categories" => $this->mCategory->getCategoriesParentBox(0, "", array(intval($category))),
+            "dates" => $this->MPost->groupDateOfPosts(),
+            "categories" => $this->MCategory->getCategoriesParentBox(0, "", array(intval($category))),
             "status" => (is_array($status) ? "all" : $status),
             "totalResult" => $result['total'],
             "type" => $type
@@ -223,7 +223,7 @@ class Post extends CI_Controller {
 
     public function edit($k) {
         $data = $this->initPostView();
-        $data['post'] = ($post = $this->mPost->getPostById($k, TRUE, TRUE));
+        $data['post'] = ($post = $this->MPost->getPostById($k, TRUE, TRUE));
         $data['title'] = "Cập nhật bài viết";
         $data['action'] = "update";
         $categoriesNeedChecked = $post->getCategories();
@@ -256,7 +256,7 @@ class Post extends CI_Controller {
         $categories = array();
         if (!empty($category_ids = $this->input->post('categories'))) {
             foreach ($category_ids as $id) {
-                $categories[] = $this->mCategory->getCategoryById($id);
+                $categories[] = $this->MCategory->getCategoryById($id);
             }
         }
 
@@ -292,7 +292,7 @@ class Post extends CI_Controller {
             $post->setBanner($avatar);
         } else {
             // If not have request to change avatar then set default for it
-            $post->setBanner($this->mPost->getPostById($post->getId())->getBanner());
+            $post->setBanner($this->MPost->getPostById($post->getId())->getBanner());
         }
         $post->setPassword($this->input->post('password'));
         $post->setParent(0);
@@ -305,7 +305,7 @@ class Post extends CI_Controller {
         }
 
         // Update post
-        if ($this->mPost->updatePost($post)) {
+        if ($this->MPost->updatePost($post)) {
             $this->session->set_flashdata('flash_message', 'Cập nhật thành công');
         } else {
             $this->session->set_flashdata('flash_error', 'Cập nhật thất bại');
@@ -317,7 +317,7 @@ class Post extends CI_Controller {
     
     public function deletePost() {
         $post_id = $this->input->post('id');
-        if($this->mPost->deletePost($post_id)) {
+        if($this->MPost->deletePost($post_id)) {
             echo "success";
         } else {
             echo "failure";
@@ -332,7 +332,7 @@ class Post extends CI_Controller {
             "status" => "public"
         );
         if($name != '') {$condition['title'] = $name;}
-        echo json_encode($this->mPost->getPosts($condition)['posts']);
+        echo json_encode($this->MPost->getPosts($condition)['posts']);
     }
     
     public function getPostsAjax() {
@@ -348,7 +348,7 @@ class Post extends CI_Controller {
             "status" => "public",
             "ids" => $pageIds
         );
-        echo json_encode($this->mPost->getPosts($condition)['posts']);
+        echo json_encode($this->MPost->getPosts($condition)['posts']);
     }
     
     public function addLink() {
@@ -362,7 +362,7 @@ class Post extends CI_Controller {
         $post->setStatus('public');
         $post->setPublished(date('y-m-d H:i:s'));
         
-        $post_id = $this->mPost->addPost($post);
+        $post_id = $this->MPost->addPost($post);
         if($post_id) {
             echo $post_id;
         } else {

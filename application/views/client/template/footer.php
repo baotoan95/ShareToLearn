@@ -2,17 +2,19 @@
     <!-- Footer widgets -->
     <ul class="no-bullet clearfix">
         <li class="widget four column">
-            <h3 class="widget-title">Giới Thiệu</h3>
+            <h3 class="widget-title">Lời Nhắn</h3>
             <div class="textwidget">
                 <p>
-                    ShareToLearn ra đời với phương châm "Chia sẻ để học".
-                    Nơi đây, mọi người có thể thảo luận và góp ý lẫn nhau để tìm ra giải pháp và
-                    đào sâu kiến thức, nâng cao sự hiểu biết của mình.
+                    Đây là blog của BTIT95. Mọi bài viết là do ngẫu hứng 
+                    hoặc được BTIT95 note lại từ những gì mình đã gặp 
+                    trong quá trình học tập cũng như làm việc. Mọi góp ý 
+                    xin vui lòng vào mục <a href="<?php echo base_url() . 'lien-he.html'?>">Liên Hệ</a>.
+                    
                 </p>
             </div>
         </li>
         <li class="widget four column">
-            <h3 class="widget-title">Flicker Gallery</h3>
+            <h3 class="widget-title">Các Trang Hữu Ích</h3>
             <div class="flickr-widget">
                 <ul class="block-grid four-up">
                     <li><a href="#"><img src="http://placehold.it/56x56"
@@ -21,50 +23,32 @@
                                          alt=""></a></li>
                     <li><a href="#"><img src="http://placehold.it/56x56"
                                          alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
-                    <li><a href="#"><img src="http://placehold.it/56x56"
-                                         alt=""></a></li>
+                    
                 </ul>
             </div>
         </li>
         <li class="widget four column">
-            <h3 class="widget-title">Twitter</h3>
+            <h3 class="widget-title">Thông Tin Liên Hệ</h3>
             <div class="twitter-widget">
                 <ul>
                     <li>
                         <p>
-                            <a href="#">about 25 days ago</a> Lorem ipsum dolor sit amet
-                            nulla malesuda odio morbi nunc odio tristique: <br />
-                            <a href="#">http://bit.ly/8b0wO4</a>
+                            Email: baotoan.95@gmail.com
                         </p>
                     </li>
                     <li>
                         <p>
-                            <a href="#">about 32 days ago</a> Malesuda orci ultricies
-                            pharetra onec accimsan curcus nec lorem aecenas: <br />
-                            <a href="#">http://bit.ly/8b0wO4</a>
+                            Điện thoại: 016.4900.1142
                         </p>
                     </li>
                     <li>
                         <p>
-                            <a href="#">about 59 days ago</a> Socis vestibulum cing molestie
-                            malesuada odio onces accussam orci lorem: <br />
-                            <a href="#">http://bit.ly/8b0wO4</a>
+                            Sky: BaoToan.95
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Facebook: https://fb.com/baotoan95
                         </p>
                     </li>
                 </ul>

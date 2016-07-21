@@ -8,12 +8,12 @@
 class Category extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('mCategory');
+        $this->load->model('MCategory');
     }
     
     public function index() {
-        echo count($this->mCategory->getCategories()) . "<br/>";
-        echo $this->mCategory->getCategoriesBox(0);
+        echo count($this->MCategory->getCategories()) . "<br/>";
+        echo $this->MCategory->getCategoriesBox(0);
     }
     
     public function addCategory() {
@@ -24,10 +24,10 @@ class Category extends CI_Controller {
         $desc = $this->input->post('desc');
         
         $category = new ECategory(0, trim($name), $slug, $desc, $parent);
-        $category_id = $this->mCategory->addCategory($category);
+        $category_id = $this->MCategory->addCategory($category);
         if($category_id) {
-            $newcate = $this->mCategory->getCategoryById($category_id);
-            $categoriesParentBox = $this->mCategory->getCategoriesParentBox(0);
+            $newcate = $this->MCategory->getCategoryById($category_id);
+            $categoriesParentBox = $this->MCategory->getCategoriesParentBox(0);
             // If required parentBox then return array include cateBox and parentBox
             if($hasParentBox) {
                 $data = array(
@@ -51,7 +51,7 @@ class Category extends CI_Controller {
         $config = array();
         $config['base_url'] = base_url() . "category";
         $config['prefix'] = "categories?p=";
-        $config['per_page'] = 2;
+        $config['per_page'] = 20;
         $config['cur_page'] = $segment;
         
         $limitConfig = array(
@@ -59,7 +59,7 @@ class Category extends CI_Controller {
             "begin" => $segment
         );
         $this->load->library("pagination");
-        $result = $this->mCategory->getCategories($limitConfig, $search);
+        $result = $this->MCategory->getCategories($limitConfig, $search);
         $config["total_rows"] = $result['total'];
         $data = array(
             "title" => "Danh Sách Thể Loại",
@@ -67,14 +67,14 @@ class Category extends CI_Controller {
             "categories" => $result['categories'],
             "links" => pagination($config, $this->pagination),
             "total" => $result['total'],
-            "categoriesParentBox" => $this->mCategory->getCategoriesParentBox(0)
+            "categoriesParentBox" => $this->MCategory->getCategoriesParentBox(0)
         );
         $this->load->view('admin/template/main', $data);
     }
     
     public function deleteCategory() {
         $category_id = $this->input->post('cate_id');
-        if($this->mCategory->deleteCategory($category_id)) {
+        if($this->MCategory->deleteCategory($category_id)) {
             echo "success";
         } else {
             echo "failure";
@@ -82,12 +82,12 @@ class Category extends CI_Controller {
     }
     
     public function editCategory($cate_id) {
-        $category = $this->mCategory->getCategoryById($cate_id);
+        $category = $this->MCategory->getCategoryById($cate_id);
         $data = array(
             "category" => $category,
             "title" => "Cập nhật thể loại",
             "content" => "admin/category",
-            "categoriesParentBox" => $this->mCategory->getCategoriesParentBox(0, "", array($category->getParent()))
+            "categoriesParentBox" => $this->MCategory->getCategoriesParentBox(0, "", array($category->getParent()))
         );
         $this->load->view('admin/template/main', $data);
     }
@@ -101,7 +101,7 @@ class Category extends CI_Controller {
         $count = $this->input->post('count');
         
         $category = new ECategory($id, trim($name), $slug, $desc, $parent, $count);
-        $category_id = $this->mCategory->updateCategory($category);
+        $category_id = $this->MCategory->updateCategory($category);
         
         if($category_id) {
             $this->session->set_flashdata('flash_message', 'Cập nhật thành công');
@@ -111,7 +111,7 @@ class Category extends CI_Controller {
                 "category" => $category,
                 "title" => "Cập nhật thể loại",
                 "content" => "admin/category",
-                "categoriesParentBox" => $this->mCategory->getCategoriesParentBox(0, "", array($category->getParent()))
+                "categoriesParentBox" => $this->MCategory->getCategoriesParentBox(0, "", array($category->getParent()))
             );
             $this->session->set_flashdata('flash_error', 'Cập nhật thất bại');
             $this->load->view('admin/template/main', $data);
@@ -121,14 +121,14 @@ class Category extends CI_Controller {
     public function searchCategoriesAjax() {
         $name = $this->input->post('name');
         if($name == '') {
-            echo $this->mCategory->getCategoriesParentBox(0, "");
+            echo $this->MCategory->getCategoriesParentBox(0, "");
             return;
         }
-        echo json_encode($this->mCategory->getCategories(array(), $name)['categories']);
+        echo json_encode($this->MCategory->getCategories(array(), $name)['categories']);
     }
     
     public function getCategoriesAjax() {
         $cateIds = $this->input->post('cateIds');
-        echo json_encode($this->mCategory->getCategoriesByIds($cateIds));
+        echo json_encode($this->MCategory->getCategoriesByIds($cateIds));
     }
 }

@@ -12,7 +12,7 @@ class Comment extends CI_Controller {
 
         $this->load->model('EComment');
 
-        $this->load->model('mComment');
+        $this->load->model('MComment');
     }
 
     public function addComment() {
@@ -37,7 +37,7 @@ class Comment extends CI_Controller {
         $comment = new EComment(0, $postId, $author, $email, $website, 1, date('y-m-d H:i:s'), 'pending', $type, $content, $parent);
         $comment->setPrev_status('pending');
         
-        $id_last_insert = $this->mComment->addComment($comment); // Get id after insert
+        $id_last_insert = $this->MComment->addComment($comment); // Get id after insert
         if ($id_last_insert) {
             echo $id_last_insert;
         } else {
@@ -53,7 +53,7 @@ class Comment extends CI_Controller {
         $content = $this->input->post('content');
 
         // Create sub comment from parent comment
-        $comment = $this->mComment->getCommentById($id);
+        $comment = $this->MComment->getCommentById($id);
         $comment->setDate(date('y-m-d H:i:s'));
         $comment->setContent($content);
         // SET parent two level
@@ -62,7 +62,7 @@ class Comment extends CI_Controller {
         $comment->setEmail('support@admin.com');
         $comment->setPrev_status('');
 
-        if ($this->mComment->addComment($comment)) {
+        if ($this->MComment->addComment($comment)) {
             echo json_encode($comment);
         } else {
             echo "failure";
@@ -80,7 +80,7 @@ class Comment extends CI_Controller {
 
         // Config pagination
         $config = array(
-            "per_page" => 2,
+            "per_page" => 20,
             "cur_page" => $segment,
             "base_url" => base_url() . "comment",
             "prefix" => "comments?status=$status&type=$type&search=$search&p="
@@ -96,14 +96,14 @@ class Comment extends CI_Controller {
             "begin" => $segment
         );
         // GET result from DB by conditions and limit result
-        $result = $this->mComment->getComments($condition, $limitConfig);
+        $result = $this->MComment->getComments($condition, $limitConfig);
         $config['total_rows'] = $result['total'];
 
         // Init data response to client
         $data = array(
             "title" => "Danh sách phản hồi",
             "content" => "admin/comments",
-            "count" => $this->mComment->countByStatus(),
+            "count" => $this->MComment->countByStatus(),
             "comments" => $result['comments'],
             "total" => $result['total'],
             "links" => pagination($config, $this->pagination), // Init pagination helper
@@ -117,15 +117,15 @@ class Comment extends CI_Controller {
     public function deleteComment() {
         $cmt_id = $this->input->post('id');
 
-        if ($this->mComment->deleteComment($cmt_id)) {
-            echo json_encode($this->mComment->countByStatus());
+        if ($this->MComment->deleteComment($cmt_id)) {
+            echo json_encode($this->MComment->countByStatus());
         } else {
             echo 'failure';
         }
     }
 
     public function editComment($cmtId) {
-        $comment = $this->mComment->getCommentById($cmtId);
+        $comment = $this->MComment->getCommentById($cmtId);
         $data = array(
             "content" => "admin/comment",
             "comment" => $comment
@@ -143,7 +143,7 @@ class Comment extends CI_Controller {
         $comment->setStatus($this->input->post('status'));
         $comment->setDate(date('y-m-d H:i:s'));
 
-        if ($this->mComment->updateComment($comment)) {
+        if ($this->MComment->updateComment($comment)) {
             $this->session->set_flashdata('flash_message', 'Cập nhật thành công.');
             header('Location: ' . base_url() . 'comment/comments', 301);
         } else {
@@ -159,7 +159,7 @@ class Comment extends CI_Controller {
     public function changeStatus() {
         $cmtId = $this->input->get('id', TRUE);
         $status = $this->input->get('status', TRUE);
-        $comment = $this->mComment->getCommentById($cmtId);
+        $comment = $this->MComment->getCommentById($cmtId);
 
         $statusAccepted = array("pending", "approved", "spam", "trash"); // List status accepted
         // Request change status
@@ -177,13 +177,13 @@ class Comment extends CI_Controller {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
                 !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
                 strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            if ($this->mComment->updateComment($comment)) {
-                echo json_encode($this->mComment->countByStatus());
+            if ($this->MComment->updateComment($comment)) {
+                echo json_encode($this->MComment->countByStatus());
             } else {
                 echo "failure";
             }
         } else {
-            if ($this->mComment->updateComment($comment)) {
+            if ($this->MComment->updateComment($comment)) {
                 $this->session->set_flashdata('flash_message', 'Đã di chuyển tới thùng rác');
             } else {
                 $this->session->set_flashdata('flash_error', 'Thao tác thất bại');

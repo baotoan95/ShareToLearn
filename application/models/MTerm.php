@@ -13,7 +13,7 @@ class MTerm extends Base_Model {
     public function __construct() {
         parent::__construct();
         $this->set_table('terms', 't_id');
-        $this->load->model('mTermTaxonomy');
+        $this->load->model('MTermTaxonomy');
     }
 
     public function addTerm($term, $taxonomy_name) {
@@ -42,7 +42,7 @@ class MTerm extends Base_Model {
                 "tt_parent" => ($term instanceof ECategory) ? $term->getParent() : 0,
                 "tt_count" => 0
             );
-            $this->mTermTaxonomy->addTermTaxonomy($term_taxonomy);
+            $this->MTermTaxonomy->addTermTaxonomy($term_taxonomy);
             $this->db->trans_complete();
         } else {
             return FALSE;
@@ -128,7 +128,7 @@ class MTerm extends Base_Model {
 
     public function deleteTermById($id) {
         $this->db->trans_start();
-        $this->mTermTaxonomy->deleteTermTaxonomyByTermId($id);
+        $this->MTermTaxonomy->deleteTermTaxonomyByTermId($id);
         $this->delete($id);
         $this->db->trans_complete();
         if($this->db->trans_status() == FALSE) {
@@ -156,7 +156,7 @@ class MTerm extends Base_Model {
         if($term instanceof ECategory) {
             $term_taxonomy["tt_parent"] = $term->getParent();
         }
-        $this->mTermTaxonomy->updateTermTaxonomyByTermId($term->getId(), $term_taxonomy);
+        $this->MTermTaxonomy->updateTermTaxonomyByTermId($term->getId(), $term_taxonomy);
         $this->db->trans_complete();
         if($this->db->trans_status() == FALSE) {
             $this->db->trans_rollback();

@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
+	'hostname' => 'localhost', //sql302.byethost8.com
+	'username' => 'root', //b8_18560656
 	'password' => 'root',
-	'database' => 'sharetolearn',
+	'database' => 'sharetolearn', //b8_18560656_btit
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

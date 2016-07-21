@@ -14,7 +14,8 @@ class MComment extends Base_Model {
         
         $this->set_table('comments', 'cmt_id');
         
-        $this->load->model('mPost');
+        $this->load->model('MPost');
+        $this->load->model('MUser');
     }
     
     public function addComment($comment) {
@@ -23,7 +24,7 @@ class MComment extends Base_Model {
             "cmt_author" => $comment->getAuthor(),
             "cmt_website" => $comment->getWebsite(),
             "cmt_email" => $comment->getEmail(),
-            "cmt_user_id" => $comment->getUserId(),
+            "cmt_user" => $comment->getUser(),
             "cmt_date" => $comment->getDate(),
             "cmt_status" => $comment->getStatus(),
             "cmt_type" => $comment->getType(),
@@ -43,8 +44,9 @@ class MComment extends Base_Model {
     public function getCommentById($cmtId) {
         $cmtTemp = $this->getByKey($cmtId);
         if(!empty($cmtTemp)) {
+            $user = $this->MUser->getUserById($cmtTemp['cmt_user']);
             $comment = new EComment($cmtTemp['cmt_id'], $cmtTemp['cmt_post_id'], 
-                        $cmtTemp['cmt_author'], $cmtTemp['cmt_email'], $cmtTemp['cmt_website'], $cmtTemp['cmt_user_id'], 
+                        $cmtTemp['cmt_author'], $cmtTemp['cmt_email'], $cmtTemp['cmt_website'], $user, 
                         $cmtTemp['cmt_date'], $cmtTemp['cmt_status'], $cmtTemp['cmt_type'], 
                         $cmtTemp['cmt_content'], $cmtTemp['cmt_parent']);
             $comment->setPrev_status($cmtTemp['cmt_prev_status']);
@@ -86,12 +88,13 @@ class MComment extends Base_Model {
         
         $comments = array();
         foreach($data as $item) {
+            $user = $this->MUser->getUserById($item['cmt_user']);
             $comment = new EComment($item['cmt_id'], $item['cmt_post_id'], 
-                    $item['cmt_author'], $item['cmt_email'], $item['cmt_website'], $item['cmt_user_id'], 
+                    $item['cmt_author'], $item['cmt_email'], $item['cmt_website'], $user, 
                     $item['cmt_date'], $item['cmt_status'], $item['cmt_type'], 
                     $item['cmt_content'], $item['cmt_parent']);
             $comment->setPrev_status($item['cmt_prev_status']);
-            $comment->setPost($this->mPost->getPostById($item['cmt_post_id']));
+            $comment->setPost($this->MPost->getPostById($item['cmt_post_id']));
             $comments[] = $comment;
         }
         return array(
@@ -138,8 +141,9 @@ class MComment extends Base_Model {
         
         $comments = array(); // Store result
         foreach($data as $item) {
+            $user = $this->MUser->getUserById($item['cmt_user']);
             $comment = new EComment($item['cmt_id'], $item['cmt_post_id'], 
-                    $item['cmt_author'], $item['cmt_email'], $item['cmt_website'], $item['cmt_user_id'], 
+                    $item['cmt_author'], $item['cmt_email'], $item['cmt_website'], $user, 
                     $item['cmt_date'], $item['cmt_status'], $item['cmt_type'], 
                     $item['cmt_content'], $item['cmt_parent']);
             $comment->setPrev_status($item['cmt_prev_status']);
@@ -147,6 +151,47 @@ class MComment extends Base_Model {
         }
         
         return $comments;
+    }
+    
+    public function generateCommentLevel($comments, $parentId, $level, $html = '') {
+        // Create a temp list
+        $cmtTemps = $comments;
+        // GET list sub comment by parentId search in comments list
+        $subCmts = array();
+        for ($i = 0; $i < count($cmtTemps); $i ++) {
+            // If found: remove it from $comments and add to subCmts
+            if ($comments[$i]->getParent() == $parentId) {
+                unset($comments[$i]);
+                $subCmts[] = $cmtTemps[$i];
+            }
+        }
+        $comments = array_values($comments);
+        
+        // Add list sub comment to html and recursive
+        if(empty($subCmts)) {
+            return "";
+        } else {
+            $html = ($parentId == 0 ? "" : '<ul class = "children">');
+            foreach ($subCmts as $cmt) {
+                if($cmt->getParent() == 0) {
+                    $level = 0;
+                }
+                $html .=
+                            '<li id="cmt_'. $cmt->getId() .'" class="depth-' . $level .'">' .
+                                '<div class="author-avatar"><img alt="" src ="' .
+                                base_url() . "assets/upload/images/avatars/" . 
+                                    ((NULL == $cmt->getUser()) ? "user.jpg" : $cmt->getUser()->getAvatar()) . '"/>' .
+                                '</div>' .
+                                '<div class="comment-author"><a>' . $cmt->getAuthor() . '</a></div>' .
+                                '<div class="comment-date">' . $cmt->getDate() . '</div>' .
+                                '<div class="comment-text"><p>' . $cmt->getContent() . '</p></div>' .
+                                '<div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="' . $cmt->getId() . '">reply</a></div>' .
+                                $this->generateCommentLevel($comments, $cmt->getId(), ++$level, $html) .
+                            '</li>';
+                $level--;
+            }
+            return $html .= ($parentId == 0 ? "" : "</ul>");
+        }
     }
     
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2016-07-18 19:50:28
+Date: 2016-07-21 22:55:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `comments` (
   `cmt_post_id` int(11) DEFAULT NULL,
   `cmt_author` varchar(50) NOT NULL,
   `cmt_email` varchar(50) DEFAULT NULL,
-  `cmt_user_id` int(11) DEFAULT NULL,
+  `cmt_user` int(11) DEFAULT NULL,
   `cmt_date` datetime NOT NULL,
   `cmt_status` varchar(10) NOT NULL,
   `cmt_type` varchar(10) NOT NULL,
@@ -34,9 +34,9 @@ CREATE TABLE `comments` (
   `cmt_prev_status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`cmt_id`),
   KEY `cmt_post_id` (`cmt_post_id`),
-  KEY `cmt_user_id` (`cmt_user_id`),
+  KEY `cmt_user_id` (`cmt_user`),
   KEY `cmt_type` (`cmt_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comments
@@ -46,8 +46,16 @@ INSERT INTO `comments` VALUES ('10', '135', 'Admin', 'support@admin.com', '1', '
 INSERT INTO `comments` VALUES ('11', '135', 'Admin', 'support@admin.com', '1', '2016-07-12 17:30:24', 'pending', 'comment', '9', 'REply hello amin 2', null, 'pending');
 INSERT INTO `comments` VALUES ('13', '135', 'Admin', 'support@admin.com', '1', '2016-07-12 17:34:57', 'approved', 'comment', '9', 'sdfsdfsdf', null, 'pending');
 INSERT INTO `comments` VALUES ('53', '135', 'Thanh', 'E-mail', '1', '2016-07-14 14:51:34', 'approved', 'comment', '13', 'adb', 'Website', 'pending');
-INSERT INTO `comments` VALUES ('54', '141', 'Toan', 'E-mail', '1', '2016-07-14 15:31:53', 'pending', 'comment', '0', 'Bài viết hay quá <3', 'Website', 'pending');
-INSERT INTO `comments` VALUES ('55', '141', 'Admin', 'E-mail', '1', '2016-07-14 15:32:13', 'pending', 'comment', '54', 'Thanks!', 'Website', 'pending');
+INSERT INTO `comments` VALUES ('54', '135', 'asdfsdf', 'sdfsdf', '1', '2016-07-19 18:08:37', 'pending', 'comment', '11', 'sdfsdfsdfsdf', 'sdfsdf', 'pending');
+INSERT INTO `comments` VALUES ('55', '0', 'LLLL', 'L@gmail.com', '1', '2016-07-19 18:13:29', 'pending', 'contact', '0', 'abcdefgh', null, 'pending');
+INSERT INTO `comments` VALUES ('56', '0', 'LLLL', 'L@gmail.com', '1', '2016-07-19 18:14:00', 'pending', 'contact', '0', 'abcdefgh', null, 'pending');
+INSERT INTO `comments` VALUES ('57', '0', 'Namesdfsdf', 'E-mailsdfsf', '1', '2016-07-20 08:34:46', 'pending', 'contact', '0', 'sdfsfsfsdf\n\n\n\n\n\n', null, 'pending');
+INSERT INTO `comments` VALUES ('58', '0', 'Namesdfsdf', 'E-mailsdfsf', '1', '2016-07-20 08:35:02', 'pending', 'contact', '0', 'sdfsfsfsdf\n\n\n\n\n\n', null, 'pending');
+INSERT INTO `comments` VALUES ('60', '131', 'sdfsdfsfsdf', '', '1', '2016-07-20 09:26:08', 'pending', 'comment', '0', 'sdfsdfsdf', 'Website', 'pending');
+INSERT INTO `comments` VALUES ('61', '131', 'fsf', 'sdfsdfsdf@sfsdf.com', '1', '2016-07-20 09:28:17', 'pending', 'comment', '0', 'ssdfdfsdfsdf', 'sdfsfd', 'pending');
+INSERT INTO `comments` VALUES ('63', '0', 'sfsdfdsf', 'sdfsdf@sdfs.dsdf', '1', '2016-07-20 09:51:04', 'pending', 'contact', '0', 'sdfsdfsdfdsf', '', 'pending');
+INSERT INTO `comments` VALUES ('64', '131', 'sfsdf', 'sdfsdfs@sfd.sdfsdf', '1', '2016-07-20 10:09:25', 'pending', 'comment', '0', 'sdfsdfsdf', '', 'pending');
+INSERT INTO `comments` VALUES ('65', '131', 'Admin', 'support@admin.com', '1', '2016-07-21 12:58:59', 'pending', 'comment', '64', '', '', '');
 
 -- ----------------------------
 -- Table structure for menu
@@ -59,19 +67,20 @@ CREATE TABLE `menu` (
   `mn_slug` varchar(200) DEFAULT NULL,
   `mn_parent` int(11) DEFAULT NULL,
   `mn_meta_value` varchar(255) DEFAULT NULL,
+  `mn_order` int(11) DEFAULT NULL,
   PRIMARY KEY (`mn_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=221 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=375 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
-INSERT INTO `menu` VALUES ('214', 'Trang Chủ', 'http://localhost/ShareToLearn/', '0', '{\"id\":\"224\",\"type\":\"navigation\"}');
-INSERT INTO `menu` VALUES ('215', 'Giải trí', 'Giai-tri', '0', '{\"id\":\"215\",\"type\":\"category\"}');
-INSERT INTO `menu` VALUES ('216', 'Doremon', 'doremon', '215', '{\"id\":\"140\",\"type\":\"post\"}');
-INSERT INTO `menu` VALUES ('217', 'Tản mạn', 'Tan-man', '215', '{\"id\":\"221\",\"type\":\"category\"}');
-INSERT INTO `menu` VALUES ('218', 'Thể thao', 'the_thao.html', '215', '{\"id\":\"243\",\"type\":\"category\"}');
-INSERT INTO `menu` VALUES ('219', 'abc', 'abc', '218', '{\"id\":\"223\",\"type\":\"navigation\"}');
-INSERT INTO `menu` VALUES ('220', 'Trang thứ 11', 'trang-thu-11', '218', '{\"id\":\"139\",\"type\":\"page\"}');
+INSERT INTO `menu` VALUES ('368', 'Trang chủ', 'http://localhost/ShareToLearn/', '0', '{\"id\":\"234\",\"type\":\"navigation\"}', '0');
+INSERT INTO `menu` VALUES ('369', 'Google', 'http://www.google.com', '0', '{\"id\":\"235\",\"type\":\"navigation\"}', '1');
+INSERT INTO `menu` VALUES ('370', 'Google', 'http://www.google.com-i1', '0', '{\"id\":\"236\",\"type\":\"navigation\"}', '2');
+INSERT INTO `menu` VALUES ('371', 'Trang thứ 11', 'http://localhost/ShareToLearn/trang-thu-p11.html', '0', '{\"id\":\"139\",\"type\":\"page\"}', '3');
+INSERT INTO `menu` VALUES ('372', 'Giải trí', 'http://localhost/ShareToLearn/the-loai/Giai-tri', '0', '{\"id\":\"215\",\"type\":\"category\"}', '4');
+INSERT INTO `menu` VALUES ('373', 'Bảo Toàn', 'https://www.facebook.com/baotoan95', '372', '{\"id\":\"237\",\"type\":\"navigation\"}', '0');
+INSERT INTO `menu` VALUES ('374', 'Doremon', 'http://localhost/ShareToLearn/doremon-140.html', '372', '{\"id\":\"140\",\"type\":\"post\"}', '1');
 
 -- ----------------------------
 -- Table structure for options
@@ -125,7 +134,7 @@ CREATE TABLE `posts` (
   `p_parent` int(11) DEFAULT NULL,
   PRIMARY KEY (`p_id`),
   UNIQUE KEY `p_guid` (`p_guid`)
-) ENGINE=InnoDB AUTO_INCREMENT=225 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of posts
@@ -133,17 +142,15 @@ CREATE TABLE `posts` (
 INSERT INTO `posts` VALUES ('131', 'Bài viết mới', '<p>N&agrave;y l&agrave; nội dung b&agrave;i viết, rất d&agrave;i v&agrave; rất hay, hữu &iacute;ch cho mọi người, n&ecirc;n đọc! :))</p>\r\n', '1', '0', '0', '<p>Đ&acirc;y l&agrave; tr&iacute;ch đoạn</p>\r\n', null, 'public', '2016-07-14 06:26:15', 'bai-viet-moi', '1', '0', 'post', '13439007_552355538305301_342366450246934188_n1.jpg', '', '0');
 INSERT INTO `posts` VALUES ('132', 'Bài viết thứ 2', '                                                                                                ', '1', '0', '0', '                                                                                                ', null, 'draf', '2016-07-06 10:54:16', 'bai-viet-thu-2', '0', '0', 'post', '13439007_552355538305301_342366450246934188_n9.jpg', '', '0');
 INSERT INTO `posts` VALUES ('133', 'Bài viết thứ 31', '', '1', '0', '0', '', null, 'private', '2016-07-14 06:26:33', 'bai-viet-thu-31', '0', '0', 'post', '13439007_552355538305301_342366450246934188_n2.jpg', '', '0');
-INSERT INTO `posts` VALUES ('134', 'Lập trình viên bạn là ai?', '                                                                                                                                                                        ', '1', '0', '0', '                                                                                                                                                                        ', null, 'pending', '2016-07-06 10:55:34', 'lap-trinh-vien-ban-la-ai', '0', '0', 'post', '10922542_401367413356838_4205009600434851352_n21.jpg', '', '0');
+INSERT INTO `posts` VALUES ('134', 'Lập trình viên bạn là ai?', '', '1', '0', '0', '', null, 'public', '2016-07-19 07:26:52', 'lap-trinh-vien-ban-la-ai', '0', '0', 'post', '10922542_401367413356838_4205009600434851352_n21.jpg', 'baotoan', '0');
 INSERT INTO `posts` VALUES ('135', 'Ngô Bảo Toàn', '<p>It is handsome</p>\r\n', '1', '0', '0', '', null, 'public', '2016-07-14 09:02:35', 'ngo-bao-toan', '1', '0', 'post', '13439007_552355538305301_342366450246934188_n.jpg', '', '0');
 INSERT INTO `posts` VALUES ('136', 'Bài viết 1001', '', '1', '0', '0', '', null, 'public', '2016-07-14 08:52:22', 'bai-viet-1001', '0', '0', 'post', '13439007_552355538305301_342366450246934188_n3.jpg', '', '0');
-INSERT INTO `posts` VALUES ('139', 'Trang thứ 11', 'Nội dung', '1', '0', '0', 'ABC', null, 'public', '2016-07-08 11:30:58', 'trang-thu-11', '0', '0', 'page', '13439007_552355538305301_342366450246934188_n11.jpg', '', '0');
+INSERT INTO `posts` VALUES ('139', 'Trang thứ 11', 'Nội dung', '1', '0', '0', 'ABC', null, 'public', '2016-07-08 11:30:58', 'trang-thu-p11', '0', '0', 'page', '13439007_552355538305301_342366450246934188_n11.jpg', '', '0');
 INSERT INTO `posts` VALUES ('140', 'Doremon', '<p style=\"text-align:center\"><span style=\"font-size:28px\"><strong>Doremon</strong></span></p>\r\n\r\n<p style=\"text-align:center\"><iframe frameborder=\"0\" height=\"315\" src=\"https://www.youtube.com/embed/n1dMnNUgCT8\" width=\"560\"></iframe></p>\r\n', '1', '0', '0', 'Phim doremon', null, 'public', '2016-07-15 11:45:49', 'doremon', '0', '0', 'post', '10922542_401367413356838_4205009600434851352_n.jpg', '', '0');
-INSERT INTO `posts` VALUES ('219', '$name', '', '0', '0', '0', '', '', 'public', '2016-07-17 15:39:39', '$linddk', '0', '0', 'navigation', '', '', '0');
-INSERT INTO `posts` VALUES ('220', '$name', '', '0', '0', '0', '', '', 'public', '2016-07-17 15:39:41', '$linddk-1', '0', '0', 'navigation', '', '', '0');
-INSERT INTO `posts` VALUES ('221', '$name', '', '0', '0', '0', '', '', 'public', '2016-07-17 15:39:45', '$linddk-2', '0', '0', 'navigation', '', '', '0');
-INSERT INTO `posts` VALUES ('222', 'A', '', '0', '0', '0', '', '', 'public', '2016-07-17 15:42:18', 'addsf', '0', '0', 'navigation', '', '', '0');
-INSERT INTO `posts` VALUES ('223', 'abc', '', '0', '0', '0', '', '', 'public', '2016-07-18 08:13:57', 'abc', '0', '0', 'navigation', '', '', '0');
-INSERT INTO `posts` VALUES ('224', 'Trang Chủ', '', '0', '0', '0', '', '', 'public', '2016-07-18 08:58:45', 'http://localhost/ShareToLearn/', '0', '0', 'navigation', '', '', '0');
+INSERT INTO `posts` VALUES ('234', 'Trang chủ', '', '0', '0', '0', '', '', 'public', '2016-07-21 13:59:00', 'http://localhost/ShareToLearn/', '0', '0', 'navigation', '', '', '0');
+INSERT INTO `posts` VALUES ('235', 'Google', '', '0', '0', '0', '', '', 'public', '2016-07-21 14:00:56', 'http://www.google.com', '0', '0', 'navigation', '', '', '0');
+INSERT INTO `posts` VALUES ('236', 'Google', '', '0', '0', '0', '', '', 'public', '2016-07-21 14:02:47', 'http://www.google.com-i1', '0', '0', 'navigation', '', '', '0');
+INSERT INTO `posts` VALUES ('237', 'Bảo Toàn', '', '0', '0', '0', '', '', 'public', '2016-07-21 14:03:35', 'https://www.facebook.com/baotoan95', '0', '0', 'navigation', '', '', '0');
 
 -- ----------------------------
 -- Table structure for terms
@@ -155,7 +162,7 @@ CREATE TABLE `terms` (
   `t_slug` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `t_group` int(11) NOT NULL,
   PRIMARY KEY (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=256 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of terms
@@ -170,13 +177,15 @@ INSERT INTO `terms` VALUES ('221', 'Tản mạn', 'Tan-man', '0');
 INSERT INTO `terms` VALUES ('223', 'Bình thường thôi', 'Binh-thuong-thoi', '0');
 INSERT INTO `terms` VALUES ('233', 'Bác Thành blc', 'Bac-Thanh-blc', '0');
 INSERT INTO `terms` VALUES ('242', 'Văn hóa', 'Van-hoa', '0');
-INSERT INTO `terms` VALUES ('243', 'Thể thao', 'the_thao.html', '0');
 INSERT INTO `terms` VALUES ('244', 'Giải trí', 'Giai-tri', '0');
 INSERT INTO `terms` VALUES ('245', 'học tập', 'hoc-tap', '0');
 INSERT INTO `terms` VALUES ('246', 'văn hóa', 'van-hoa', '0');
 INSERT INTO `terms` VALUES ('247', 'chính trị', 'chinh-tri', '0');
 INSERT INTO `terms` VALUES ('248', 'vui', 'vui', '0');
 INSERT INTO `terms` VALUES ('249', 'phim hoạt hình', 'phim-hoat-hinh', '0');
+INSERT INTO `terms` VALUES ('251', 'Tào lao', 'tao-lao', '0');
+INSERT INTO `terms` VALUES ('252', 'ádfsdf', 'sdfsdfsdf', '0');
+INSERT INTO `terms` VALUES ('253', 'sdfsdf', 'sdfsdf', '0');
 
 -- ----------------------------
 -- Table structure for term_relationships
@@ -188,16 +197,12 @@ CREATE TABLE `term_relationships` (
   `tr_term_taxonomy_id` int(11) NOT NULL,
   `tr_term_order` int(11) NOT NULL,
   PRIMARY KEY (`tr_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of term_relationships
 -- ----------------------------
 INSERT INTO `term_relationships` VALUES ('198', '132', '191', '0');
-INSERT INTO `term_relationships` VALUES ('199', '134', '192', '0');
-INSERT INTO `term_relationships` VALUES ('200', '134', '195', '0');
-INSERT INTO `term_relationships` VALUES ('201', '134', '190', '0');
-INSERT INTO `term_relationships` VALUES ('202', '134', '196', '0');
 INSERT INTO `term_relationships` VALUES ('211', '131', '192', '0');
 INSERT INTO `term_relationships` VALUES ('212', '131', '194', '0');
 INSERT INTO `term_relationships` VALUES ('213', '131', '190', '0');
@@ -212,6 +217,10 @@ INSERT INTO `term_relationships` VALUES ('221', '135', '191', '0');
 INSERT INTO `term_relationships` VALUES ('228', '141', '196', '0');
 INSERT INTO `term_relationships` VALUES ('229', '140', '222', '0');
 INSERT INTO `term_relationships` VALUES ('230', '140', '190', '0');
+INSERT INTO `term_relationships` VALUES ('235', '134', '192', '0');
+INSERT INTO `term_relationships` VALUES ('236', '134', '195', '0');
+INSERT INTO `term_relationships` VALUES ('237', '134', '190', '0');
+INSERT INTO `term_relationships` VALUES ('238', '134', '196', '0');
 
 -- ----------------------------
 -- Table structure for term_taxonomy
@@ -225,7 +234,7 @@ CREATE TABLE `term_taxonomy` (
   `tt_parent` int(11) NOT NULL,
   `tt_count` int(11) NOT NULL,
   PRIMARY KEY (`tt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=223 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=229 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of term_taxonomy
@@ -240,13 +249,15 @@ INSERT INTO `term_taxonomy` VALUES ('196', '221', 'category', 'category', '215',
 INSERT INTO `term_taxonomy` VALUES ('198', '223', 'tag', 'Bình thường lại bình thường\r\n                                                      ', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('208', '233', 'tag', 'Good job', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('215', '242', 'category', 'mô tả\n', '0', '0');
-INSERT INTO `term_taxonomy` VALUES ('216', '243', 'category', '                            111                        ', '215', '0');
 INSERT INTO `term_taxonomy` VALUES ('217', '244', 'tag', 'Giải trí', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('218', '245', 'tag', 'học tập', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('219', '246', 'tag', 'văn hóa', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('220', '247', 'tag', 'chính trị', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('221', '248', 'tag', 'vui', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('222', '249', 'tag', 'phim hoạt hình', '0', '0');
+INSERT INTO `term_taxonomy` VALUES ('224', '251', 'category', 'abc', '0', '0');
+INSERT INTO `term_taxonomy` VALUES ('225', '252', 'category', 'adsfsdf', '0', '0');
+INSERT INTO `term_taxonomy` VALUES ('226', '253', 'category', 'sdfsdf', '0', '0');
 
 -- ----------------------------
 -- Table structure for users

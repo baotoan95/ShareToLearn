@@ -16,11 +16,11 @@ class MPost extends Base_Model {
         $this->load->model('EPost');
         $this->load->model('ETag');
         
-        $this->load->model('mTerm');
-        $this->load->model('mTermRelationships');
-        $this->load->model('mCategory');
-        $this->load->model('mTag');
-        $this->load->model('mUser');
+        $this->load->model('MTerm');
+        $this->load->model('MTermRelationships');
+        $this->load->model('MCategory');
+        $this->load->model('MTag');
+        $this->load->model('MUser');
     }
 
     /**
@@ -31,7 +31,7 @@ class MPost extends Base_Model {
     public function addPost($post) {
         // Add tags to DB if them is new
         $tags = $post->getTags();
-        $this->mTag->addTags($tags);
+        $this->MTag->addTags($tags);
         
         // Add post to DB
         $this->db->trans_start();
@@ -59,24 +59,24 @@ class MPost extends Base_Model {
         // Add tags for post (not for page and navigation)
         if ($post->getType() == 'post' && !empty($tags)) {
             foreach ($tags as $tag) {
-                $term = $this->mTerm->getTerm($tag->getName(), 'tag');
+                $term = $this->MTerm->getTerm($tag->getName(), 'tag');
                 $termRelationship = array(
                     "tr_object_id" => $post_id,
                     "tr_term_taxonomy_id" => $term['tt_id']
                 );
-                $this->mTermRelationships->addTermRelationship($termRelationship);
+                $this->MTermRelationships->addTermRelationship($termRelationship);
             }
         }
         
         // Add categories for post (not for page and navigation)
         if ($post->getType() == 'post' && !empty($post->getCategories())) {
             foreach ($post->getCategories() as $category) {
-                $term = $this->mTerm->getTerm($category->getName(), 'category');
+                $term = $this->MTerm->getTerm($category->getName(), 'category');
                 $termRelationship = array(
                     "tr_object_id" => $post_id,
                     "tr_term_taxonomy_id" => $term['tt_id']
                 );
-                $this->mTermRelationships->addTermRelationship($termRelationship);
+                $this->MTermRelationships->addTermRelationship($termRelationship);
             }
         }
         $this->db->trans_complete();
@@ -115,7 +115,7 @@ class MPost extends Base_Model {
         $post->setId($postTemp['p_id']);
         $post->setTitle($postTemp['p_title']);
         $post->setContent($postTemp['p_content']);
-        $post->setAuthor($this->mUser->getUserById($postTemp['p_author']));
+        $post->setAuthor($this->MUser->getUserById($postTemp['p_author']));
         $post->setViews($postTemp['p_view_count']);
         $post->setComments($postTemp['p_comment_count']);
         $post->setExcerpt($postTemp['p_excerpt']);
@@ -137,7 +137,7 @@ class MPost extends Base_Model {
         // Set categories for post
         if($inc_cates) {
             $categories = array();
-            $term_relates = $this->mTermRelationships
+            $term_relates = $this->MTermRelationships
                     ->getTermRelationshipByObjectId($post->getId(), 'category');
             foreach($term_relates as $term_relate) {
                 $category = new ECategory(intval($term_relate['t_id']), $term_relate['t_name'], 
@@ -149,7 +149,7 @@ class MPost extends Base_Model {
         // Set tags for post
         if($inc_tags) {
             $tags = array();
-            $term_relates = $this->mTermRelationships
+            $term_relates = $this->MTermRelationships
                     ->getTermRelationshipByObjectId($post->getId(), 'tag');
             foreach($term_relates as $term_relate) {
                 $tag = new ETag(intval($term_relate['t_id']), $term_relate['t_name'], 
@@ -176,7 +176,7 @@ class MPost extends Base_Model {
     public function updatePost($post) {
         // Add tags to DB if them is new
         $tags = $post->getTags();
-        $this->mTag->addTags($tags);
+        $this->MTag->addTags($tags);
         
         // Update post
         $data = array(
@@ -201,30 +201,30 @@ class MPost extends Base_Model {
         $this->db->trans_start();
         $this->update($data);
         // Update tags and categories for post in term_relationships
-        $this->mTermRelationships->deleteTermRelationshipByObjectId($post->getId());
+        $this->MTermRelationships->deleteTermRelationshipByObjectId($post->getId());
         // Add tags for post
         if (!empty($tags = $post->getTags())) {
             foreach ($tags as $tag) {
-                $term = $this->mTerm->getTerm($tag->getName(), 'tag');
+                $term = $this->MTerm->getTerm($tag->getName(), 'tag');
                 if(!empty($term)) {
                     $termRelationship = array(
                         "tr_object_id" => $post->getId(),
                         "tr_term_taxonomy_id" => $term['tt_id']
                     );
-                    $this->mTermRelationships->addTermRelationship($termRelationship);
+                    $this->MTermRelationships->addTermRelationship($termRelationship);
                 }
             }
         }
         // Add categories for post
         if (!empty($categories = $post->getCategories())) {
             foreach ($categories as $category) {
-                $term = $this->mTerm->getTerm($category->getName(), 'category');
+                $term = $this->MTerm->getTerm($category->getName(), 'category');
                 if(!empty($category)) {
                     $termRelationship = array(
                         "tr_object_id" => $post->getId(),
                         "tr_term_taxonomy_id" => $term['tt_id']
                     );
-                    $this->mTermRelationships->addTermRelationship($termRelationship);
+                    $this->MTermRelationships->addTermRelationship($termRelationship);
                 }
             }
         }
@@ -301,7 +301,7 @@ class MPost extends Base_Model {
     public function deletePost($post_id) {
         $this->db->trans_start();
         $this->delete($post_id);
-        $this->mTermRelationships->deleteTermRelationshipByObjectId($post_id);
+        $this->MTermRelationships->deleteTermRelationshipByObjectId($post_id);
         $this->db->trans_complete();
         if($this->db->trans_status() == FALSE) {
             $this->db->trans_rollback();

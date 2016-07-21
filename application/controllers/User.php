@@ -12,12 +12,12 @@ class User extends CI_Controller {
 
         $this->load->model('EUser');
 
-        $this->load->model('mUser');
-        $this->load->model('mPost');
+        $this->load->model('MUser');
+        $this->load->model('MPost');
     }
     
     public function profile() {
-        $user = $this->mUser->getUserById($this->session->userdata['cur_user']['id']);
+        $user = $this->MUser->getUserById($this->session->userdata['cur_user']['id']);
         $data = array(
             "title" => "Cập nhật người dùng",
             "content" => "admin/user",
@@ -56,7 +56,7 @@ class User extends CI_Controller {
             
         if($action == 'passpost') {
             $postId = $this->input->post('id');
-            $post = $this->mPost->getPostById($postId);
+            $post = $this->MPost->getPostById($postId);
             // If post does not existed: redirect to index page
             if(NULL == $post) {
                 header('Location: ' . base_url());   
@@ -84,7 +84,7 @@ class User extends CI_Controller {
             $username = $this->input->post('username');
             
             // GET user by username and password in DB
-            $user = $this->mUser->getUser($username, $password);
+            $user = $this->MUser->getUser($username, $password);
             if(NULL == $user) {
                 // User does not exist
                 $this->session->set_flashdata('flash_error', 'Username or password incorrect');
@@ -174,7 +174,7 @@ class User extends CI_Controller {
             $user->setAvatar($avatar);
         }
 
-        if ($this->mUser->addUser($user)) {
+        if ($this->MUser->addUser($user)) {
             $this->session->set_flashdata('flash_message', 'Đã thêm một người dùng thành công');
             header("Location: " . base_url() . "user/users");
         } else {
@@ -195,20 +195,20 @@ class User extends CI_Controller {
         $config["base_url"] = base_url() . "user";
         $config["prefix"] = "users?role=" . (is_array($role) ? "all" : $role) .
                 "&search=$search&p=$segment";
-        $config["per_page"] = 2;
+        $config["per_page"] = 20;
         $config["cur_page"] = empty($segment) ? 0 : $segment;
         
         $limitCofig = array(
             "records" => $config["per_page"],
             "begin" => $search
         );
-        $result = $this->mUser->getUsers($limitCofig, $role, $search);
+        $result = $this->MUser->getUsers($limitCofig, $role, $search);
         $config["total_rows"] = $result["total"];
         
         $this->load->library('pagination');
         $pagination = pagination($config, $this->pagination);
         
-        $count = $this->mUser->countByRoles();
+        $count = $this->MUser->countByRoles();
         
         $data = array(
             "title" => "Danh sách người dùng",
@@ -222,7 +222,7 @@ class User extends CI_Controller {
     }
     
     public function editUser($user_id) {
-        $user = $this->mUser->getUserById($user_id);
+        $user = $this->MUser->getUserById($user_id);
         $data = array(
             "title" => "Cập nhật người dùng",
             "content" => "admin/user",
@@ -263,7 +263,7 @@ class User extends CI_Controller {
         $id = $this->input->post('id');
         $blocked = $this->input->post('blocked');
         $actived = $this->input->post('actived');
-        $avatar = $this->mUser->getUserById($id)->getAvatar();
+        $avatar = $this->MUser->getUserById($id)->getAvatar();
 
         $key = generateRandomString(20);
         $user = new EUser($id, $username, $password, $fullname, $avatar, $desc, 
@@ -286,7 +286,7 @@ class User extends CI_Controller {
             $user->setAvatar($avatar);
         }
         
-        if ($this->mUser->updateUser($user)) {
+        if ($this->MUser->updateUser($user)) {
             $this->session->set_flashdata('flash_message', 'Cập nhật thành công');
             header("Location: " . base_url() . "user/users");
         } else {

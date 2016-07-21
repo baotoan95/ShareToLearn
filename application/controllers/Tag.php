@@ -11,7 +11,7 @@ class Tag extends CI_Controller {
         
         $this->load->model('ETag');
         
-        $this->load->model('mTag');
+        $this->load->model('MTag');
     }
     
     public function tags() {
@@ -22,7 +22,7 @@ class Tag extends CI_Controller {
         $config = array();
         $config['base_url'] = base_url() . "tag";
         $config['prefix'] = "tags?p=";
-        $config['per_page'] = 10;
+        $config['per_page'] = 20;
         $config['cur_page'] = $segment;
         
         $limitConfig = array(
@@ -30,7 +30,7 @@ class Tag extends CI_Controller {
             "begin" => $segment
         );
         $this->load->library("pagination");
-        $result = $this->mTag->getTags($limitConfig, $search);
+        $result = $this->MTag->getTags($limitConfig, $search);
         $config["total_rows"] = $result['total'];
         $data = array(
             "title" => "Tags",
@@ -48,10 +48,10 @@ class Tag extends CI_Controller {
         $desc = $this->input->post('desc');
         
         $tag = new ETag(0, $name, $desc, $slug);
-        $tag_id = $this->mTag->addTag($tag);
+        $tag_id = $this->MTag->addTag($tag);
         
         if($tag_id) {
-            echo json_encode($this->mTag->getTagById($tag_id));
+            echo json_encode($this->MTag->getTagById($tag_id));
         } else {
             echo "failure";
         }
@@ -59,7 +59,7 @@ class Tag extends CI_Controller {
     
     public function deleteTag() {
         $tag_id = $this->input->post('tag_id');
-        if($this->mTag->deleteTag($tag_id)) {
+        if($this->MTag->deleteTag($tag_id)) {
             echo "success";
         } else {
             echo "failure";
@@ -67,7 +67,7 @@ class Tag extends CI_Controller {
     }
     
     public function editTag($tag_id) {
-        $tag = $this->mTag->getTagById($tag_id);
+        $tag = $this->MTag->getTagById($tag_id);
         $data = array(
             "tag" => $tag,
             "title" => "Cập nhật tag",
@@ -84,7 +84,7 @@ class Tag extends CI_Controller {
         $count = $this->input->post('count');
         
         $tag = new ETag($id, $name, $desc, $slug, $count);
-        $tag_id = $this->mTag->updateTag($tag);
+        $tag_id = $this->MTag->updateTag($tag);
         
         if($tag_id) {
             $this->session->set_flashdata('flash_message', 'Cập nhật thành công');

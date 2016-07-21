@@ -6,7 +6,7 @@
     </nav>
 
     <div class="search-bar right clearfix">
-        <form action="<?php echo base_url() . 'redirect/search'; ?>">
+        <form action="<?php echo base_url() . 'search.html'; ?>">
             <input name="s" type="text" data-value="search" value="">
             <input type="submit" value="">
         </form>

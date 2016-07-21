@@ -14,8 +14,8 @@ class MTag extends Base_Model {
         
         $this->load->model('ETag');
         
-        $this->load->model('mTerm');
-        $this->load->model('mTermTaxonomy');
+        $this->load->model('MTerm');
+        $this->load->model('MTermTaxonomy');
     }
     
     /**
@@ -23,7 +23,7 @@ class MTag extends Base_Model {
      * @param type $tag
      */
     public function addTag($tag) {
-        return $this->mTerm->addTerm($tag, 'tag');
+        return $this->MTerm->addTerm($tag, 'tag');
     }
 
     /**
@@ -33,7 +33,7 @@ class MTag extends Base_Model {
      */
     public function addTags($tags = array()) {
         foreach ($tags as $tag) {
-            $this->mTerm->addTerm($tag, 'tag');
+            $this->MTerm->addTerm($tag, 'tag');
         }
     }
     
@@ -43,12 +43,12 @@ class MTag extends Base_Model {
      * @return ETag
      */
     public function getTagById($tag_id) {
-        $term = $this->mTerm->getTermById($tag_id);
+        $term = $this->MTerm->getTermById($tag_id);
         return new ETag($term['t_id'], $term['t_name'], $term['tt_desc'], $term['t_slug'], $term['tt_count']);
     }
 
     public function getTags($limitConfig = array(), $term_name = '') {
-        $result = $this->mTerm->getTermsByTaxonomy('tag', $limitConfig, $term_name);
+        $result = $this->MTerm->getTermsByTaxonomy('tag', $limitConfig, $term_name);
         $tags = array();
         foreach($result['terms'] as $term) {
             $tags[] = new ETag(intval($term['t_id']), $term['t_name'], $term['tt_desc'], $term['t_slug'], $term['tt_count']);
@@ -60,11 +60,11 @@ class MTag extends Base_Model {
     }
     
     public function deleteTag($tag_id) {
-        return $this->mTerm->deleteTermById($tag_id);
+        return $this->MTerm->deleteTermById($tag_id);
     }
     
     public function updateTag($tag) {
-        return $this->mTerm->updateTerm($tag);
+        return $this->MTerm->updateTerm($tag);
     }
 
 }

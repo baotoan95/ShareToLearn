@@ -42,47 +42,6 @@
                 </div><!-- /.box-body -->
                 <div class="box-footer">
                     <button type="submit" id="submit" class="btn btn-primary">Thêm</button>
-                    <script lang="javascript">
-                        // ADD tag
-                        $('#submit').click(function (e) {
-                            e.preventDefault();
-                            if (!$('input[name=newcate]').val()) {
-                                return;
-                            }
-                            $.ajax({
-                                url: <?php echo "\"" . base_url() . "category/addCategory\""; ?>,
-                                type: "POST",
-                                dataType: "text",
-                                data: {
-                                    newcate: $('input[name=newcate]').val(),
-                                    slug: $('input[name=slug]').val(),
-                                    parent_cate: $('select[name=parent_cate]').val(),
-                                    desc: $('textarea[name=desc]').val(),
-                                    hasParentBox: true
-                                },
-                                success: function (res) {
-                                    if (res !== 'failure') {
-                                        var data = $.parseJSON(res);
-                                        var category = data.category;
-                                        $('tbody').prepend(
-                                                "<tr>" +
-                                                "<td>" + category.name + "</td>" +
-                                                "<td>" + category.desc + "</td>" +
-                                                "<td>" + category.slug + "</td>" +
-                                                "<td>" + category.count + "</td>" +
-                                                "<td><i class='fa fa-fw fa-trash del_tag' id='" + category.id + "'></i></td>" +
-                                                "</tr>"
-                                                );
-                                    } else {
-
-                                    }
-                                },
-                                failure: function (error) {
-                                    alert(err);
-                                }
-                            });
-                        });
-                    </script>
                 </div>
             </form>
         </div><!-- /.box -->
@@ -133,8 +92,49 @@
                     </tbody>
                 </table>
                 <script lang="javascript">
+                    // ADD tag
+                    $('#submit').click(function (e) {
+                        e.preventDefault();
+                        if (!$('input[name=newcate]').val()) {
+                            return;
+                        }
+                        $.ajax({
+                            url: <?php echo "\"" . base_url() . "category/addCategory\""; ?>,
+                            type: "POST",
+                            dataType: "text",
+                            data: {
+                                newcate: $('input[name=newcate]').val(),
+                                slug: $('input[name=slug]').val(),
+                                parent_cate: $('select[name=parent_cate]').val(),
+                                desc: $('textarea[name=desc]').val(),
+                                hasParentBox: true
+                            },
+                            success: function (res) {
+                                if (res !== 'failure') {
+                                    var data = $.parseJSON(res);
+                                    var category = data.category;
+                                    $('tbody').prepend(
+                                            "<tr>" +
+                                            "<td>" + category.name + "</td>" +
+                                            "<td>" + category.desc + "</td>" +
+                                            "<td>" + category.slug + "</td>" +
+                                            "<td>" + category.count + "</td>" +
+                                            "<td><i class='fa fa-fw fa-trash del_cate' id='" + category.id + "'></i></td>" +
+                                            "</tr>"
+                                            );
+                                    updateCounts(-1);
+                                } else {
+                                    alert('error');
+                                }
+                            },
+                            failure: function (error) {
+                                alert(error);
+                            }
+                        });
+                    });
+
                     // DELETE tag
-                    $('.del_cate').click(function () {
+                    $('.table tbody').on('click', '.del_cate', function () {
                         var element = $(this);
                         $.ajax({
                             url: <?php echo "\"" . base_url() . "category/deleteCategory\""; ?>,
@@ -146,18 +146,27 @@
                             success: function (res) {
                                 if (res !== 'failure') {
                                     element.parent().parent().remove();
+                                    updateCounts(1);
                                 }
                             },
                             failure: function (error) {
-                                alert(err);
+                                alert(error);
                             }
                         });
                     });
+
+                    function updateCounts(numb) {
+                        // Update result (at last of table)
+                        $('#numerator').html(parseInt($('#numerator').text()) - numb);
+                        $('#denominator').html(parseInt($('#denominator').text()) - numb);
+                    }
                 </script>
             </div><!-- /.box-body -->
             <div class="box-footer clearfix">
+                Kết quả: <?php echo "<i id='numerator'>" . count($categories) . "</i>/<i id='denominator'>" . $total . "</i>"; ?>
                 <ul class="pagination pagination-sm no-margin pull-right">
-                    <?php echo $links; ?>
+                    <!-- Pagination -->
+                    <?php echo $links ?>
                 </ul>
             </div>
         </div><!-- /.box -->

@@ -13,6 +13,9 @@ class MMenu extends Base_Model {
         
         // Set default value
         $this->set_table('menu', 'mn_id');
+        
+        $this->load->model('MPost');
+        $this->load->model('MCategory');
     }
     
     /**
@@ -25,12 +28,13 @@ class MMenu extends Base_Model {
             "mn_name" => $menu->getName(),
             "mn_slug" => $menu->getSlug(),
             "mn_parent" => $menu->getParent(),
-            "mn_meta_value" => $menu->getMeta()
+            "mn_meta_value" => $menu->getMeta(),
+            "mn_order" => $menu->getOrder()
         );
         return $this->insert($data);
     }
     
-    public function getMenus() {
+    public function getMenu() {
         $menuTemps = $this->getAll();
         $menu = array();
         foreach($menuTemps as $menuItem) {
@@ -45,8 +49,8 @@ class MMenu extends Base_Model {
         $menuItems = $this->db->get($this->_table['table_name'])->result_array();
         $menu = array();
         foreach($menuItems as $item) {
-            $menu[] = new EMenuItem($menuItem['mn_id'], $menuItem['mn_name'], 
-                    $menuItem['mn_slug'], $menuItem['mn_parent'], $menuItem['mn_meta_value']);
+            $menu[] = new EMenuItem($item['mn_id'], $item['mn_name'], 
+                    $item['mn_slug'], $item['mn_parent'], $item['mn_meta_value']);
         }
         return $menu;
     }
@@ -78,15 +82,20 @@ class MMenu extends Base_Model {
         if(empty($subMenu)) {
             return "";
         } else {
+            // Sort subMenu by order desc
+            usort($subMenu, function($a, $b) {
+                return $a > $b;
+            });
             $html = ($parentId == 0) ? "" : "<{$config['tag_container_name']} class='dd-list sub-menu'>";
             foreach ($subMenu as $item) {
                 // Parse meta value to get id and type of menu item
                 $meta = json_decode($item->getMeta(), TRUE);
-                $html .= "<li class='dd-item' data-id='{$meta['id']}-{$meta['type']}'>"
-                            . "<{$config['tag_name']} class='dd-handle' href='" . $item->getSlug() . "'>" .
+                $html .= "<li class='dd-item dd3-item' data-id='{$meta['id']}-{$meta['type']}'>"
+                            . (($config['tag_name'] != 'a') ? "<div class='dd-handle dd3-handle'>Drag</div>" : "") 
+                            . "<{$config['tag_name']} class='dd3-content' href='" . $item->getSlug() . "'>" .
                                 $item->getName() . 
                                         // If client side (tag name is <a>) then don't add type
-                                        (($config['tag_name'] != 'a') ? " [" . strtoupper($meta['type']) . "]" : "")
+                                        (($config['tag_name'] != 'a') ? " [" . strtoupper($meta['type']) . "]<a class='pull-right del-mnItem' title='Delete'>X</a>" : "")
                             . "</{$config['tag_name']}>" .
                               $this->generateMenu($menuItems, $config, $item->getId(), $html) .
                           "</li>";
@@ -96,12 +105,48 @@ class MMenu extends Base_Model {
     }
     
     /**
+     * Just use for delete menu
+     * @param int $parentId
+     */
+    public function deleteMenu() {
+        $menu = $this->getMenu();
+        foreach($menu as $item) {
+            $this->deleteMenuItem($item->getId());
+        }
+    }
+    
+    public function getMenuItem($id) {
+        $this->db->where('mn_id', $id);
+        $item = $this->db->get($this->_table['table_name'])->row_array();
+        if(empty($item)) {
+            return NULL;
+        } else {
+            return new EMenuItem($item['mn_id'], $item['mn_name'], 
+                    $item['mn_slug'], $item['mn_parent'], $item['mn_meta_value']);
+        }
+    }
+    
+    public function deleteMenuItem($id) {
+        $menuItem = $this->getMenuItem($id);
+        $this->db->trans_start();
+        $this->db->where('mn_id', $id);
+        $this->db->delete($this->_table['table_name']);
+        $this->db->trans_complete();
+        if($this->db->trans_status() == TRUE) {
+            $meta = json_decode($menuItem->getMeta(), TRUE);
+            if($meta['type'] == 'navigation') {
+                $this->MPost->deletePost($meta['id']);
+            }
+        }
+    }
+    
+    /**
      * 
      * @param array $menu
      */
     public function addMenu($menu) {
         // Delete all
-        $this->db->where('mn_id > 0');
+        $this->db->where('mn_id > ', 0);
         $this->db->delete($this->_table['table_name']);
         // Store new menu
         $this->store($menu);
@@ -113,13 +158,13 @@ class MMenu extends Base_Model {
      * @param int $parentId
      */
     public function store($menuItems, $parentId = 0) {
+        $order = 0;
         foreach($menuItems as $item) {
-            $menuItem = $this->createMenuItemByType($item['id'], $parentId);
-            var_dump($menuItem) . "<br/>";
-            $parent = $this->mMenu->addMenuItem($menuItem);
+            $menuItem = $this->createMenuItemByType($item['id'], $parentId, $order);
+            $parent = $this->addMenuItem($menuItem);
+            $order++;
             // If have any child: recursive
             if(array_key_exists('children', $item)) {
-                echo "child<br/><br/><br/>";
                 $this->store($item['children'], $parent);
             }
         }
@@ -130,26 +175,26 @@ class MMenu extends Base_Model {
      * @param string $str structure: id-type
      * @return object EMenuItem
      */
-    private function createMenuItemByType($str, $parentId) {
+    private function createMenuItemByType($str, $parentId, $order) {
         $data = explode("-", $str); // GET id and type
         // Create meta value for menuItem {"id":"id","type":"type"}
         $meta_value = '{"id":"' . trim($data[0]) . '","type":"' . trim($data[1]) . '"}';
         switch (trim($data[1])) {
             case 'post':
-                $post = $this->mPost->getPostById($data[0]);
+                $post = $this->MPost->getPostById($data[0]);
                 return new EMenuItem(0, $post->getTitle(), base_url() . 
-                        $post->getGuid() . '-' . $post->getId() . '.html', $parentId, $meta_value);
+                        $post->getGuid() . '-' . $post->getId() . '.html', $parentId, $meta_value, $order);
             case 'page':
-                $post = $this->mPost->getPostById($data[0]);
+                $post = $this->MPost->getPostById($data[0]);
                 return new EMenuItem(0, $post->getTitle(), base_url() . 
-                        $post->getGuid() . '.html', $parentId, $meta_value);
+                        $post->getGuid() . '.html', $parentId, $meta_value, $order);
             case 'navigation': 
-                $post = $this->mPost->getPostById($data[0]);
-                return new EMenuItem(0, $post->getTitle(), $post->getGuid(), $parentId, $meta_value);
+                $post = $this->MPost->getPostById($data[0]);
+                return new EMenuItem(0, $post->getTitle(), $post->getGuid(), $parentId, $meta_value, $order);
             case 'category': 
-                $category = $this->mCategory->getCategoryById($data[0]);
+                $category = $this->MCategory->getCategoryById($data[0]);
                 return new EMenuItem(0, $category->getName(), base_url() . 
-                        'the-loai/' . $category->getSlug(), $parentId, $meta_value);
+                        'the-loai/' . $category->getSlug(), $parentId, $meta_value, $order);
         }
     }
 }

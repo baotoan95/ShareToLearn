@@ -10,8 +10,8 @@ defined('BASEPATH') or exit('No derect script access allowed');
 class AdminRedirect extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('mPost');
-        $this->load->model('mCategory');
+        $this->load->model('MPost');
+        $this->load->model('MCategory');
     }
 
     public function index() {

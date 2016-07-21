@@ -34,7 +34,9 @@
                     <li>
                         <a href="<?php echo base_url() . $comment->getPost()->getGuid() . '-' . 
                                 $comment->getPost()->getId() . '.html#cmt_' . $comment->getId(); ?>">
-                            <img alt="" src="http://placehold.it/60x60">
+                            <img alt="" src="<?php echo base_url() . 'assets/upload/images/avatars/' . 
+                                    ((NULL == $comment->getUser()) ? 'user.jpg' : 
+                                    $comment->getUser()->getAvatar())?>">
                         </a>
                         <h3>
                             <a href="<?php echo base_url() . $comment->getPost()->getGuid() . '-' . 
@@ -87,9 +89,12 @@
             </form>
         </li>
         <li class="widget widget_facebook_box clearfix">
-            <h3 class="widget-title">Find Us On Facebook</h3> <iframe
-                src="http://www.facebook.com/plugins/likebox.php?href=http://facebook.com/psdtuts&amp;width=285&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=false&amp;height=258"
-                scrolling="no" frameborder="0" allowtransparency="true"></iframe>
+            <h3 class="widget-title">Find Us On Facebook</h3>
+            <div class="fb-page"
+            data-href="https://www.facebook.com/Btit95-588678394647082/" 
+            data-width="340"
+            data-hide-cover="false"
+            data-show-facepile="true"></div>
         </li>
     </ul>
 </aside>

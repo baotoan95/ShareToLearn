@@ -24,6 +24,15 @@
         <![endif]-->
     </head>
     <body>
+        <script>(function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7&appId=278724535821899";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
         <!-- Header -->
         <?php $this->load->view('client/template/header'); ?>
         <!-- End Header -->
@@ -49,7 +58,7 @@
             <!-- End Inner Container -->
         </section>
         <!-- End Container -->
-        
+
         <script type="text/javascript" src="<?php echo base_url() . 'assets/client/js/jquery.superfish.js' ?>"></script>
         <script type="text/javascript" src="<?php echo base_url() . 'assets/client/js/jquery.flexslider.min.js' ?>"></script>
         <script type="text/javascript" src="<?php echo base_url() . 'assets/client/js/jquery.fancybox.js' ?>"></script>

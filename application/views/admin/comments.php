@@ -179,7 +179,8 @@
                     // Reply
                     $('.table').on('click', "#btnReply", function() {
                         var element = $(this);
-                        if($('textarea[name=content]').val().trim().length === 0) {
+                        var content = CKEDITOR.instances.content.getData();
+                        if(content.length === 0) {
                             return;
                         }
                         $.ajax({
@@ -188,10 +189,9 @@
                             dataType: "text",
                             data: {
                                 id: element.attr('data-value'),
-                                content: $('textarea[name=content]').val()
+                                content: content
                             },
                             success: function (res) {
-                                alert(res);
                                 if (res !== 'failure') {
                                     $('#replyrow').remove();
                                     var cmt = $.parseJSON(res);

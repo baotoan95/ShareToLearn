@@ -12,7 +12,7 @@ class EComment implements JsonSerializable {
     private $author;
     private $email;
     private $website;
-    private $userId;
+    private $user;
     private $date;
     private $status;
     private $type;
@@ -21,13 +21,13 @@ class EComment implements JsonSerializable {
     private $prev_status;
     private $post;
 
-    public function __construct($id = 0, $postId = 0, $author = '', $email = '', $website = '', $userId = 0, $date = '', $status = '', $type = '', $content = '', $parent = 0) {
+    public function __construct($id = 0, $postId = 0, $author = '', $email = '', $website = '', $user = 0, $date = '', $status = '', $type = '', $content = '', $parent = 0) {
         $this->id = $id;
         $this->postId = $postId;
         $this->author = $author;
         $this->email = $email;
         $this->website = $website;
-        $this->userId = $userId;
+        $this->user = $user;
         $this->date = $date;
         $this->status = $status;
         $this->type = $type;
@@ -55,8 +55,8 @@ class EComment implements JsonSerializable {
         return $this->website;
     }
 
-    public function getUserId() {
-        return $this->userId;
+    public function getUser() {
+        return $this->user;
     }
 
     public function getDate() {
@@ -99,8 +99,8 @@ class EComment implements JsonSerializable {
         $this->website = $website;
     }
 
-    public function setUserId($userId) {
-        $this->userId = $userId;
+    public function setUser($user) {
+        $this->user = $user;
     }
 
     public function setDate($date) {

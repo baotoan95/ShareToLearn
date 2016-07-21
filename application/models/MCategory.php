@@ -11,7 +11,7 @@ class MCategory extends Base_Model {
 
     function __construct() {
         parent::__construct();
-        $this->load->model('mTerm');
+        $this->load->model('MTerm');
     }
 
     // Create select category parent (in post view)
@@ -28,12 +28,12 @@ class MCategory extends Base_Model {
     }
 
     public function getCategoryById($id) {
-        $term = $this->mTerm->getTermById($id);
+        $term = $this->MTerm->getTermById($id);
         return new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']), intval($term['tt_count']));
     }
 
     public function getCategoriesByParent($parentId) {
-        $terms = $this->mTerm->getTermByParent($parentId, 'category');
+        $terms = $this->MTerm->getTermByParent($parentId, 'category');
         $categories = array();
         foreach ($terms as $term) {
             $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']), intval($term['tt_count']));
@@ -48,7 +48,7 @@ class MCategory extends Base_Model {
      * @return array list of category result and total result before limit
      */
     public function getCategories($limitConfig = array(), $cate_name = '') {
-        $result = $this->mTerm->getTermsByTaxonomy('category', $limitConfig, $cate_name);
+        $result = $this->MTerm->getTermsByTaxonomy('category', $limitConfig, $cate_name);
         
         // GET list term
         $terms = array_key_exists('terms', $result) ? $result['terms'] : $result;
@@ -73,15 +73,15 @@ class MCategory extends Base_Model {
     }
 
     public function addCategory($category) {
-        return $this->mTerm->addTerm($category, 'category');
+        return $this->MTerm->addTerm($category, 'category');
     }
     
     public function deleteCategory($category_id) {
-        return $this->mTerm->deleteTermById($category_id);
+        return $this->MTerm->deleteTermById($category_id);
     }
     
     public function updateCategory($category) {
-        return $this->mTerm->updateTerm($category);
+        return $this->MTerm->updateTerm($category);
     }
 
 }

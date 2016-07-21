@@ -12,13 +12,15 @@ class EMenuItem {
     private $slug;
     private $parent;
     private $meta;
+    private $order;
 
-    public function __construct($id = 0, $name = '', $slug = '', $parent = 0, $meta = '') {
+    public function __construct($id = 0, $name = '', $slug = '', $parent = 0, $meta = '', $order = 0) {
         $this->id = $id;
         $this->name = $name;
         $this->slug = $slug;
         $this->parent = $parent;
         $this->meta = $meta;
+        $this->order = $order;
     }
 
     public function getId() {
@@ -59,6 +61,14 @@ class EMenuItem {
 
     public function setMeta($meta) {
         $this->meta = $meta;
+    }
+
+    public function getOrder() {
+        return $this->order;
+    }
+
+    public function setOrder($order) {
+        $this->order = $order;
     }
 
 }

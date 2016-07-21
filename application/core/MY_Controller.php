@@ -10,13 +10,13 @@ class My_Controller extends CI_Controller {
     
     public function __construct() {
         parent::__construct();
-        $this->load->model('mPost');
-        $this->load->model('mComment');
-        $this->load->model('mUser');
-        $this->load->model('mMenu');
+        $this->load->model('MPost');
+        $this->load->model('MComment');
+        $this->load->model('MUser');
+        $this->load->model('MMenu');
         
         $this->_data = array(
-            "menu" => $this->mMenu->generateMenu($this->mMenu->getMenus(), array("tag_name"=>"a", "tag_container_name" => "ul"))
+            "menu" => $this->MMenu->generateMenu($this->MMenu->getMenu(), array("tag_name"=>"a", "tag_container_name" => "ul"))
         );
     }
     
@@ -27,7 +27,7 @@ class My_Controller extends CI_Controller {
             "type" => 'post',
             "status" => 'public',
         );
-        $this->_data['populars'] = $this->mPost->getPosts($condition, 
+        $this->_data['populars'] = $this->MPost->getPosts($condition, 
                 array('records' => 10, 'begin' => 0))['posts'];
     }
     
@@ -36,7 +36,7 @@ class My_Controller extends CI_Controller {
         $condition = array(
             "type" => "comment"
         );
-        $this->_data['cmt_latests'] = $this->mComment->getComments($condition, 
+        $this->_data['cmt_latests'] = $this->MComment->getComments($condition, 
                 array('records' => 10, 'begin' => 0))['comments'];
     }
     

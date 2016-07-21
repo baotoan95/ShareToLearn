@@ -7,10 +7,10 @@ defined('BASEPATH') or exit('No derect script access allowed');
  *
  * @author BaoToan
  */
-class Redirect extends My_Controller {
+class Redirect extends MY_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('mTerm');
+        $this->load->model('MTerm');
     }
 
     public function index() {
@@ -29,7 +29,7 @@ class Redirect extends My_Controller {
             "status" => "public"
         );
         // GET list post order by date (latest)
-        $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
+        $result = $this->MPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
         $config['total_rows'] = $result['total'];
 
         // Init data to response client
@@ -50,14 +50,14 @@ class Redirect extends My_Controller {
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
         $this->_data['sidebar'] = 'client/template/sidebar';
-        $this->_data['comments'] = $this->generateCommentLevel($this->mComment->getCommentsByPostId($id), 0, 0);
+        $this->_data['comments'] = $this->MComment->generateCommentLevel($this->MComment->getCommentsByPostId($id), 0, 0);
         
         // GET post include tags itself
         $post = NULL;
         if($id == 0) { // url: [guid].html
-            $post = $this->mPost->getPostByGuid($guid, 'page', FALSE, TRUE);
+            $post = $this->MPost->getPostByGuid($guid, 'page', FALSE, TRUE);
         } else { // url: [guid]-[id].html
-            $post = $this->mPost->getPostById($id, TRUE, TRUE);
+            $post = $this->MPost->getPostById($id, TRUE, TRUE);
         }
         // Check post is existed
         if(NULL == $post) {
@@ -91,7 +91,7 @@ class Redirect extends My_Controller {
         $this->_data['title'] = 'Danh sách tác giả';
         $this->_data['sidebar'] = 'client/template/sidebar';
         $this->_data['content'] = 'client/authors';
-        $this->_data['users'] = $this->mUser->getUsers(array("records" => 100, "begin" => 0), 'writer')['users'];
+        $this->_data['users'] = $this->MUser->getUsers(array("records" => 100, "begin" => 0), 'writer')['users'];
         $this->load->view('client/template/main', $this->_data);
     }
     
@@ -115,7 +115,7 @@ class Redirect extends My_Controller {
             "title" => $s
         );
         // GET list post order by date (latest)
-        $result = $this->mPost->getPosts($condition, 
+        $result = $this->MPost->getPosts($condition, 
                 array('records' => $config['per_page'], 'begin' => $segment));
         $config['total_rows'] = $result['total'];
         
@@ -147,7 +147,7 @@ class Redirect extends My_Controller {
         $segment = intval($this->input->get('p'));
         
         // GET termTaxonomy id (category or tag)
-        $term = $this->mTerm->getTermBySlug($slug, htmlentities($cate));
+        $term = $this->MTerm->getTermBySlug($slug, htmlentities($cate));
         if(empty($term)) { // If not exist term taxonomy then error 404
             $this->_data['content'] = 'client/404';
             $this->load->view('client/template/main', $this->_data);
@@ -168,7 +168,7 @@ class Redirect extends My_Controller {
             "taxonomy" => $term['t_id']
         );
         // GET list post order by date (latest)
-        $result = $this->mPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
+        $result = $this->MPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
         $config['total_rows'] = $result['total'];
         
         $this->_data['content'] = 'client/index';
@@ -178,44 +178,6 @@ class Redirect extends My_Controller {
         $this->_data['title'] = $term['t_name'];
         
         $this->load->view('client/template/main', $this->_data);
-    }
-
-    private function generateCommentLevel($comments, $parentId, $level, $html = '') {
-        // Create a temp list
-        $cmtTemps = $comments;
-        // GET list sub comment by parentId search in comments list
-        $subCmts = array();
-        for ($i = 0; $i < count($cmtTemps); $i ++) {
-            // If found: remove it from $comments and add to subCmts
-            if ($comments[$i]->getParent() == $parentId) {
-                unset($comments[$i]);
-                $subCmts[] = $cmtTemps[$i];
-            }
-        }
-        $comments = array_values($comments);
-        
-        // Add list sub comment to html and recursive
-        if(empty($subCmts)) {
-            return "";
-        } else {
-            $html = ($parentId == 0 ? "" : '<ul class = "children">');
-            foreach ($subCmts as $cmt) {
-                if($cmt->getParent() == 0) {
-                    $level = 0;
-                }
-                $html .=
-                            '<li id="cmt_'. $cmt->getId() .'" class="depth-' . $level .'">' .
-                                '<div class="author-avatar"><img alt="" src ="'.base_url().'assets/client/images/avatar.jpg"/></div>' .
-                                '<div class="comment-author"><a>' . $cmt->getAuthor() . '</a></div>' .
-                                '<div class="comment-date">' . $cmt->getDate() . '</div>' .
-                                '<div class="comment-text"><p>' . $cmt->getContent() . '</p></div>' .
-                                '<div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="' . $cmt->getId() . '">reply</a></div>' .
-                                $this->generateCommentLevel($comments, $cmt->getId(), ++$level, $html) .
-                            '</li>';
-                $level--;
-            }
-            return $html .= ($parentId == 0 ? "" : "</ul>");
-        }
     }
 
 }

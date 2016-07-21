@@ -10,9 +10,9 @@ class Menu extends CI_Controller {
         parent::__construct();
         $this->load->model('EMenuItem');
         
-        $this->load->model('mPost');
-        $this->load->model('mCategory');
-        $this->load->model('mMenu');
+        $this->load->model('MPost');
+        $this->load->model('MCategory');
+        $this->load->model('MMenu');
     }
     
     public function menus() {
@@ -21,21 +21,21 @@ class Menu extends CI_Controller {
             "type" => 'page',
             "status" => 'public'
         );
-        $pages = $this->mPost->getPosts($condition)['posts'];
+        $pages = $this->MPost->getPosts($condition)['posts'];
         
         // GET post
         $condition = array(
             "type" => 'post',
             "status" => 'public'
         );
-        $posts = $this->mPost->getPosts($condition)['posts'];
+        $posts = $this->MPost->getPosts($condition)['posts'];
         $data = array(
             "title" => "Quản lý menu",
             "content" => "admin/menus",
-            "categories" => $this->mCategory->getCategoriesParentBox(0, ""),
+            "categories" => $this->MCategory->getCategoriesParentBox(0, ""),
             "pages" => $pages,
             "posts" => $posts,
-            "menu" => $this->mMenu->generateMenu($this->mMenu->getMenus(), array("tag_name"=>"div", "tag_container_name" => "ol"))
+            "menu" => $this->MMenu->generateMenu($this->MMenu->getMenu(), array("tag_name"=>"div", "tag_container_name" => "ol"))
         );
         $this->load->view('admin/template/main', $data);
     }
@@ -44,14 +44,14 @@ class Menu extends CI_Controller {
         $link_name = $this->input->post('name');
         $link = $this->input->post('link');
         $menuItem = new EMenuItem(0, $link_name, $link, 0);
-        echo $this->mMenu->addMenuItem($menuItem);
+        echo $this->MMenu->addMenuItem($menuItem);
     }
     
     public function addAndUpdateMenu() {
         // GET menu (json) from client
         $menu = $this->input->post('menu');
         
-        $this->mMenu->addMenu(json_decode($menu, TRUE));
+        $this->MMenu->addMenu(json_decode($menu, TRUE));
         
         $config = array(
             "tag_name" => "a",

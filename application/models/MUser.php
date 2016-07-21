@@ -15,7 +15,7 @@ class MUser extends Base_Model {
         
         $this->load->model('EUser');
 
-        $this->load->model('mPost');
+        $this->load->model('MPost');
     }
 
     public function addUser($user) {
@@ -51,7 +51,7 @@ class MUser extends Base_Model {
                     $userTemp['u_fullname'], $userTemp['u_avatar'], $userTemp['u_desc'], $userTemp['u_bio'], 
                     $userTemp['u_email'], $userTemp['u_phone'], $userTemp['u_facebook'], $userTemp['u_skype'], 
                     $userTemp['u_google'], $userTemp['u_key'], $userTemp['u_actived'], $userTemp['u_role'], $userTemp['u_non_blocked'],
-                    $this->mPost->countPostByUserId($userTemp['u_id']));
+                    $this->MPost->countPostByUserId($userTemp['u_id']));
         }
     }
 
@@ -88,7 +88,7 @@ class MUser extends Base_Model {
                     $user['u_fullname'], $user['u_avatar'], $user['u_desc'], $user['u_bio'], 
                     $user['u_email'], $user['u_phone'], $user['u_facebook'], $user['u_skype'], 
                     $user['u_google'], $user['u_key'], $user['u_actived'], $user['u_role'], $user['u_non_blocked'],
-                    $this->mPost->countPostByUserId($user['u_id']));
+                    $this->MPost->countPostByUserId($user['u_id']));
         }
 
         return array(
@@ -99,11 +99,14 @@ class MUser extends Base_Model {
     
     public function getUserById($user_id) {
         $rs = $this->getByKey($user_id);
+        if(empty($rs)) {
+            return NULL;
+        }
         $user = new EUser($rs['u_id'], $rs['u_username'], $rs['u_password'], 
                     $rs['u_fullname'], $rs['u_avatar'], $rs['u_desc'], $rs['u_bio'], 
                     $rs['u_email'], $rs['u_phone'], $rs['u_facebook'], $rs['u_skype'], 
                     $rs['u_google'], $rs['u_key'], $rs['u_actived'], $rs['u_role'], $rs['u_non_blocked'],
-                    $this->mPost->countPostByUserId($user_id));
+                    $this->MPost->countPostByUserId($user_id));
         return $user;
     }
     

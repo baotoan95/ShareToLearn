@@ -35,7 +35,8 @@
     <div class="social-media clearfix">
         <ul>
             <li class="twitter">
-                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.nextwpthemes.com/" data-text="">Tweet</a>
+                <a href="https://twitter.com/share" class="twitter-share-button" 
+                   data-url="<?php echo base_url() . $post->getGuid() . '-' . $post->getId() . '.html'; ?>" data-text="">Tweet</a>
                 <script>!function (d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0];
                         if (!d.getElementById(id)) {
@@ -47,18 +48,9 @@
                     }(document, "script", "twitter-wjs");</script>
             </li>
             <li class="facebook">
-                <script>(function (d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id))
-                            return;
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));
-                </script>
-
-                <div class="fb-like" data-href="http://www.nextwpthemes.com/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+                <div id="fb-root"></div>
+                <div class="fb-like" 
+                     data-href="<?php echo base_url() . $post->getGuid() . '-' . $post->getId() . '.html'; ?>" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>
             </li>
             <li class="google_plus">
                 <!-- Place this tag where you want the +1 button to render. -->
