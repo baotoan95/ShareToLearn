@@ -14,10 +14,10 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><?php echo $title; ?></h3><br/>
-                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả tìm kiếm cho \"" . $_GET['search'] . "\"" : "" ?>
+                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Result for \"" . $_GET['search'] . "\"" : "" ?>
                 <div class="box-tools">
                     <div class="input-group" style="width: 150px;">
-                        <input name="search" class="form-control input-sm pull-right"  placeholder="Tìm kiếm" type="text">
+                        <input name="search" class="form-control input-sm pull-right"  placeholder="Search" type="text">
                         <div class="input-group-btn">
                             <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                         </div>
@@ -38,7 +38,7 @@
                                            $_GET['status'] == 'all') {
                                     echo 'active';
                                 } ?>">
-                                    Tất cả (<?php echo array_pop($count); ?>)
+                                    All (<?php echo array_pop($count); ?>)
                                 </a>
                                 <?php
                                 foreach ($count as $key => $value) {
@@ -46,27 +46,27 @@
                                         case 'pending': echo "<a href='$uri?status=$key&type=$type' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
                                                 $_GET['status'] == 'pending') ? "active" : "") . "'>"
-                                            . "Chờ duyệt ($value)</a>";
+                                            . "Pending ($value)</a>";
                                             break;
                                         case 'public': echo "<a href='$uri?status=$key&type=$type' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
                                                 $_GET['status'] == 'public') ? "active" : "") . "'>"
-                                            . "Công khai ($value)</a>";
+                                            . "Public ($value)</a>";
                                             break;
                                         case 'private': echo "<a href='$uri?status=$key&type=$type' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
                                                 $_GET['status'] == 'private') ? "active" : "") . "'>"
-                                            . "Riêng tư ($value)</a>";
+                                            . "Private ($value)</a>";
                                             break;
                                         case 'draf': echo "<a href='$uri?status=$key&type=$type' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
                                                 $_GET['status'] == 'draf') ? "active" : "") . "'>"
-                                            . "Nháp ($value)</a>";
+                                            . "Draf ($value)</a>";
                                             break;
                                         case 'trash': echo "<a href='$uri?status=$key&type=$type' "
                                             . "class='btn btn-sm btn-default " . ((!empty($_GET['status']) && 
                                                 $_GET['status'] == 'trash') ? "active" : "") . "'>"
-                                            . "Rác ($value)</a>";
+                                            . "Trash ($value)</a>";
                                             break;
                                     }
                                 }
@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <select class="form-control" name="date">
-                            <option value="">Tất cả ngày</option>
+                            <option value="">------- All ------</option>
                             <?php
                             foreach ($dates as $date) {
                                 echo "<option " . (isset($_GET['date']) && $_GET['date'] == date('MY', strtotime($date)) ? "selected" : "")
@@ -94,7 +94,7 @@
                     ?>
                     <div class="col-lg-3">
                         <select class="form-control" name="category">
-                            <option value="">Tất cả thể loại</option>
+                            <option value="">------- All ------</option>
                             <?php echo $categories; ?>
                         </select>
                     </div>
@@ -102,7 +102,7 @@
                         }
                     ?>
                     <div class="col-lg-1">
-                        <button class="btn btn-sm btn-default">Lọc</button>
+                        <button class="btn btn-sm btn-default">Filter</button>
                     </div>
                 </div>
             </div>
@@ -114,21 +114,21 @@
                     <tbody>
                         <tr>
                             <th>ID</th>
-                            <th>Tiêu Đề</th>
-                            <th>Tác Giả</th>
+                            <th>Title</th>
+                            <th>Author</th>
                             <?php
                                 if($type == "post") {
                             ?>
-                            <th>Thể Loại</th>
+                            <th>Categories</th>
                             <th>Tags</th>
                             <?php
                                 }
                             ?>
-                            <th>Bình Luận</th>
-                            <th>Lượt Xem</th>
-                            <th>Ngày Đăng</th>
-                            <th>Trạng Thái</th>
-                            <th>Xóa</th>
+                            <th>Comments</th>
+                            <th>Views</th>
+                            <th>Publised Date</th>
+                            <th>Status</th>
+                            <th>Delete</th>
                         </tr>
                         <?php
                         foreach ($posts as $post) {
@@ -190,35 +190,14 @@
                         ?>
                     </tbody>
                 </table>
-                <script lang="javascript">
-                    // DELETE post
-                    $('.del_post').click(function () {
-                        var element = $(this);
-                        $.ajax({
-                            url: <?php echo "\"" . base_url() . "post/deletePost\""; ?>,
-                            type: "POST",
-                            dataType: "text",
-                            data: {
-                                id: element.attr('id')
-                            },
-                            success: function (res) {
-                                if (res !== 'failure') {
-                                    element.parent().parent().remove();
-                                }
-                            },
-                            failure: function (error) {
-                                alert(err);
-                            }
-                        });
-                    });
-                </script>
+                <script lang="javascript" src="<?php echo base_url(); ?>assets/admin/dist/js/pages/post_management.js"></script>
             </div>
             <!-- End body show data -->
             <!-- /.box-body -->
             <div class="box-footer clearfix">
-                Kết quả: <?php echo count($posts) . '/' . $totalResult; ?>
+                Result: <?php echo count($posts) . '/' . $totalResult; ?>
                 <!-- Pagination -->
-<?php echo $links ?>
+                <?php echo $links ?>
             </div>
     </form>
 </div><!-- /.box -->

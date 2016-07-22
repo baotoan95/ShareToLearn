@@ -60,6 +60,6 @@ $route['search.html'] = 'redirect/search';
 $route['(:any)-(:num).html'] = 'redirect/single/$1/$2';
 $route['(:any).html'] = 'redirect/single/$1/0';
 $route['the-loai/(:any)'] = 'redirect/category/category/$1';
-$route['tag/(:any)'] = 'redirect/category/tag/$1';
+$route['ptag/(:any)'] = 'redirect/category/tag/$1';
 
 

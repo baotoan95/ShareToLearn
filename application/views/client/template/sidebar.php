@@ -60,7 +60,7 @@
             <div class="tagcloud">
                 <?php
                     foreach($post->getTags() as $tag) {
-                        echo "<a href='" . base_url() . "tag/{$tag->getSlug()}' "
+                        echo "<a href='" . base_url() . "ptag/{$tag->getSlug()}' "
                         . "style='font-size: 22pt;'>{$tag->getName()}</a>";
                     }
                 ?>
@@ -94,7 +94,9 @@
             data-href="https://www.facebook.com/Btit95-588678394647082/" 
             data-width="340"
             data-hide-cover="false"
-            data-show-facepile="true"></div>
+            data-show-facepile="true">
+            </div>
         </li>
     </ul>
+    
 </aside>

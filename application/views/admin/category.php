@@ -21,14 +21,14 @@
                 <input type="hidden" name="count" value="<?php echo $category->getCount(); ?>"/>
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="name">Tên thể loại</label>
+                        <label for="name">Category name</label>
                         <input class="form-control" name="name" 
                                value="<?php echo $category->getName(); ?>" id="name" placeholder="" type="text">
                     </div>
                     <div class="form-group">
-                        <label>Cha</label>
+                        <label>Parent</label>
                         <select name="parent_cate" class="form-control">
-                            <option value="0">---- Cha ----</option>
+                            <option value="0">---- Select ----</option>
                             <?php echo $categoriesParentBox; ?>
                         </select>
                     </div>
@@ -38,15 +38,14 @@
                                value="<?php echo $category->getSlug(); ?>" id="slug" placeholder="slug" type="text">
                     </div>
                     <div class="form-group">
-                        <label>Mô tả</label>
-                        <textarea class="form-control" rows="5" name="desc" placeholder="Nhập mô tả ...">
-                            <?php echo $category->getDesc(); ?>
-                        </textarea>
+                        <label>Description</label>
+                        <textarea class="form-control" rows="5" name="desc" 
+                                  placeholder="Desc..."><?php echo $category->getDesc(); ?></textarea>
                     </div>
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div><!-- /.box -->

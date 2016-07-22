@@ -115,7 +115,7 @@
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input <?php echo (isset($user) && $user->getNon_blocked() == 1) ? "checked" : ""; ?> type="checkbox" name="blocked" value="1"> Khóa
+                            <input <?php echo (isset($user) && $user->getNon_blocked() == 1) ? "checked" : ""; ?> type="checkbox" name="blocked" value="1"> Block
                         </label>
                     </div>
                 </div><!-- /.box-body -->

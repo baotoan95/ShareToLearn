@@ -260,5 +260,24 @@ $(document).ready(function () {
         e.preventDefault();
         $(this).parent().parent().remove();
     });
+    
+    // Delete menu
+    $('#delete_menu').on('click', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: document.location.origin + "/menu/deleteMenu",
+            type: "post",
+            contextType: "text",
+            success: function (res) {
+                if(res === 'successful') {
+                    $('#menus').empty();
+                    updateOutput($('#nestable').data('output', $('#nestable-output')));
+                }
+            },
+            failure: function (error) {
+                alert(error);
+            }
+        });
+    });
 });
 

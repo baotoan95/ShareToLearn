@@ -64,7 +64,7 @@ class Post extends CI_Controller {
 
     public function newPost() {
         $data = $this->initPostView();
-        $data["title"] = "Thêm bài viết mới";
+        $data["title"] = "Add post";
         $data['action'] = "addpost";
         $data['categories'] = $this->getCategoriesBox(0, array());
         $type = $this->input->get('type', TRUE);
@@ -74,10 +74,10 @@ class Post extends CI_Controller {
 
     public function addPost() {
         // Validation form
-        $this->form_validation->set_rules('title', 'Tiêu đề', 'required');
+        $this->form_validation->set_rules('title', 'Title', 'required');
         // Data default when error occur
         $data = $this->initPostView();
-        $data["title"] = "Thêm bài viết mới";
+        $data["title"] = "Add post";
         $data["action"] = "addpost";
         $data['categories'] = $this->getCategoriesBox(0, array());
         $data['type'] = $this->input->post('type');
@@ -90,11 +90,11 @@ class Post extends CI_Controller {
         // Upload avatar
         $avatar = $this->upload_image('avatar', './assets/upload/images');
         if (!$avatar) { // Upload fail
-            $this->session->set_flashdata('flash_error', 'Thêm không thành công, vui lòng chọn hình đặc phù hợp.'
-                    . '<br/>Hình đặc trưng phù hợp là:'
+            $this->session->set_flashdata('flash_error', 'Ops! please chose a picture with condition below'
+                    . '<br/>Condition:'
                     . '<ul>'
-                    . '<li>Thuộc định dạng: png/jpg/gif</li>'
-                    . '<li>Dung lượng: không quá 900kb</li>'
+                    . '<li>Extension: png/jpg/gif</li>'
+                    . '<li>Quantity: not too 900kb</li>'
                     . '</ul>');
             $this->load->view('admin/template/main', $data);
             return;
@@ -143,10 +143,10 @@ class Post extends CI_Controller {
         $post->setTags($tags);
         $post_id = $this->MPost->addPost($post);
         if ($post_id) {
-            $this->session->set_flashdata("flash_message", "Đã thêm bài viết: " . $post->getTitle()
+            $this->session->set_flashdata("flash_message", "Added: " . $post->getTitle()
                     . " | <a href='" . base_url() . "post/view/" . $post->getGuid() . "'>Xem</a>");
         } else {
-            $this->session->set_flashdata("flash_error", "Bài viết bị trùng: " . $post->getTitle()
+            $this->session->set_flashdata("flash_error", "Duplicate: " . $post->getTitle()
                     . " | <a href='" . base_url() . "post/view/" . $post->getGuid() . "'>Xem</a>");
         }
         // When add success then redirect to update page
@@ -206,7 +206,7 @@ class Post extends CI_Controller {
         // Call pagination helper to make links
         $pagination = pagination($config, $this->pagination);
         $data = array(
-            "title" => $type == 'post' ? "Danh Sách Bài Viết" : "Danh Sách Trang",
+            "title" => $type == 'post' ? "Posts" : "Pages",
             "content" => "admin/posts",
             "posts" => $result['posts'],
             "links" => $pagination,
@@ -224,7 +224,7 @@ class Post extends CI_Controller {
     public function edit($k) {
         $data = $this->initPostView();
         $data['post'] = ($post = $this->MPost->getPostById($k, TRUE, TRUE));
-        $data['title'] = "Cập nhật bài viết";
+        $data['title'] = "Update post";
         $data['action'] = "update";
         $categoriesNeedChecked = $post->getCategories();
         $data['categories'] = $this->getCategoriesBox(0, $categoriesNeedChecked);
@@ -234,10 +234,10 @@ class Post extends CI_Controller {
     public function update() {
         
         // Validation form
-        $this->form_validation->set_rules('title', 'Tiêu đề', 'required');
+        $this->form_validation->set_rules('title', 'Title', 'required');
 
         $data = $this->initPostView();
-        $data["title"] = "Thêm bài viết mới";
+        $data["title"] = "Add post";
         $data['action'] = "update";
         $data['categories'] = $this->getCategoriesBox(0, array());
 
@@ -280,12 +280,12 @@ class Post extends CI_Controller {
             // Upload avatar
             $avatar = $this->upload_image('avatar', './assets/upload/images');
             if (!$avatar) { // Upload fail
-                $this->session->set_flashdata('flash_error', 'Thêm không thành công, vui lòng chọn hình đặc phù hợp.'
-                        . '<br/>Hình đặc trưng phù hợp là:'
-                        . '<ul>'
-                        . '<li>Thuộc định dạng: png/jpg/gif</li>'
-                        . '<li>Dung lượng: không quá 900kb</li>'
-                        . '</ul>');
+                $this->session->set_flashdata('flash_error', 'Ops! please chose a picture with condition below'
+                    . '<br/>Condition:'
+                    . '<ul>'
+                    . '<li>Extension: png/jpg/gif</li>'
+                    . '<li>Quantity: not too 900kb</li>'
+                    . '</ul>');
                 $this->load->view('admin/template/main', $data);
                 return;
             }
@@ -306,9 +306,9 @@ class Post extends CI_Controller {
 
         // Update post
         if ($this->MPost->updatePost($post)) {
-            $this->session->set_flashdata('flash_message', 'Cập nhật thành công');
+            $this->session->set_flashdata('flash_message', 'Update successful');
         } else {
-            $this->session->set_flashdata('flash_error', 'Cập nhật thất bại');
+            $this->session->set_flashdata('flash_error', 'Update fail');
         }
 
         // When update success redirect to itself

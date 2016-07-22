@@ -20,7 +20,7 @@ class Redirect extends MY_Controller {
         $config = array(
             "base_url" => base_url(),
             "prefix" => "redirect?p=",
-            "per_page" => 10,
+            "per_page" => 20,
             "cur_page" => $segment
         );
 
@@ -35,21 +35,19 @@ class Redirect extends MY_Controller {
         // Init data to response client
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
-        $this->_data['boxTitle'] = "Bài Viết Mới";
-        $this->_data['sidebar'] = 'client/template/sidebar';
-        $this->_data['content'] = 'client/index';
         $this->_data['posts'] = $result['posts'];
         // Init pagination for post latest
         $this->_data['links'] = pagination($config, $this->pagination);
         
-        $this->load->view('client/template/main', $this->_data);
+        $this->_data['listTitle'] = 'Bài viết mới nhất';
+        $this->_data['content'] = 'client2/list-post';
+        $this->load->view('client2/main', $this->_data);
     }
 
     public function single($guid, $id) {
         // Init data to response client
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
-        $this->_data['sidebar'] = 'client/template/sidebar';
         $this->_data['comments'] = $this->MComment->generateCommentLevel($this->MComment->getCommentsByPostId($id), 0, 0);
         
         // GET post include tags itself
@@ -67,9 +65,9 @@ class Redirect extends MY_Controller {
         }
         $this->_data['post'] = $post;
         $this->_data['title'] = $post->getTitle();
-        $this->_data['content'] = 'client/single';
+        $this->_data['content'] = 'client2/single';
         if($guid == $post->getGuid()) {
-            $this->load->view('client/template/main', $this->_data);
+            $this->load->view('client2/main', $this->_data);
         } else {
             header('Location: ' . base_url() . $post->getGuid() . '-' . $id . '.html');
         }
@@ -79,10 +77,9 @@ class Redirect extends MY_Controller {
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
         $this->_data['title'] = 'Liên hệ';
-        $this->_data['sidebar'] = 'client/template/sidebar';
-        $this->_data['content'] = 'client/contact';
+        $this->_data['content'] = 'client2/contact';
         
-        $this->load->view('client/template/main', $this->_data);
+        $this->load->view('client2/main', $this->_data);
     }
     
     public function authors() {

@@ -15,13 +15,13 @@
         <!-- general form elements -->
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Thêm Tag</h3>
+                <h3 class="box-title">Add Tag</h3>
             </div><!-- /.box-header -->
             <!-- form start -->
             <form role="form">
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="tag-name">Tên Tag</label>
+                        <label for="tag-name">Tag name</label>
                         <input class="form-control" name="tag_name" id="tag-name" type="text">
                     </div>
                     <div class="form-group">
@@ -29,12 +29,12 @@
                         <input class="form-control" id="slug" name="slug" type="text">
                     </div>
                     <div class="form-group">
-                        <label>Mô Tả</label>
+                        <label>Description</label>
                         <textarea name="desc" class="form-control" rows="3" placeholder="Enter ..."></textarea>
                     </div>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary" id="submit">Thêm</button>
+                    <button type="submit" class="btn btn-primary" id="submit">ADD</button>
                     <script lang="javascript">
                         // ADD tag
                         $('#submit').click(function (e) {
@@ -78,12 +78,12 @@
     <div class="col-md-9">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Danh Sách Bài Viết</h3><br/>
-                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Kết quả cho\"" . $_GET['search'] . "\"" : ""; ?>
+                <h3 class="box-title">Tags</h3><br/>
+                <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Result for \"" . $_GET['search'] . "\"" : ""; ?>
                 <div class="box-tools">
                     <form action="" method="get">
                         <div class="input-group" style="width: 150px;">
-                            <input name="search" class="form-control input-sm pull-right" placeholder="Tìm kiếm" type="text">
+                            <input name="search" class="form-control input-sm pull-right" placeholder="Search" type="text">
                             <div class="input-group-btn">
                                 <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                             </div>
@@ -95,11 +95,11 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Tên</th>
-                            <th>Mô Tả</th>
+                            <th>Name</th>
+                            <th>Description</th>
                             <th>Slug</th>
-                            <th>Số Lượng</th>
-                            <th>Xóa</th>
+                            <th>Count</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,14 +136,14 @@
                                 }
                             },
                             failure: function (error) {
-                                alert(err);
+                                alert(error);
                             }
                         });
                     });
                 </script>
             </div><!-- /.box-body -->
             <div class="box-footer clearfix">
-                Kết quả: <?php echo count($tags) . "/" . $total ?>
+                Result: <?php echo count($tags) . "/" . $total ?>
                 <?php echo $links; ?>
             </div>
         </div><!-- /.box -->

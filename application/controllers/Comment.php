@@ -22,7 +22,7 @@ class Comment extends CI_Controller {
         $this->form_validation->set_rules('content', 'Content', 'required');
         
         if($this->form_validation->run() == FALSE) {
-            echo validation_errors();
+            echo validation_errors() . ' - ' . $this->input->post('email');
             return;
         }
         
@@ -101,7 +101,7 @@ class Comment extends CI_Controller {
 
         // Init data response to client
         $data = array(
-            "title" => "Danh sách phản hồi",
+            "title" => "Discussion",
             "content" => "admin/comments",
             "count" => $this->MComment->countByStatus(),
             "comments" => $result['comments'],
@@ -144,10 +144,10 @@ class Comment extends CI_Controller {
         $comment->setDate(date('y-m-d H:i:s'));
 
         if ($this->MComment->updateComment($comment)) {
-            $this->session->set_flashdata('flash_message', 'Cập nhật thành công.');
+            $this->session->set_flashdata('flash_message', 'Update successful');
             header('Location: ' . base_url() . 'comment/comments', 301);
         } else {
-            $this->session->set_flashdata('flash_message', 'Cập nhật chưa thành công, vui lòng điền đầy đủ thông tin và thử lại.');
+            $this->session->set_flashdata('flash_message', 'Update fail, please fill all fields required.');
             $data = array(
                 "content" => "admin/comment",
                 "comment" => $comment
@@ -184,9 +184,9 @@ class Comment extends CI_Controller {
             }
         } else {
             if ($this->MComment->updateComment($comment)) {
-                $this->session->set_flashdata('flash_message', 'Đã di chuyển tới thùng rác');
+                $this->session->set_flashdata('flash_message', 'Moved to trash');
             } else {
-                $this->session->set_flashdata('flash_error', 'Thao tác thất bại');
+                $this->session->set_flashdata('flash_error', 'Manipulation fail');
             }
             header('Location: ' . base_url() . 'comment/comments', 301);
         }

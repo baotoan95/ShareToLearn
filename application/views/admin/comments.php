@@ -17,7 +17,7 @@
                 <?php echo (isset($_GET['search']) && strlen(trim($_GET['search'])) > 0) ? "Result for \"" . $_GET['search'] . "\"" : "" ?>
                 <div class="box-tools">
                     <div class="input-group" style="width: 150px;">
-                        <input name="search" class="form-control input-sm pull-right"  placeholder="Tìm kiếm" type="text">
+                        <input name="search" class="form-control input-sm pull-right"  placeholder="Search" type="text">
                         <div class="input-group-btn">
                             <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                         </div>
@@ -199,11 +199,11 @@
                                     alert(cmt.status);
                                     switch(cmt.status) {
                                         case 'pending':
-                                            action = "<a class='approved'>Duyệt</a> | <a class='reply'>Trả lời</a> | "
+                                            action = "<a class='approved'>Approved</a> | <a class='reply'>Trả lời</a> | "
                                             + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
                                             break;
                                         case 'approved':
-                                            action = "<a class='restore'>Bỏ duyệt</a> | <a class='reply'>Trả lời</a> | "
+                                            action = "<a class='restore'>Unapproved</a> | <a class='reply'>Trả lời</a> | "
                                             + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
                                             break;
                                     }

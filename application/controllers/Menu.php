@@ -30,7 +30,7 @@ class Menu extends CI_Controller {
         );
         $posts = $this->MPost->getPosts($condition)['posts'];
         $data = array(
-            "title" => "Quản lý menu",
+            "title" => "Menu management",
             "content" => "admin/menus",
             "categories" => $this->MCategory->getCategoriesParentBox(0, ""),
             "pages" => $pages,
@@ -60,5 +60,8 @@ class Menu extends CI_Controller {
         header('Location: ' . base_url() . 'menu/menus', 301);
     }
     
-    
+    public function deleteMenu() {
+        $this->MMenu->deleteMenu();
+        echo "successful";
+    }
 }

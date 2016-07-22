@@ -41,7 +41,7 @@
                 <!-- form start -->
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="title">Tiêu Đề</label>
+                        <label for="title">Title</label>
                         <?php
                         if (form_error('title')) {
                             echo "<div class='has-error'>"
@@ -60,7 +60,7 @@
                         </script>
                     </div>
                     <div class="form-group">
-                        <label for="guid">Đường dẫn</label>
+                        <label for="guid">Permalink</label>
                         <?php
                         if (form_error('guid')) {
                             echo "<div class='has-error'>"
@@ -74,22 +74,22 @@
                                value="<?php echo isset($post) ? $post->getGuid() : set_value('guid') ?>" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="excerpt">Trích Đoạn</label>
+                        <label for="excerpt">Excerpt</label>
                         <textarea id="excerpt" class="form-control" rows="5" 
                                   name="excerpt" onkeypress="change()"><?php echo isset($post) 
                                   ? $post->getExcerpt() : set_value('excerpt'); ?></textarea>
                     </div>
                     <div class="form-group">
                         
-                        <label for="avatar">Hình Đặc Trưng</label>
+                        <label for="avatar">Avatar</label>
                         <input type="file" name="avatar">
-                        <p class="help-block">Sử dụng để hiển thị.</p>
+                        <p class="help-block">Used to display.</p>
                         <img class="avatarPreview" src="<?php echo isset($post) ? base_url() .
                                     'assets/upload/images/' . $post->getBanner() : "";
                             ?>"/>
                     </div>
                     <div class="form-group">
-                        <label>Nội Dung</label>
+                        <label>Content</label>
                         <?php
                         if (form_error('content')) {
                             echo "<div class='has-error'>"
@@ -111,33 +111,33 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Thuộc Tính</h3>
+                    <h3 class="box-title">Attributes</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="status">Trạng thái</label>
+                        <label for="status">Status</label>
                         <select class="form-control" id="status" name="status">
                             <?php
                             if (isset($post) && $post->getStatus() == 'private') {
-                                echo "<option value='private' selected='selected'>Riêng tư</option>";
+                                echo "<option value='private' selected='selected'>Private</option>";
                             } else {
                                 ?>
                                 <option value="public"
                                         <?php echo (isset($post) &&
                                         $post->getStatus() == 'public') ? "selected='selected'" : ""
                                         ?>>
-                                    Công Khai</option>
+                                    Public</option>
                                 <option value="draf"
                                     <?php echo (isset($post) &&
                                     $post->getStatus() == 'draf') ? "selected='selected'" : ""
                                     ?>>
-                                    Nháp</option>
+                                    Draf</option>
                                 <option value="pending"
                                 <?php echo (isset($post) &&
                                 $post->getStatus() == 'pending') ? "selected='selected'" : ""
                                 ?>>
-                                    Chờ Duyệt</option>
+                                    Pending</option>
                                 <?php } ?>
                         </select>
                     </div>
@@ -148,22 +148,22 @@
                             <?php echo (isset($post) &&
                             ($post->getStatus() == 'public' || strlen($post->getPassword()) > 0)) ? "selected='selected'" : ""
                             ?>>
-                                Công khai</option>
+                                Public</option>
                             <option value="private"
                                     <?php echo (isset($post) &&
                                     $post->getStatus() == 'private') ? "selected='selected'" : ""
                                     ?>>
-                                Riêng tư</option>
+                                Private</option>
                             <option value="protected"
                          <?php echo (isset($post) &&
                          $post->getStatus() == 'public' && strlen($post->getPassword()) > 0) ? "selected='selected'" : ""
                          ?>>
-                                Bảo vệ</option>
+                                Protected</option>
                         </select>
                     </div>
                     <div class="form-group" id="password" style="display: 
                             <?php echo (isset($post) && strlen($post->getPassword()) > 0) ? "block;" : "none;" ?>">
-                        <label>Mật khẩu</label>
+                        <label>Password</label>
                         <input class="form-control" placeholder="Password" name="password" type="text"
                                value="<?php echo (isset($post) && strlen($post->getPassword()) > 0) ? $post->getPassword() : "" ?>">
                     </div>
@@ -173,33 +173,17 @@
                             <?php echo (isset($post) &&
                              $post->getCmt_allow() == TRUE) ? "checked='checked'" : !isset($post) ? "checked" : ""
                             ?>/>
-                            Cho phép bình luận
+                            Allow comment
                         </label>
                     </div>
                     <script>
-                        $status = $('select[name=status]');
-
-                        $('#visibility').change(function () {
-                            $('#password').fadeOut(10);
-                            if ($(this).val() === 'public') {
-                                $status.empty();
-                                $status.append("<option value='public'>Công khai</option>");
-                                $status.append("<option value='draf'>Nháp</option>");
-                                $status.append("<option value='pending'>Chờ duyệt</option>");
-                                $('select[name=status] option[value=public]').attr('selected', 'selected');
-                            } else if ($(this).val() === 'protected') {
-                                $('#password').fadeIn(10);
-                                $status.empty().append("<option value='public'>Công khai</option>");
-                            } else if ($(this).val() === 'private') {
-                                $status.empty().append("<option value='private'>Riêng tư</option>");
-                            }
-                        });
+                        
                     </script>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">
                         <?php
-                            echo $action == 'update' ? "Cập Nhật" : "Thêm";
+                            echo $action == 'update' ? "Update" : "ADD";
                         ?>
                     </button>
                 </div>
@@ -211,7 +195,7 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Thể Loại</h3>
+                    <h3 class="box-title">Categories</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
@@ -220,7 +204,7 @@
                             echo $categories;
                         ?>
                     </div>
-                    <u id="add-cate" style="cursor: pointer;">Thêm thể loại mới</u>
+                    <u id="add-cate" style="cursor: pointer;">ADD</u>
                 </div><!-- /.box-body -->
                 <div class="box-footer" style="display: none;" id="add-cate-panel">
                     <div class="box-body">
@@ -236,7 +220,7 @@
                             </select>
                         </div>
                     </div><!-- /.box-body -->
-                    <button id="addCate" class="btn btn-primary">Thêm</button>
+                    <button id="addCate" class="btn btn-primary">ADD</button>
                     <script lang="javascript">
                         // Handler category
                         $('#addCate').click(function (e) {
@@ -319,10 +303,10 @@
                     <div class="input-group input-group-sm">
                         <input class="form-control" id="tag_name" type="text">
                         <span class="input-group-btn">
-                            <button class="btn btn-info btn-flat" onclick="addTag()" type="button">Thêm</button>
+                            <button class="btn btn-info btn-flat" onclick="addTag()" type="button">ADD</button>
                         </span>
                     </div>
-                    <i>Thêm tag cho bài viết</i>
+                    <i>ADD tag cho bài viết</i>
 
                     <div id="tags" class="input-group" style="padding-top: 5px;">
                         <?php
@@ -339,7 +323,8 @@
                         
                     </div>
                 </div><!-- /.box-body -->
-                <script lang="javascript"> // Handler tags
+                <script lang="javascript"> 
+                    // Handler tags
                     tags = [<?php echo $tags; ?>];
 
                     $(document).ready(function () {

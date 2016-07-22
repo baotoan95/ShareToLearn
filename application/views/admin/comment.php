@@ -15,12 +15,12 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Chỉnh sửa phản hồi</h3>
+                    <h3 class="box-title">Edit</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="author">Tên tác giả</label>
+                        <label for="author">Author name</label>
                         <input class="form-control" id="author" name="author"
                                value="<?php echo isset($comment) ? $comment->getAuthor() : "" ?>" type="text">
                     </div>
@@ -29,7 +29,7 @@
                         <input class="form-control" id="email" name="email" value="<?php echo isset($comment) ? $comment->getEmail() : "" ?>" type="text">
                     </div>
                     <div class="form-group">
-                        <label for="content">Nội dung</label>
+                        <label for="content">Content</label>
                         <textarea id="content" class="form-control" rows="5" 
                                   name="content"><?php echo isset($comment) ? $comment->getContent() : "";?></textarea>
                         <script type="text/javascript">
@@ -44,7 +44,7 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Trạng thái</h3>
+                    <h3 class="box-title">Status</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
@@ -53,28 +53,28 @@
                             <label>
                                 <input name="status" <?php echo $comment->getStatus() == 'approved' ? "checked" : ""?>
                                        id="approved" value="approved" checked="" type="radio">
-                                Đã chấp nhận
+                                Approved
                             </label>
                         </div>
                         <div class="radio">
                             <label>
                                 <input name="status" <?php echo $comment->getStatus() == 'pending' ? "checked" : ""?>
                                        id="pending" value="pending" type="radio">
-                                Chờ duyệt
+                                Pending
                             </label>
                         </div>
                         <div class="radio">
                             <label>
                                 <input name="status" <?php echo $comment->getStatus() == 'spam' ? "checked" : ""?>
                                        id="spam" value="spam" type="radio">
-                                Rác
+                                Spam
                             </label>
                         </div>
-                        <p class="margin">Ngày: <code><?php echo $comment->getDate(); ?></code></p>
+                        <p class="margin">Date: <code><?php echo $comment->getDate(); ?></code></p>
                     </div>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Cập Nhật</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                     <a href="" class="pull-right">Move to Trash</a>
                 </div>
             </div><!-- /.box -->

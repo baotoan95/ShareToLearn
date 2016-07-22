@@ -19,7 +19,7 @@ class User extends CI_Controller {
     public function profile() {
         $user = $this->MUser->getUserById($this->session->userdata['cur_user']['id']);
         $data = array(
-            "title" => "Cập nhật người dùng",
+            "title" => "Update user",
             "content" => "admin/user",
             "user" => $user,
             "action" => "updateUser"
@@ -118,7 +118,7 @@ class User extends CI_Controller {
     public function newUser() {
         $data = array(
             "content" => "admin/user",
-            "title" => "Thêm người dùng",
+            "title" => "Add user",
             "action" => "addUser"
         );
         $this->load->view('admin/template/main', $data);
@@ -126,14 +126,14 @@ class User extends CI_Controller {
 
     public function addUser() {
         // Validation form
-        $this->form_validation->set_rules('username', 'Tên tài khoản', 'required');
-        $this->form_validation->set_rules('password', 'Mật khẩu', 'required');
-        $this->form_validation->set_rules('fullname', 'Họ và tên', 'required');
+        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('fullname', 'Fullname', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required');
         // Default data will have response to client
         $data = array(
             "content" => "admin/user",
-            "title" => "Thêm người dùng"
+            "title" => "Add user"
         );
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('admin/template/main', $data);
@@ -162,12 +162,12 @@ class User extends CI_Controller {
             // Upload avatar
             $avatar = $this->upload_image('avatar', './assets/upload/images/avatars');
             if (!$avatar) { // Upload fail
-                $this->session->set_flashdata('flash_error', 'Thêm không thành công, vui lòng chọn hình đặc phù hợp.'
-                        . '<br/>Hình đặc trưng phù hợp là:'
-                        . '<ul>'
-                        . '<li>Thuộc định dạng: png/jpg/gif</li>'
-                        . '<li>Dung lượng: không quá 900kb</li>'
-                        . '</ul>');
+                $this->session->set_flashdata('flash_error', 'Ops! please chose a picture with condition below'
+                    . '<br/>Condition:'
+                    . '<ul>'
+                    . '<li>Extension: png/jpg/gif</li>'
+                    . '<li>Quantity: not too 900kb</li>'
+                    . '</ul>');
                 $this->load->view('admin/template/main', $data);
                 return;
             }
@@ -175,10 +175,10 @@ class User extends CI_Controller {
         }
 
         if ($this->MUser->addUser($user)) {
-            $this->session->set_flashdata('flash_message', 'Đã thêm một người dùng thành công');
+            $this->session->set_flashdata('flash_message', 'Add successful');
             header("Location: " . base_url() . "user/users");
         } else {
-            $this->session->set_flashdata('flash_error', 'Tên tài khoản đã tồn tại');
+            $this->session->set_flashdata('flash_error', 'Username is existed');
         }
         $this->load->view('admin/template/main', $data);
     }
@@ -211,7 +211,7 @@ class User extends CI_Controller {
         $count = $this->MUser->countByRoles();
         
         $data = array(
-            "title" => "Danh sách người dùng",
+            "title" => "Users",
             "content" => "admin/users",
             "users" => $result["users"],
             "total" => $result["total"],
@@ -224,7 +224,7 @@ class User extends CI_Controller {
     public function editUser($user_id) {
         $user = $this->MUser->getUserById($user_id);
         $data = array(
-            "title" => "Cập nhật người dùng",
+            "title" => "Update user",
             "content" => "admin/user",
             "user" => $user,
             "action" => "updateUser"
@@ -234,14 +234,14 @@ class User extends CI_Controller {
     
     public function updateUser() {
         // Validation form
-        $this->form_validation->set_rules('username', 'Tên tài khoản', 'required');
-        $this->form_validation->set_rules('password', 'Mật khẩu', 'required');
-        $this->form_validation->set_rules('fullname', 'Họ và tên', 'required');
+        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('fullname', 'Fullname', 'required');
         $this->form_validation->set_rules('email', 'Email', 'required');
         // Default data will have response to client
         $data = array(
             "content" => "admin/user",
-            "title" => "Cập nhật người dùng",
+            "title" => "Update user",
             "action" => "updateUser"
         );
         if ($this->form_validation->run() == FALSE) {
@@ -274,12 +274,12 @@ class User extends CI_Controller {
             // Upload avatar
             $avatar = $this->upload_image('avatar', './assets/upload/images/avatars');
             if (!$avatar) { // Upload fail
-                $this->session->set_flashdata('flash_error', 'Thêm không thành công, vui lòng chọn hình đặc phù hợp.'
-                        . '<br/>Hình đặc trưng phù hợp là:'
-                        . '<ul>'
-                        . '<li>Thuộc định dạng: png/jpg/gif</li>'
-                        . '<li>Dung lượng: không quá 900kb</li>'
-                        . '</ul>');
+                $this->session->set_flashdata('flash_error', 'Ops! please chose a picture with condition below'
+                    . '<br/>Condition:'
+                    . '<ul>'
+                    . '<li>Extension: png/jpg/gif</li>'
+                    . '<li>Quantity: not too 900kb</li>'
+                    . '</ul>');
                 $this->load->view('admin/template/main', $data);
                 return;
             }
@@ -287,10 +287,10 @@ class User extends CI_Controller {
         }
         
         if ($this->MUser->updateUser($user)) {
-            $this->session->set_flashdata('flash_message', 'Cập nhật thành công');
+            $this->session->set_flashdata('flash_message', 'Update successful');
             header("Location: " . base_url() . "user/users");
         } else {
-            $this->session->set_flashdata('flash_error', 'Cập nhật không thành công');
+            $this->session->set_flashdata('flash_error', 'Update fail');
         }
         $this->load->view('admin/template/main', $data);
     }

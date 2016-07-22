@@ -62,7 +62,7 @@ class Category extends CI_Controller {
         $result = $this->MCategory->getCategories($limitConfig, $search);
         $config["total_rows"] = $result['total'];
         $data = array(
-            "title" => "Danh Sách Thể Loại",
+            "title" => "Categories",
             "content" => "admin/categories",
             "categories" => $result['categories'],
             "links" => pagination($config, $this->pagination),
@@ -85,7 +85,7 @@ class Category extends CI_Controller {
         $category = $this->MCategory->getCategoryById($cate_id);
         $data = array(
             "category" => $category,
-            "title" => "Cập nhật thể loại",
+            "title" => "Update category",
             "content" => "admin/category",
             "categoriesParentBox" => $this->MCategory->getCategoriesParentBox(0, "", array($category->getParent()))
         );
@@ -104,17 +104,11 @@ class Category extends CI_Controller {
         $category_id = $this->MCategory->updateCategory($category);
         
         if($category_id) {
-            $this->session->set_flashdata('flash_message', 'Cập nhật thành công');
+            $this->session->set_flashdata('flash_message', 'Update successful');
             header('Location: ' . base_url() . 'category/categories', TRUE, 301);
         } else {
-            $data = array(
-                "category" => $category,
-                "title" => "Cập nhật thể loại",
-                "content" => "admin/category",
-                "categoriesParentBox" => $this->MCategory->getCategoriesParentBox(0, "", array($category->getParent()))
-            );
-            $this->session->set_flashdata('flash_error', 'Cập nhật thất bại');
-            $this->load->view('admin/template/main', $data);
+            $this->session->set_flashdata('flash_error', 'Update fail');
+            header('Location: ' . base_url() . 'category/editCategory/' . $id, TRUE, 301);
         }
     }
     

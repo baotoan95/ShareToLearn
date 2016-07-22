@@ -153,6 +153,49 @@ class MComment extends Base_Model {
         return $comments;
     }
     
+//    public function generateCommentLevel($comments, $parentId, $level, $html = '') {
+//        // Create a temp list
+//        $cmtTemps = $comments;
+//        // GET list sub comment by parentId search in comments list
+//        $subCmts = array();
+//        for ($i = 0; $i < count($cmtTemps); $i ++) {
+//            // If found: remove it from $comments and add to subCmts
+//            if ($comments[$i]->getParent() == $parentId) {
+//                unset($comments[$i]);
+//                $subCmts[] = $cmtTemps[$i];
+//            }
+//        }
+//        $comments = array_values($comments);
+//        
+//        // Add list sub comment to html and recursive
+//        if(empty($subCmts)) {
+//            return "";
+//        } else {
+//            $html = ($parentId == 0 ? "" : '<ul class = "children">');
+//            foreach ($subCmts as $cmt) {
+//                if($cmt->getParent() == 0) {
+//                    $level = 0;
+//                }
+//                $html .=
+//                            '<li id="cmt_'. $cmt->getId() .'" class="depth-' . $level .'">' .
+//                                '<div class="author-avatar"><img alt="" src ="' .
+//                                base_url() . "assets/upload/images/avatars/" . 
+//                                    ((NULL == $cmt->getUser()) ? "user.jpg" : $cmt->getUser()->getAvatar()) . '"/>' .
+//                                '</div>' .
+//                                '<div class="comment-author"><a>' . $cmt->getAuthor() . '</a></div>' .
+//                                '<div class="comment-date">' . $cmt->getDate() . '</div>' .
+//                                '<div class="comment-text"><p>' . $cmt->getContent() . '</p></div>' .
+//                                '<div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="' . $cmt->getId() . '">reply</a></div>' .
+//                                $this->generateCommentLevel($comments, $cmt->getId(), ++$level, $html) .
+//                            '</li>';
+//                $level--;
+//            }
+//            return $html .= ($parentId == 0 ? "" : "</ul>");
+//        }
+//    }
+    
+    
+    
     public function generateCommentLevel($comments, $parentId, $level, $html = '') {
         // Create a temp list
         $cmtTemps = $comments;
@@ -171,21 +214,28 @@ class MComment extends Base_Model {
         if(empty($subCmts)) {
             return "";
         } else {
-            $html = ($parentId == 0 ? "" : '<ul class = "children">');
+            $html = ($parentId == 0 ? "" : '<ul>');
             foreach ($subCmts as $cmt) {
                 if($cmt->getParent() == 0) {
                     $level = 0;
                 }
-                $html .=
-                            '<li id="cmt_'. $cmt->getId() .'" class="depth-' . $level .'">' .
-                                '<div class="author-avatar"><img alt="" src ="' .
-                                base_url() . "assets/upload/images/avatars/" . 
-                                    ((NULL == $cmt->getUser()) ? "user.jpg" : $cmt->getUser()->getAvatar()) . '"/>' .
+                $html .=    '<li id="cmt_'. $cmt->getId() .'">' .
+                                '<div class="item">' .
+                                    '<a href="#" class="image"><img src="' .
+                                    base_url() . "assets/upload/images/avatars/" . 
+                                    ((NULL == $cmt->getUser()) ? "user.jpg" : $cmt->getUser()->getAvatar()) . '"></a>' .
+                                    '<div class="comment">' .
+                                        '<div class="info">' .
+                                            '<h2><a href="goliath-post-1.html">' . $cmt->getAuthor() . '</a></h2>' .
+                                            '<span class="legend-default"><i class="fa fa-clock-o"></i>' . $cmt->getDate() . '</span>' .
+                                            '<span class="nr"></span>' .
+                                        '</div>' .
+                                        '<p>' .
+                                            $cmt->getContent() .
+                                            '<a href="' . $cmt->getId() . '" class="reply-link">Reply</a>' .
+                                        '</p>' .
+                                    '</div>' .
                                 '</div>' .
-                                '<div class="comment-author"><a>' . $cmt->getAuthor() . '</a></div>' .
-                                '<div class="comment-date">' . $cmt->getDate() . '</div>' .
-                                '<div class="comment-text"><p>' . $cmt->getContent() . '</p></div>' .
-                                '<div class="comment-reply"><a class="comment-reply-link" rel="nofollow" href="' . $cmt->getId() . '">reply</a></div>' .
                                 $this->generateCommentLevel($comments, $cmt->getId(), ++$level, $html) .
                             '</li>';
                 $level--;

@@ -128,7 +128,7 @@
                     <input type="hidden" id="nestable-output" name="menu"/>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-info pull-left">Delete Menu</button>
+                    <button id="delete_menu" class="btn btn-info pull-left">Delete Menu</button>
                     <button type="submit" class="btn btn-info pull-right">Save</button>
                 </div>
             </form>

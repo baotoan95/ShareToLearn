@@ -70,7 +70,7 @@ class Tag extends CI_Controller {
         $tag = $this->MTag->getTagById($tag_id);
         $data = array(
             "tag" => $tag,
-            "title" => "Cập nhật tag",
+            "title" => "Update Tag",
             "content" => "admin/tag"
         );
         $this->load->view('admin/template/main', $data);
@@ -87,16 +87,11 @@ class Tag extends CI_Controller {
         $tag_id = $this->MTag->updateTag($tag);
         
         if($tag_id) {
-            $this->session->set_flashdata('flash_message', 'Cập nhật thành công');
+            $this->session->set_flashdata('flash_message', 'Update successful');
             header('Location: ' . base_url() . 'tag/tags', TRUE, 301);
         } else {
-            $data = array(
-                "tag" => $tag,
-                "title" => "Cập nhật tag",
-                "content" => "admin/tag"
-            );
-            $this->session->set_flashdata('flash_error', 'Cập nhật thất bại');
-            $this->load->view('admin/template/main', $data);
+            $this->session->set_flashdata('flash_error', 'Update fail');
+            header('Location: ' . base_url() . 'tag/editTag/' . $id, TRUE, 301);
         }
     }
 }
