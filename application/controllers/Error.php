@@ -14,9 +14,8 @@ class Error extends MY_Controller {
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
         $this->_data['title'] = 'Page not found';
-        $this->_data['sidebar'] = 'client/template/sidebar';
         $this->_data['content'] = 'client/404';
        
-        $this->load->view('client/template/main', $this->_data);
+        $this->load->view('client/main', $this->_data);
     }
 }

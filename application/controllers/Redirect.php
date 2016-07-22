@@ -39,9 +39,9 @@ class Redirect extends MY_Controller {
         // Init pagination for post latest
         $this->_data['links'] = pagination($config, $this->pagination);
         
-        $this->_data['listTitle'] = 'Bài viết mới nhất';
-        $this->_data['content'] = 'client2/list-post';
-        $this->load->view('client2/main', $this->_data);
+        $this->_data['listTitle'] = 'Latest';
+        $this->_data['content'] = 'client/list-post';
+        $this->load->view('client/main', $this->_data);
     }
 
     public function single($guid, $id) {
@@ -60,14 +60,14 @@ class Redirect extends MY_Controller {
         // Check post is existed
         if(NULL == $post) {
             $this->_data['content'] = 'client/404';
-            $this->load->view('client/template/main', $this->_data);
+            $this->load->view('client/main', $this->_data);
             return;
         }
         $this->_data['post'] = $post;
         $this->_data['title'] = $post->getTitle();
-        $this->_data['content'] = 'client2/single';
+        $this->_data['content'] = 'client/single';
         if($guid == $post->getGuid()) {
-            $this->load->view('client2/main', $this->_data);
+            $this->load->view('client/main', $this->_data);
         } else {
             header('Location: ' . base_url() . $post->getGuid() . '-' . $id . '.html');
         }
@@ -77,19 +77,18 @@ class Redirect extends MY_Controller {
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
         $this->_data['title'] = 'Liên hệ';
-        $this->_data['content'] = 'client2/contact';
+        $this->_data['content'] = 'client/contact';
         
-        $this->load->view('client2/main', $this->_data);
+        $this->load->view('client/main', $this->_data);
     }
     
     public function authors() {
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
         $this->_data['title'] = 'Danh sách tác giả';
-        $this->_data['sidebar'] = 'client/template/sidebar';
         $this->_data['content'] = 'client/authors';
         $this->_data['users'] = $this->MUser->getUsers(array("records" => 100, "begin" => 0), 'writer')['users'];
-        $this->load->view('client/template/main', $this->_data);
+        $this->load->view('client/main', $this->_data);
     }
     
     public function search() {
@@ -120,13 +119,12 @@ class Redirect extends MY_Controller {
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
         $this->_data['title'] = 'Kết quả tìm kiếm';
-        $this->_data['boxTitle'] = "Kết quả cho \"$s\"";
-        $this->_data['sidebar'] = 'client/template/sidebar';
-        $this->_data['content'] = 'client/index';
+        $this->_data['listTitle'] = "Kết quả cho \"$s\"";
+        $this->_data['content'] = 'client/list-post';
         $this->_data['posts'] = $result['posts'];
         $this->_data['links'] = pagination($config, $this->pagination);
         
-        $this->load->view('client/template/main', $this->_data);
+        $this->load->view('client/main', $this->_data);
     }
     
     /**
@@ -139,15 +137,13 @@ class Redirect extends MY_Controller {
         $this->createListPostsPopular();
         $this->createListCmtsLatest();
         
-        $this->_data['sidebar'] = 'client/template/sidebar';
-        
         $segment = intval($this->input->get('p'));
         
         // GET termTaxonomy id (category or tag)
         $term = $this->MTerm->getTermBySlug($slug, htmlentities($cate));
         if(empty($term)) { // If not exist term taxonomy then error 404
             $this->_data['content'] = 'client/404';
-            $this->load->view('client/template/main', $this->_data);
+            $this->load->view('client/main', $this->_data);
             return;
         }
         
@@ -168,13 +164,13 @@ class Redirect extends MY_Controller {
         $result = $this->MPost->getPosts($condition, array('records' => $config['per_page'], 'begin' => $segment));
         $config['total_rows'] = $result['total'];
         
-        $this->_data['content'] = 'client/index';
+        $this->_data['content'] = 'client/list-post';
         $this->_data['posts'] = $result['posts'];
-        $this->_data['boxTitle'] = $term['t_name'];
+        $this->_data['listTitle'] = $term['t_name'];
         $this->_data['links'] = pagination($config, $this->pagination);
         $this->_data['title'] = $term['t_name'];
         
-        $this->load->view('client/template/main', $this->_data);
+        $this->load->view('client/main', $this->_data);
     }
 
 }

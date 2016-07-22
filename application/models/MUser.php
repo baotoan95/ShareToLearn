@@ -34,7 +34,8 @@ class MUser extends Base_Model {
             "u_key" => $user->getKey(),
             "u_actived" => $user->getActived(),
             "u_role" => $user->getRole(),
-            "u_non_blocked" => $user->getNon_Blocked()
+            "u_non_blocked" => $user->getNon_Blocked(),
+            "u_joined" => date('y-m-d H:i:s')
         );
         return $this->insert($data);
     }
@@ -51,7 +52,7 @@ class MUser extends Base_Model {
                     $userTemp['u_fullname'], $userTemp['u_avatar'], $userTemp['u_desc'], $userTemp['u_bio'], 
                     $userTemp['u_email'], $userTemp['u_phone'], $userTemp['u_facebook'], $userTemp['u_skype'], 
                     $userTemp['u_google'], $userTemp['u_key'], $userTemp['u_actived'], $userTemp['u_role'], $userTemp['u_non_blocked'],
-                    $this->MPost->countPostByUserId($userTemp['u_id']));
+                    $this->MPost->countPostByUserId($userTemp['u_id']), $userTemp['u_joined']);
         }
     }
 
@@ -88,7 +89,7 @@ class MUser extends Base_Model {
                     $user['u_fullname'], $user['u_avatar'], $user['u_desc'], $user['u_bio'], 
                     $user['u_email'], $user['u_phone'], $user['u_facebook'], $user['u_skype'], 
                     $user['u_google'], $user['u_key'], $user['u_actived'], $user['u_role'], $user['u_non_blocked'],
-                    $this->MPost->countPostByUserId($user['u_id']));
+                    $this->MPost->countPostByUserId($user['u_id']), $user['u_joined']);
         }
 
         return array(
@@ -106,7 +107,7 @@ class MUser extends Base_Model {
                     $rs['u_fullname'], $rs['u_avatar'], $rs['u_desc'], $rs['u_bio'], 
                     $rs['u_email'], $rs['u_phone'], $rs['u_facebook'], $rs['u_skype'], 
                     $rs['u_google'], $rs['u_key'], $rs['u_actived'], $rs['u_role'], $rs['u_non_blocked'],
-                    $this->MPost->countPostByUserId($user_id));
+                    $this->MPost->countPostByUserId($user_id), $rs['u_joined']);
         return $user;
     }
     
@@ -142,7 +143,8 @@ class MUser extends Base_Model {
             "u_key" => $user->getKey(),
             "u_actived" => $user->getActived(),
             "u_role" => $user->getRole(),
-            "u_non_blocked" => $user->getNon_Blocked()
+            "u_non_blocked" => $user->getNon_Blocked(),
+            "u_joined" => date('y-m-d H:i:s')
         );
         return $this->update($data);
     }

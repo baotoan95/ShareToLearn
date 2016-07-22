@@ -16,8 +16,17 @@ class My_Controller extends CI_Controller {
         $this->load->model('MMenu');
         
         $this->_data = array(
-            "menu" => $this->MMenu->generateMenu($this->MMenu->getMenu(), array("tag_name"=>"a", "tag_container_name" => "ul"))
+            "menu" => $this->MMenu->generateMainMenu($this->MMenu->getMenu())
         );
+        
+        // GET list post latest
+        $condition = array(
+            "type" => "post",
+            "status" => "public",
+            "order_by" => "p_published"
+        );
+        $this->_data['trending'] = $this->MPost->getPosts($condition, 
+                array('records' => 50, 'begin' => 0))['posts'];
     }
     
     public function createListPostsPopular() {

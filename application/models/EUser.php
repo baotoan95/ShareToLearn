@@ -24,10 +24,9 @@ class EUser {
     private $role;
     private $non_blocked;
     private $count_posts; // Extra (not have in DB)
+    private $joined;
 
-    public function __construct($id = 0, $username = '', $password = '', $full_name = '', 
-            $avatar = '', $desc = '', $bio = '', $email = '', $phone = '', $facebook = '', 
-            $skype = '', $google = '', $key = '', $actived = 0, $role = '', $non_blocked = 0, $count_posts = 0) {
+    public function __construct($id = 0, $username = '', $password = '', $full_name = '', $avatar = '', $desc = '', $bio = '', $email = '', $phone = '', $facebook = '', $skype = '', $google = '', $key = '', $actived = 0, $role = '', $non_blocked = 0, $count_posts = 0, $joined = '') {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
@@ -45,6 +44,7 @@ class EUser {
         $this->role = $role;
         $this->non_blocked = $non_blocked;
         $this->count_posts = $count_posts;
+        $this->joined = $joined;
     }
 
     function getId() {
@@ -181,6 +181,14 @@ class EUser {
 
     public function setCount_posts($count_posts) {
         $this->count_posts = $count_posts;
+    }
+
+    public function getJoined() {
+        return $this->joined;
+    }
+
+    public function setJoined($joined) {
+        $this->joined = $joined;
     }
 
 }

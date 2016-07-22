@@ -35,7 +35,7 @@ class Menu extends CI_Controller {
             "categories" => $this->MCategory->getCategoriesParentBox(0, ""),
             "pages" => $pages,
             "posts" => $posts,
-            "menu" => $this->MMenu->generateMenu($this->MMenu->getMenu(), array("tag_name"=>"div", "tag_container_name" => "ol"))
+            "menu" => $this->MMenu->generateMenuMng($this->MMenu->getMenu())
         );
         $this->load->view('admin/template/main', $data);
     }

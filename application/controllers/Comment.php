@@ -22,7 +22,7 @@ class Comment extends CI_Controller {
         $this->form_validation->set_rules('content', 'Content', 'required');
         
         if($this->form_validation->run() == FALSE) {
-            echo validation_errors() . ' - ' . $this->input->post('email');
+            echo validation_errors();
             return;
         }
         
@@ -33,7 +33,7 @@ class Comment extends CI_Controller {
         $postId = intval($this->input->post('postId'));
         $parent = intval($this->input->post('parent'));
         $type = htmlentities($this->input->post('type'));
-
+        
         $comment = new EComment(0, $postId, $author, $email, $website, 1, date('y-m-d H:i:s'), 'pending', $type, $content, $parent);
         $comment->setPrev_status('pending');
         

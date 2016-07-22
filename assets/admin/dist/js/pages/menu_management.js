@@ -48,7 +48,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: document.location.origin + "/post/addLink",
+            url: document.location.origin + "/ShareToLearn/post/addLink",
             type: 'post',
             contextType: 'text',
             data: {
@@ -78,7 +78,7 @@ $(document).ready(function () {
     // SEARCH category
     $('#search-cates').on('keyup', function () {
         $.ajax({
-            url: document.location.origin + "/category/searchCategoriesAjax",
+            url: document.location.origin + "/ShareToLearn/category/searchCategoriesAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -110,7 +110,7 @@ $(document).ready(function () {
             return;
         }
         $.ajax({
-            url: document.location.origin + "/category/getCategoriesAjax",
+            url: document.location.origin + "/ShareToLearn/category/getCategoriesAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -140,7 +140,7 @@ $(document).ready(function () {
     // Search page
     $('#search-page').on('keyup', function () {
         $.ajax({
-            url: document.location.origin + "/post/searchPostsAjax",
+            url: document.location.origin + "/ShareToLearn/post/searchPostsAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -168,7 +168,7 @@ $(document).ready(function () {
             return;
         }
         $.ajax({
-            url: document.location.origin + "/post/getPostsAjax",
+            url: document.location.origin + "/ShareToLearn/post/getPostsAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -199,7 +199,7 @@ $(document).ready(function () {
     // Search post
     $('#search-post').on('keyup', function () {
         $.ajax({
-            url: document.location.origin + "/post/searchPostsAjax",
+            url: document.location.origin + "/ShareToLearn/post/searchPostsAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -227,7 +227,7 @@ $(document).ready(function () {
             return;
         }
         $.ajax({
-            url: document.location.origin + "/post/getPostsAjax",
+            url: document.location.origin + "/ShareToLearn/post/getPostsAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -265,7 +265,7 @@ $(document).ready(function () {
     $('#delete_menu').on('click', function(e) {
         e.preventDefault();
         $.ajax({
-            url: document.location.origin + "/menu/deleteMenu",
+            url: document.location.origin + "/ShareToLearn/menu/deleteMenu",
             type: "post",
             contextType: "text",
             success: function (res) {

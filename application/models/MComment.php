@@ -226,7 +226,7 @@ class MComment extends Base_Model {
                                     ((NULL == $cmt->getUser()) ? "user.jpg" : $cmt->getUser()->getAvatar()) . '"></a>' .
                                     '<div class="comment">' .
                                         '<div class="info">' .
-                                            '<h2><a href="goliath-post-1.html">' . $cmt->getAuthor() . '</a></h2>' .
+                                            '<h2><a>' . $cmt->getAuthor() . '</a></h2>' .
                                             '<span class="legend-default"><i class="fa fa-clock-o"></i>' . $cmt->getDate() . '</span>' .
                                             '<span class="nr"></span>' .
                                         '</div>' .

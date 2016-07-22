@@ -55,6 +55,12 @@ class MMenu extends Base_Model {
         return $menu;
     }
     
+    public function haveChild($parentId) {
+        $this->db->select('count(mn_id) as count');
+        $this->db->where('mn_parent', $parentId);
+        return intval($this->db->get($this->_table['table_name'])->row_array()['count']) > 0;
+    }
+    
     /**
      * 
      * @param array $menuItems List of EMenuItem
@@ -64,7 +70,7 @@ class MMenu extends Base_Model {
      * @param string $html
      * @return string
      */
-    public function generateMenu($menuItems, $config, $parentId = 0, $html = '') {
+    public function generateMenuMng($menuItems, $parentId = 0, $html = '') {
         // Create a temp list
         $menuTemps = $menuItems;
         // GET list sub comment by parentId search in comments list
@@ -86,21 +92,58 @@ class MMenu extends Base_Model {
             usort($subMenu, function($a, $b) {
                 return $a > $b;
             });
-            $html = ($parentId == 0) ? "" : "<{$config['tag_container_name']} class='dd-list sub-menu'>";
+            $html = ($parentId == 0) ? "" : "<ol class='dd-list sub-menu'>";
             foreach ($subMenu as $item) {
                 // Parse meta value to get id and type of menu item
                 $meta = json_decode($item->getMeta(), TRUE);
                 $html .= "<li class='dd-item dd3-item' data-id='{$meta['id']}-{$meta['type']}'>"
-                            . (($config['tag_name'] != 'a') ? "<div class='dd-handle dd3-handle'>Drag</div>" : "") 
-                            . "<{$config['tag_name']} class='dd3-content' href='" . $item->getSlug() . "'>" .
-                                $item->getName() . 
-                                        // If client side (tag name is <a>) then don't add type
-                                        (($config['tag_name'] != 'a') ? " [" . strtoupper($meta['type']) . "]<a class='pull-right del-mnItem' title='Delete'>X</a>" : "")
-                            . "</{$config['tag_name']}>" .
-                              $this->generateMenu($menuItems, $config, $item->getId(), $html) .
+                            . "<div class='dd-handle dd3-handle'>Drag</div>"
+                            . "<div class='dd3-content'>" . $item->getName() . " [" . strtoupper($meta['type']) . "]"
+                            . "<a class='pull-right del-mnItem' title='Delete'>X</a>"
+                            . "</div>" .
+                              $this->generateMenuMng($menuItems, $item->getId(), $html) .
                           "</li>";
             }
-            return $html. (($parentId == 0) ? "" : "</{$config['tag_container_name']}>");
+            return $html. (($parentId == 0) ? "" : "</ol>");
+        }
+    }
+    
+    public function generateMainMenu($menuItems, $parentId = 0, $html = '') {
+        // Create a temp list
+        $menuTemps = $menuItems;
+        // GET list sub comment by parentId search in comments list
+        $subMenu = array();
+        for ($i = 0; $i < count($menuTemps); $i ++) {
+            // If found: remove it from $comments and add to subCmts
+            if ($menuItems[$i]->getParent() == $parentId) {
+                unset($menuItems[$i]);
+                $subMenu[] = $menuTemps[$i];
+            }
+        }
+        $menuItems = array_values($menuItems);
+        
+        // Add list sub comment to html and recursive
+        if(empty($subMenu)) {
+            return "";
+        } else {
+            // Sort subMenu by order desc
+            usort($subMenu, function($a, $b) {
+                return $a > $b;
+            });
+            $html = ($parentId == 0) ? "" : "<ul>";
+            foreach ($subMenu as $item) {
+                // Parse meta value to get id and type of menu item
+                $meta = json_decode($item->getMeta(), TRUE);
+                
+                $haveChild = $this->haveChild($item->getId());
+                $html .= "<li " . ($haveChild ? (($parentId == 0) ? "class='dropdown'" : "class='has-children dropdown'") : "") . ">";
+                $html .= "<a href='{$item->getSlug()}' " . ($haveChild ? (($parentId == 0) ? "class='dropdown-toggle' data-toggle='dropdown' data-hover='dropdown'" : "") : "") . ">{$item->getName()}</a>";
+                $html .= $haveChild ? "<div " . (($parentId == 0) ? "class='dropdown-menu default-dropdown' style='opacity: 1; display: none;'" : "class='dropdown-menu default-dropdown'") . ">" : "";
+                $html .= $this->generateMainMenu($menuItems, $item->getId(), $html);
+                $html .= $haveChild ? "</div>" : "";
+                $html .= "</li>";
+            }
+            return $html. (($parentId == 0) ? "" : "</ul>");
         }
     }
     
