@@ -107,18 +107,18 @@
                                     <?php
                                         switch($comment->getStatus()) {
                                             case 'pending':
-                                                echo "<a class='approved'>Duyệt</a> | <a class='reply'>Trả lời</a> | "
-                                                . "<a href='".base_url().'comment/editComment/'. $comment->getId() . "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                                echo "<a class='approved'>Approved</a> | <a class='reply'>Reply</a> | "
+                                                . "<a href='".base_url().'comment/editComment/'. $comment->getId() . "'>Edit</a> | <a class='spam'>Spam</a> | <a class='trash'>Delete</a>";
                                                 break;
                                             case 'approved':
-                                                echo "<a class='restore'>Bỏ duyệt</a> | <a class='reply'>Trả lời</a> | "
-                                                . "<a href='".base_url().'comment/editComment/'. $comment->getId() . "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                                echo "<a class='restore'>Unapproved</a> | <a class='reply'>Reply</a> | "
+                                                . "<a href='".base_url().'comment/editComment/'. $comment->getId() . "'>Edit</a> | <a class='spam'>Spam</a> | <a class='trash'>Delete</a>";
                                                 break;
                                             case 'spam':
-                                                echo "<a class='restore'>Bỏ Rác</a> | <a class='delete'>Xóa vĩnh viễn</a>";
+                                                echo "<a class='restore'>Not spam</a> | <a class='delete'>Delete</a>";
                                                 break;
                                             case 'trash':
-                                                echo "<a class='restore'>Khôi phục</a> | <a class='delete'>Xóa vĩnh viễn</a>";
+                                                echo "<a class='restore'>Restore</a> | <a class='delete'>Delete</a>";
                                                 break;
                                         }
                                     ?>
@@ -199,12 +199,12 @@
                                     alert(cmt.status);
                                     switch(cmt.status) {
                                         case 'pending':
-                                            action = "<a class='approved'>Approved</a> | <a class='reply'>Trả lời</a> | "
-                                            + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                            action = "<a class='approved'>Approved</a> | <a class='reply'>Reply</a> | "
+                                            + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Edit</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
                                             break;
                                         case 'approved':
-                                            action = "<a class='restore'>Unapproved</a> | <a class='reply'>Trả lời</a> | "
-                                            + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Sửa</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                            action = "<a class='restore'>Unapproved</a> | <a class='reply'>Reply</a> | "
+                                            + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Edit</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
                                             break;
                                     }
                                     $('tbody').append(
@@ -248,11 +248,11 @@
                     
                     function updateCounts(count) {
                         count = $.parseJSON(count);
-                        $('#total').html('Tất cả (' + count.total + ')');
-                        $('#pending').html('Chờ duyệt (' + ((typeof count.pending !== 'undefined') ? count.pending : '0') + ')');
-                        $('#approved').html('Đã duyệt (' + ((typeof count.approved !== 'undefined') ? count.approved : '0') + ')');
-                        $('#spam').html('Rác (' + ((typeof count.spam !== 'undefined') ? count.spam : '0') + ')');
-                        $('#trash').html('Thùng rác (' + ((typeof count.trash !== 'undefined') ? count.trash : '0') + ')');
+                        $('#total').html('All (' + count.total + ')');
+                        $('#pending').html('Pending (' + ((typeof count.pending !== 'undefined') ? count.pending : '0') + ')');
+                        $('#approved').html('Approved (' + ((typeof count.approved !== 'undefined') ? count.approved : '0') + ')');
+                        $('#spam').html('Spam (' + ((typeof count.spam !== 'undefined') ? count.spam : '0') + ')');
+                        $('#trash').html('Trash (' + ((typeof count.trash !== 'undefined') ? count.trash : '0') + ')');
                         
                         // Update result (at last of table)
                         $('#numerator').html(parseInt($('#numerator').text()) - 1);

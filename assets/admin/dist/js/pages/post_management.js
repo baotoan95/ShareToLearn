@@ -8,13 +8,14 @@
 $('.del_post').click(function () {
     var element = $(this);
     $.ajax({
-        url: document.location.orgin + "post/deletePost",
+        url: document.location.origin + "/Post/deletePost",
         type: "POST",
         dataType: "text",
         data: {
             id: element.attr('id')
         },
         success: function (res) {
+            alert(res);
             if (res !== 'failure') {
                 element.parent().parent().remove();
             }

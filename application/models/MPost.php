@@ -17,6 +17,7 @@ class MPost extends Base_Model {
         $this->load->model('ETag');
         
         $this->load->model('MTerm');
+        $this->load->model('MTermTaxonomy');
         $this->load->model('MTermRelationships');
         $this->load->model('MCategory');
         $this->load->model('MTag');
@@ -65,6 +66,8 @@ class MPost extends Base_Model {
                     "tr_term_taxonomy_id" => $term['tt_id']
                 );
                 $this->MTermRelationships->addTermRelationship($termRelationship);
+                // Increase count for tag
+                $this->MTermTaxonomy->adjustCount($term['t_id'], '+');
             }
         }
         
@@ -77,6 +80,8 @@ class MPost extends Base_Model {
                     "tr_term_taxonomy_id" => $term['tt_id']
                 );
                 $this->MTermRelationships->addTermRelationship($termRelationship);
+                // Increase count for category
+                $this->MTermTaxonomy->adjustCount($term['t_id'], '+');
             }
         }
         $this->db->trans_complete();
@@ -300,8 +305,20 @@ class MPost extends Base_Model {
     
     public function deletePost($post_id) {
         $this->db->trans_start();
-        $this->delete($post_id);
+        $post = $this->getPostById($post_id, TRUE, TRUE);
+        
+        $this->delete($post->getId());
         $this->MTermRelationships->deleteTermRelationshipByObjectId($post_id);
+        
+        foreach($post->getTags() as $tag) {
+            // Reduce count for tag
+            $this->MTermTaxonomy->adjustCount($tag->getId(), '-');
+        }
+        foreach($post->getCategories() as $category) {
+            // Reduce count for category
+            $this->MTermTaxonomy->adjustCount($category->getId(), '-');
+        }
+        
         $this->db->trans_complete();
         if($this->db->trans_status() == FALSE) {
             $this->db->trans_rollback();
@@ -358,6 +375,13 @@ class MPost extends Base_Model {
         $this->db->select("count(p_id) as count");
         $this->db->where("p_author", $user_id);
         return $this->db->get($this->_table['table_name'])->row_array()['count'];
+    }
+    
+    public function adjustCountComments($postId, $operation) {
+        if($operation == '+' || $operation == '-' || $operation == '*' || $operation == '/') {
+            $this->db->query("update posts set p_comment_count = "
+                    . "p_comment_count $operation 1 where p_id = $postId");
+        }
     }
 
 }

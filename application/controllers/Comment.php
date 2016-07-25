@@ -33,12 +33,18 @@ class Comment extends CI_Controller {
         $postId = intval($this->input->post('postId'));
         $parent = intval($this->input->post('parent'));
         $type = htmlentities($this->input->post('type'));
+        $user = 0;
         
-        $comment = new EComment(0, $postId, $author, $email, $website, 1, date('y-m-d H:i:s'), 'pending', $type, $content, $parent);
+        if($this->session->userdata('cur_user')) {
+            $user = $this->session->userdata('cur_user')['id'];
+        }
+        
+        $comment = new EComment(0, $postId, $author, $email, $website, $user, date('y-m-d H:i:s'), 'pending', $type, $content, $parent);
         $comment->setPrev_status('pending');
         
         $id_last_insert = $this->MComment->addComment($comment); // Get id after insert
         if ($id_last_insert) {
+            $this->session->set_userdata('count_discussion_unapproved', $this->MComment->countByStatus('pending'));
             echo $id_last_insert;
         } else {
             echo "failure";
@@ -46,7 +52,7 @@ class Comment extends CI_Controller {
     }
 
     /**
-     * admin
+     * Just for admin
      */
     public function reply() {
         $id = $this->input->post('id');

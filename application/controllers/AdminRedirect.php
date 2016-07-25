@@ -12,12 +12,14 @@ class AdminRedirect extends CI_Controller {
         parent::__construct();
         $this->load->model('MPost');
         $this->load->model('MCategory');
+        $this->load->model('MComment');
     }
 
     public function index() {
         $data = array(
             "content" => "admin/statistic"
         );
+        $this->session->set_userdata('count_discussion_unapproved', $this->MComment->countByStatus('pending'));
         $this->load->view('admin/template/main', $data);
     }
     

@@ -25,7 +25,7 @@
             </p>
             <input type="button" id="submit" data-type="comment" data-value="0" class="btn btn-default" value="Post comment"></input>
         </form>
-        <script lang="javascript" src="<?php echo base_url() . 'assets/client2/js/comment.js'; ?>"></script>
+        <script lang="javascript" src="<?php echo base_url() . 'assets/client/js/comment.js'; ?>"></script>
     </div>
 
 </div>

@@ -26,4 +26,16 @@ class MTermTaxonomy extends Base_Model {
         return $this->db->update($this->_table['table_name'], $term_taxonomy);
     }
     
+    /**
+     * 
+     * @param int $termId
+     * @param char $operation (+,-,*,/)
+     */
+    public function adjustCount($termId, $operation) {
+        if($operation == '+' || $operation == '-' || 
+                $operation == '*' || $operation == '/') {
+            $this->db->query("update term_taxonomy set tt_count = tt_count "
+                    . "$operation 1 where tt_term_id = $termId");
+        }
+    }
 }

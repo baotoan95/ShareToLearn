@@ -48,7 +48,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: document.location.origin + "/ShareToLearn/post/addLink",
+            url: document.location.origin + "/post/addLink",
             type: 'post',
             contextType: 'text',
             data: {
@@ -59,7 +59,7 @@ $(document).ready(function () {
                 if (res !== 'failure') {
                     $('#menus').append(
                             '<li class="dd-item dd3-item" data-id="' + res + '-navigation">' +
-                            '<div class="dd-handle dd3-handle">Drag</div>' +
+                            '<div class="dd-handle dd3-handle"></div>' +
                             '<div class="dd3-content">' + $('#link_name').val() + ' [NAVIGATION]' +
                             '<a class="pull-right del-mnItem" title="Delete">X</a>' +
                             '</div>' +
@@ -78,7 +78,7 @@ $(document).ready(function () {
     // SEARCH category
     $('#search-cates').on('keyup', function () {
         $.ajax({
-            url: document.location.origin + "/ShareToLearn/category/searchCategoriesAjax",
+            url: document.location.origin + "/category/searchCategoriesAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -110,7 +110,7 @@ $(document).ready(function () {
             return;
         }
         $.ajax({
-            url: document.location.origin + "/ShareToLearn/category/getCategoriesAjax",
+            url: document.location.origin + "/category/getCategoriesAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -121,7 +121,7 @@ $(document).ready(function () {
                 cates.forEach(function (cate) {
                     $('#menus').append(
                             '<li class="dd-item dd3-item" data-id="' + cate.id + '-category">' +
-                            '<div class="dd-handle dd3-handle">Drag</div>' +
+                            '<div class="dd-handle dd3-handle"></div>' +
                             '<div class="dd3-content">' + cate.name + ' [CATEGORY]' +
                             '<a class="pull-right del-mnItem" title="Delete">X</a>' +
                             '</div>' +
@@ -140,7 +140,7 @@ $(document).ready(function () {
     // Search page
     $('#search-page').on('keyup', function () {
         $.ajax({
-            url: document.location.origin + "/ShareToLearn/post/searchPostsAjax",
+            url: document.location.origin + "/post/searchPostsAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -168,7 +168,7 @@ $(document).ready(function () {
             return;
         }
         $.ajax({
-            url: document.location.origin + "/ShareToLearn/post/getPostsAjax",
+            url: document.location.origin + "/post/getPostsAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -180,7 +180,7 @@ $(document).ready(function () {
                 pages.forEach(function (page) {
                     $('#menus').append(
                             '<li class="dd-item dd3-item" data-id="' + page.id + '-page">' +
-                            '<div class="dd-handle dd3-handle">Drag</div>' +
+                            '<div class="dd-handle dd3-handle"></div>' +
                             '<div class="dd3-content">' + page.title + ' [PAGE]' +
                             '<a class="pull-right del-mnItem" title="Delete">X</a>' +
                             '</div>' +
@@ -199,7 +199,7 @@ $(document).ready(function () {
     // Search post
     $('#search-post').on('keyup', function () {
         $.ajax({
-            url: document.location.origin + "/ShareToLearn/post/searchPostsAjax",
+            url: document.location.origin + "/post/searchPostsAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -227,7 +227,7 @@ $(document).ready(function () {
             return;
         }
         $.ajax({
-            url: document.location.origin + "/ShareToLearn/post/getPostsAjax",
+            url: document.location.origin + "/post/getPostsAjax",
             type: "post",
             contextType: "text",
             data: {
@@ -239,7 +239,7 @@ $(document).ready(function () {
                 posts.forEach(function (post) {
                     $('#menus').append(
                             '<li class="dd-item dd3-item" data-id="' + post.id + '-post">' +
-                            '<div class="dd-handle dd3-handle">Drag</div>' +
+                            '<div class="dd-handle dd3-handle"></div>' +
                             '<div class="dd3-content">' + post.title + ' [POST]' +
                             '<a class="pull-right del-mnItem" title="Delete">X</a>' +
                             '</div>' +
@@ -265,7 +265,7 @@ $(document).ready(function () {
     $('#delete_menu').on('click', function(e) {
         e.preventDefault();
         $.ajax({
-            url: document.location.origin + "/ShareToLearn/menu/deleteMenu",
+            url: document.location.origin + "/menu/deleteMenu",
             type: "post",
             contextType: "text",
             success: function (res) {

@@ -50,11 +50,12 @@ class Redirect extends MY_Controller {
         $this->createListCmtsLatest();
         $this->_data['comments'] = $this->MComment->generateCommentLevel($this->MComment->getCommentsByPostId($id), 0, 0);
         
-        // GET post include tags itself
         $post = NULL;
         if($id == 0) { // url: [guid].html
-            $post = $this->MPost->getPostByGuid($guid, 'page', FALSE, TRUE);
+            // GET page
+            $post = $this->MPost->getPostByGuid($guid, 'page', FALSE, FALSE);
         } else { // url: [guid]-[id].html
+            // GET post include tags and categories itself
             $post = $this->MPost->getPostById($id, TRUE, TRUE);
         }
         // Check post is existed
@@ -63,10 +64,17 @@ class Redirect extends MY_Controller {
             $this->load->view('client/main', $this->_data);
             return;
         }
+        
         $this->_data['post'] = $post;
         $this->_data['title'] = $post->getTitle();
         $this->_data['content'] = 'client/single';
         if($guid == $post->getGuid()) {
+            // Update view count
+            $post->setViews($post->getViews() + 1);
+            $post->setAuthor($post->getAuthor()->getId());
+            $this->MPost->updatePost($post);
+            
+            $post->setAuthor($this->MUser->getUserById($post->getAuthor()));
             $this->load->view('client/main', $this->_data);
         } else {
             header('Location: ' . base_url() . $post->getGuid() . '-' . $id . '.html');
@@ -78,6 +86,7 @@ class Redirect extends MY_Controller {
         $this->createListCmtsLatest();
         $this->_data['title'] = 'Liên hệ';
         $this->_data['content'] = 'client/contact';
+        $this->_data['page'] = $this->MPost->getPostByGuid('lien-he', 'page');
         
         $this->load->view('client/main', $this->_data);
     }

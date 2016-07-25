@@ -1,6 +1,6 @@
 <div class="post-1">
     <div class="post">
-        <p>Intro</p>
+        <?php echo $page->getContent(); ?>
     </div>
 </div>
 <div class="add-comment">
@@ -17,5 +17,5 @@
         </p>
         <input type="button" id="submit" data-type="contact" data-value="0" class="btn btn-default" value="Send"></input>
     </form>
-    <script lang="javascript" src="<?php echo base_url() . 'assets/client2/js/comment.js'; ?>"></script>
+    <script lang="javascript" src="<?php echo base_url() . 'assets/client/js/comment.js'; ?>"></script>
 </div>

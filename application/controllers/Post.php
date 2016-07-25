@@ -121,7 +121,7 @@ class Post extends CI_Controller {
         $post = new EPost();
         $post->setTitle($this->input->post('title'));
         $post->setContent($this->input->post('content'));
-        $post->setAuthor(1);
+        $post->setAuthor($this->session->userdata['cur_user']['id']);
         $post->setViews(0);
         $post->setComments(0);
         $post->setExcerpt($this->input->post('excerpt'));
@@ -131,7 +131,7 @@ class Post extends CI_Controller {
         if ($this->input->post('status') == 'draf') {
             $post->setStatus($this->input->post('status'));
         }
-        $post->setPublished(date('y-m-d H:i:s'));
+        $post->setPublished(date('Y-m-d H:i:s'));
         $post->setGuid($this->input->post('guid'));
         $post->setCmt_allow(empty($this->input->post('comment_allowed')) ? FALSE : TRUE);
         $post->setOrder(0);
@@ -270,7 +270,7 @@ class Post extends CI_Controller {
         $post->setComments(0);
         $post->setExcerpt($this->input->post('excerpt'));
         $post->setCatalogue($this->input->post('catalogue'));
-        $post->setPublished(date('y-m-d H:i:s'));
+        $post->setPublished(date('Y-m-d H:i:s'));
         $post->setGuid($this->input->post('guid'));
         $post->setCmt_allow(empty($this->input->post('comment_allowed')) ? FALSE : TRUE);
         $post->setOrder(0);
@@ -360,7 +360,7 @@ class Post extends CI_Controller {
         $post->setGuid($link);
         $post->setType('navigation');
         $post->setStatus('public');
-        $post->setPublished(date('y-m-d H:i:s'));
+        $post->setPublished(date('Y-m-d H:i:s'));
         
         $post_id = $this->MPost->addPost($post);
         if($post_id) {

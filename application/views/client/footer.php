@@ -1,39 +1,42 @@
 <footer class="container footer">
     <div class="widget about">
         <div class="title-default">
-            <a href="#" class="active">About</a>
+            <a class="active">About</a>
         </div>
         <div class="text">
-            <p class="logo"><a href="<?php echo base_url(); ?>"><img src="<?php echo base_url() . 'assets/client/img/logo.gif'; ?>"></a></p>
+            <p class="logo">
+                <a href="<?php echo base_url(); ?>">
+                    <img alt="BTIT95" src="<?php echo base_url() . 'assets/client/img/logo.gif'; ?>">
+                </a>
+            </p>
             Đây là blog của BTIT95. <br/>
-            Mọi bài viết là do ngẫu hứng 
-            hoặc được BTIT95 note lại từ những gì mình đã gặp 
-            trong quá trình học tập cũng như làm việc. <br/>Mọi góp ý 
-            xin vui lòng vào mục <a href="<?php echo base_url() . 'lien-he.html' ?>">Liên Hệ</a>.
+            Mọi bài viết là do ngẫu hứng hoặc được note lại từ những bài hay mình đã đọc, 
+            hay những lỗi mình thường gặp trong quá trình coding. <br/>
+            Với mục đích chia sẻ và học hỏi, Rất mong nhận được sự góp ý từ mọi người!
         </div>
     </div>
 
     <div class="widget page-map">
         <div class="title-default">
-            <a href="#" class="active">Page map</a>
+            <a class="active">Contact</a>
         </div>
         <div class="items archives">
             <table class="table">
                 <tr>
-                    <td><a href="#">Technology</a>23</td>
-                    <td><a href="#">Travel</a>194</td>
+                    <td><a>Address: </a></td>
+                    <td><a>Dĩ An - Bình Dương - VN</a></td>
                 </tr>
                 <tr>
-                    <td><a href="#">Reviews</a>125</td>
-                    <td><a href="#">Fitness</a>445</td>
+                    <td><a>Phone:</a></td>
+                    <td><a>01649001142</a></td>
                 </tr>
                 <tr>
-                    <td><a href="#">Breaking news</a>660</td>
-                    <td><a href="#">Politics</a>635</td>
+                    <td><a>Email:</a></td>
+                    <td><a>BaoToan.95@gmail.com</a></td>
                 </tr>
                 <tr>
-                    <td><a href="#">Automotive</a>123</td>
-                    <td><a href="#">Local activies</a>223</td>
+                    <td><a>Facebook:</a></td>
+                    <td><a href="https://fb.com/btit95">https://fb.com/btit95</a></td>
                 </tr>
             </table>
         </div>
@@ -41,24 +44,23 @@
 
     <div class="widget tags">
         <div class="title-default">
-            <a href="#" class="active">Tag cloud</a>
+            <a class="active">Statistic Access</a>
         </div>
-        <div class="items tag-cloud">
-            <a href="#" class="tag-1"><span>travel</span><s>15</s></a>
-            <a href="#" class="tag-1"><span>running</span><s>20</s></a>
-            <a href="#" class="tag-1"><span>iphone</span><s>8</s></a>
-            <a href="#" class="tag-1"><span>fitness</span><s>9</s></a>
-            <a href="#" class="tag-1"><span>virtual reality</span><s>3</s></a>
-            <a href="#" class="tag-1"><span>tablet</span><s>30</s></a>
-            <a href="#" class="tag-1"><span>beach</span><s>16</s></a>
-            <a href="#" class="tag-1"><span>cycling</span><s>25</s></a>
-            <a href="#" class="tag-1"><span>hockey</span><s>16</s></a>
-            <a href="#" class="tag-1"><span>coffee shop</span><s>8</s></a>
-            <a href="#" class="tag-1"><span>mountains</span><s>19</s></a>
-            <a href="#" class="tag-1"><span>fitness</span><s>9</s></a>
-            <a href="#" class="tag-1"><span>tablet</span><s>30</s></a>
-            <a href="#" class="tag-1"><span>running</span><s>20</s></a>
-            <a href="#" class="tag-1"><span>iphone</span><s>8</s></a>
+        <div class="items archives">
+            <table class="table">
+                <tr>
+                    <td><a>Total: </a></td>
+                    <td><a><?php echo $statistic->getTotal(); ?></a>visitor(s)</td>
+                </tr>
+                <tr>
+                    <td><a>Yesterday:</a></td>
+                    <td><a><?php echo $statistic->getYesterday(); ?></a>visitor(s)</td>
+                </tr>
+                <tr>
+                    <td><a>Online:</a></td>
+                    <td><a><?php echo $count_user_online; ?></a>visitor(s)</td>
+                </tr>
+            </table>
         </div>
     </div>
 

@@ -32,9 +32,11 @@
                             <div class="input-group-btn">
                                 <?php $uri = base_url() . 'user/users'; ?>
                                 <a href="<?php echo $uri . '?role=all' ?>" 
-                                   class="btn btn-sm btn-default <?php if (empty($_GET['role']) || $_GET['role'] == 'all') {
-                                    echo 'active';
-                                } ?>">
+                                   class="btn btn-sm btn-default <?php
+                                   if (empty($_GET['role']) || $_GET['role'] == 'all') {
+                                       echo 'active';
+                                   }
+                                   ?>">
                                     All (<?php echo array_pop($count); ?>)
                                 </a>
                                 <?php
@@ -96,7 +98,7 @@
             <div class="box-footer clearfix">
                 Total: <?php echo count($users) . '/' . $total; ?>
                 <!-- Pagination -->
-<?php echo $links ?>
+                <?php echo $links ?>
             </div>
     </form>
 </div><!-- /.box -->

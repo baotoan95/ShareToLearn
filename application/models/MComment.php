@@ -32,12 +32,22 @@ class MComment extends Base_Model {
             "cmt_parent" => $comment->getParent(),
             "cmt_prev_status" => $comment->getPrev_status()
         );
+        // Reduce amount comment for post
+        if($comment->getPostId() != 0) {
+            $this->MPost->adjustCountComments($comment->getPostId(), '+');
+        }
         return $this->insert($data);
     }
     
     public function deleteComment($cmtId) {
+        $comment = $this->getCommentById($cmtId);
         $this->db->where('cmt_id', $cmtId);
         $this->db->or_where('cmt_parent', $cmtId);
+        
+        // Reduce amount comment for post
+        if($comment->getPostId() != 0) {
+            $this->MPost->adjustCountComments($comment->getPostId(), '-');
+        }
         return $this->db->delete($this->_table['table_name']);
     }
     
@@ -103,7 +113,8 @@ class MComment extends Base_Model {
         );
     }
     
-    public function countByStatus() {
+    public function countByStatus($status = '') {
+        if($status == '') {
         $this->db->select('cmt_status as name, count(cmt_id) as value');
         $this->db->group_by("cmt_status");
         $data = $this->db->get($this->_table['table_name'])->result_array();
@@ -119,6 +130,10 @@ class MComment extends Base_Model {
         }
         $result['total'] = $total;
         return $result;
+        } else {
+            $count = $this->db->query("select count(cmt_id) as count from comments where cmt_status = '$status'")->row();
+            return $count ? $count->count : 0;
+        }
     }
     
     public function updateComment($comment) {
@@ -136,6 +151,8 @@ class MComment extends Base_Model {
     
     public function getCommentsByPostId($postId) {
         $this->db->where('cmt_post_id', $postId);
+        $this->db->where('cmt_status', 'approved');
+        $this->db->where('cmt_type', 'comment');
         $this->db->order_by('cmt_date', 'DESC');
         $data = $this->db->get($this->_table['table_name'])->result_array();
         

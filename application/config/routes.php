@@ -54,6 +54,8 @@ $route['404_override'] = 'error';
 $route['translate_uri_dashes'] = FALSE;
 
 /* MY ROUTING */
+$route['btit95/admin'] = 'AdminRedirect/index';
+$route['btit95/admin/'] = 'AdminRedirect/index';
 $route['danh-sach-tac-gia.html'] = 'redirect/authors';
 $route['lien-he.html'] = 'redirect/contact';
 $route['search.html'] = 'redirect/search';

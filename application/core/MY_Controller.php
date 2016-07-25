@@ -14,9 +14,13 @@ class My_Controller extends CI_Controller {
         $this->load->model('MComment');
         $this->load->model('MUser');
         $this->load->model('MMenu');
+        $this->load->model('MStatistic');
+        $this->load->model('MUserOnline');
         
         $this->_data = array(
-            "menu" => $this->MMenu->generateMainMenu($this->MMenu->getMenu())
+            "menu" => $this->MMenu->generateMainMenu($this->MMenu->getMenu()),
+            "statistic" => $this->MStatistic->getStatisticByDate(date('Y-m-d')),
+            "count_user_online" => $this->MUserOnline->countUserOnline()
         );
         
         // GET list post latest
@@ -43,7 +47,8 @@ class My_Controller extends CI_Controller {
     protected function createListCmtsLatest() {
         // GET list comment latest
         $condition = array(
-            "type" => "comment"
+            "type" => "comment",
+            "status" => "approved"
         );
         $this->_data['cmt_latests'] = $this->MComment->getComments($condition, 
                 array('records' => 10, 'begin' => 0))['comments'];

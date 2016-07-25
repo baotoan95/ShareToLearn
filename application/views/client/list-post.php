@@ -10,10 +10,17 @@
         ?>
         <div class="post-item post-sticky">
             <div class="image">
-                <a href="<?php echo base_url() . $post->getGuid() . '-' . $post->getId() . '.html'; ?>"><img src="<?php echo base_url() . 'assets/upload/images/' . $post->getBanner(); ?>"></a>
+                <a href="<?php echo base_url() . $post->getGuid() . '-' . $post->getId() . '.html'; ?>">
+                    <img alt="<?php echo $post->getTitle(); ?>"
+                        src="<?php echo base_url() . 'assets/upload/images/' . $post->getBanner(); ?>">
+                </a>
             </div>
             <div class="title">
-                <h2><a href="<?php echo base_url() . $post->getGuid() . '-' . $post->getId() . '.html'; ?>"><?php echo $post->getTitle(); ?></a></h2>
+                <h2>
+                    <a href="<?php echo base_url() . $post->getGuid() . '-' . $post->getId() . '.html'; ?>">
+                        <?php echo $post->getTitle(); ?>
+                    </a>
+                </h2>
                 <p>
                     <i class="tag-default"><?php echo $post->getAuthor()->getFull_name(); ?></i>
                     <span class="legend-default">

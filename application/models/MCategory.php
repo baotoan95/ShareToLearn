@@ -29,14 +29,17 @@ class MCategory extends Base_Model {
 
     public function getCategoryById($id) {
         $term = $this->MTerm->getTermById($id);
-        return new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']), intval($term['tt_count']));
+        return new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], 
+                $term['tt_desc'], intval($term['tt_parent']), intval($term['tt_count']));
     }
 
     public function getCategoriesByParent($parentId) {
         $terms = $this->MTerm->getTermByParent($parentId, 'category');
         $categories = array();
         foreach ($terms as $term) {
-            $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']), intval($term['tt_count']));
+            $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], 
+                    $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']), 
+                    intval($term['tt_count']));
         }
         return $categories;
     }
@@ -54,7 +57,9 @@ class MCategory extends Base_Model {
         $terms = array_key_exists('terms', $result) ? $result['terms'] : $result;
         $categories = array();
         foreach ($terms as $term) {
-            $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']));
+            $categories[] = new ECategory(intval($term['t_id']), $term['t_name'], 
+                    $term['t_slug'], $term['tt_desc'], intval($term['tt_parent']), 
+                    intval($term['tt_count']));
         }
        
         return array(

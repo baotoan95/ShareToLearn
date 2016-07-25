@@ -1,10 +1,10 @@
 <div class="container copyright">
     <div class="left">
-        © 2016 <a href="#">BTIT95</a>
+        © 2016 <a>BTIT95</a>
     </div>
     <div class="right">
         <ul>
-            <li><a href="<?php base_url() . 'lien-he.html'?>">Contacts us</a></li>
+            <li><a href="<?php base_url() . 'lien-he.html'?>">Contact to me</a></li>
             <li>
                 <a href="https://twitter.com/BaoToan1995"><i class="fa fa-twitter-square"></i></a>
                 <a href="https://www.facebook.com/baotoan95"><i class="fa fa-facebook-square"></i></a>

@@ -8,7 +8,7 @@
             foreach($users as $u) {
         ?>
         <div class="post-item post-sticky" data-overlay="1" 
-            data-overlay-excerpt="<?php echo $u->getBio(); ?>" data-overlay-url="">
+            data-overlay-excerpt="<?php echo $u->getDesc(); ?>" data-overlay-url="">
             <div class="image">
                 <a href=""><img src="<?php echo base_url() . 'assets/upload/images/avatars/' . $u->getAvatar(); ?>"></a>
             </div>
@@ -22,7 +22,7 @@
                 </p>
             </div>
             <div class="intro">
-                <?php echo $u->getBio(); ?>
+                <?php echo $u->getDesc(); ?>
             </div>
         </div>
         <?php

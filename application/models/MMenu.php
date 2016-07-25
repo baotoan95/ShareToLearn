@@ -97,7 +97,7 @@ class MMenu extends Base_Model {
                 // Parse meta value to get id and type of menu item
                 $meta = json_decode($item->getMeta(), TRUE);
                 $html .= "<li class='dd-item dd3-item' data-id='{$meta['id']}-{$meta['type']}'>"
-                            . "<div class='dd-handle dd3-handle'>Drag</div>"
+                            . "<div class='dd-handle dd3-handle'></div>"
                             . "<div class='dd3-content'>" . $item->getName() . " [" . strtoupper($meta['type']) . "]"
                             . "<a class='pull-right del-mnItem' title='Delete'>X</a>"
                             . "</div>" .

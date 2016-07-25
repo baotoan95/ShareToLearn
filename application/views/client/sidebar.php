@@ -39,13 +39,17 @@
                     <div class="image">
                         <a href="<?php echo base_url() . $comment->getPost()->getGuid() . '-' . 
                                 $comment->getPost()->getId() . '.html#cmt_' . $comment->getId(); ?>">
-                            <img alt="" src="<?php echo base_url() . 'assets/upload/images/avatars/' . 
+                            <img alt="<?php echo $comment->getContent(); ?>" src="<?php echo base_url() . 'assets/upload/images/avatars/' . 
                                     ((NULL == $comment->getUser()) ? 'user.jpg' : 
                                     $comment->getUser()->getAvatar())?>"></a>
                     </div>
                     <div class="title">
-                        <h2><a href="<?php echo base_url() . $comment->getPost()->getGuid() . '-' . 
-                                $comment->getPost()->getId() . '.html#cmt_' . $comment->getId(); ?>"><?php echo $comment->getAuthor(); ?></a></h2>
+                        <h2>
+                            <a href="<?php echo base_url() . $comment->getPost()->getGuid() . '-' . 
+                                $comment->getPost()->getId() . '.html#cmt_' . $comment->getId(); ?>">
+                                    <?php echo $comment->getAuthor(); ?> say: <?php echo $comment->getContent(); ?>
+                            </a>
+                        </h2>
                         <p>
                             <span class="legend-default">
                                 <i class="fa fa-clock-o"></i><?php echo $comment->getDate(); ?>
@@ -66,41 +70,13 @@
         <a href="goliath-post-1.html"><img src="<?php echo base_url() . 'assets/client/img/banner-300x250.png'; ?>"></a>
     </div>
 
-    <!-- Archive -->
-    <div class="widget-tabs">
-        <div class="title-default">
-            <a href="#" class="active">Archives</a>
-            <a href="#" class="view-all">Go to full archives</a>
-        </div>
-        <div class="items archives">
-            <table class="table">
-                <tr>
-                    <td><a href="#">November 2013</a>23</td>
-                    <td><a href="#">December 2013</a>194</td>
-                </tr>
-                <tr>
-                    <td><a href="#">January 2014</a>15</td>
-                    <td><a href="#">February 2014</a>45</td>
-                </tr>
-                <tr>
-                    <td><a href="#">March 2014</a>60</td>
-                    <td><a href="#">April 2014</a>65</td>
-                </tr>
-                <tr>
-                    <td><a href="#">May 2014</a>13</td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
     <?php
         if(isset($post) && $post->getType() == 'post') {
     ?>
     <!-- Tags -->
     <div class="widget-tabs">
         <div class="title-default">
-            <a class="active">Tag cloud</a>
+            <a class="active">Post categories</a>
         </div>
         <div class="items tag-cloud">
             <?php
@@ -119,15 +95,14 @@
     <!-- Tags -->
     <div class="widget-tabs">
         <div class="title-default">
-            <a class="active">Find Us On Facebook</a>
+            <a class="active">Find On Facebook</a>
         </div>
         <div class="items">
             <div class="fb-page"
-                data-href="https://www.facebook.com/Btit95-588678394647082/" 
-                data-width="340"
-                data-hide-cover="false"
-                data-show-facepile="true">
-            </div>
+            data-href="https://www.facebook.com/Btit95-588678394647082/" 
+            data-width="340"
+            data-hide-cover="false"
+            data-show-facepile="true"></div>
         </div>
     </div>
 

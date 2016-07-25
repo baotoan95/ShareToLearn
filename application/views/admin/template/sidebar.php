@@ -15,7 +15,7 @@
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="active treeview">
-                <a href="<?php echo base_url() . 'adminredirect/index'?>">
+                <a href="<?php echo base_url() . 'AdminRedirect/index'?>">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
@@ -56,7 +56,9 @@
             <li class="treeview">
                 <a href="<?php echo base_url() . 'comment/comments'?>">
                     <i class="fa fa-edit"></i> <span>Discussion</span>
-                    <small class="label pull-right bg-yellow">12</small>
+                    <small class="label pull-right bg-yellow">
+                        <?php echo $this->session->userdata('count_discussion_unapproved'); ?>
+                    </small>
                 </a>
             </li>
             <li class="treeview">
@@ -72,7 +74,7 @@
                 </ul>
             </li>
             <li class="treeview">
-                <a href="<?php echo base_url() . 'adminredirect/setting'?>">
+                <a href="<?php echo base_url() . 'AdminRedirect/setting'?>">
                     <i class="fa fa-cog"></i>
                     <span>Setting</span>
                 </a>

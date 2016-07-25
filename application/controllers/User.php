@@ -38,7 +38,7 @@ class User extends CI_Controller {
     public function login() {
         // Logged in
         if($this->session->userdata('cur_user')) {
-           header('Location: ' . base_url() . 'adminredirect', 301);
+           header('Location: ' . base_url() . 'AdminRedirect', 301);
             return;
         }
         $this->load->view('admin/login');
@@ -97,7 +97,7 @@ class User extends CI_Controller {
                     "avatar" => $user->getAvatar()
                 );
                 $this->session->set_userdata('cur_user', $userdata);
-                header('Location: ' . base_url() . 'adminredirect', 301);
+                header('Location: ' . base_url() . 'AdminRedirect', 301);
             }
         }
     }

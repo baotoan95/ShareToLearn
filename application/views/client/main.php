@@ -2,9 +2,11 @@
 <html>
     <head>
         <title><?php echo isset($title) ? $title : "BTIT95"; ?></title>
+        <link rel="alternate" href="<?php echo base_url(); ?>" hreflang="vi"/>
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="<?php isset($post) ? $post->getExcerpt() : "BTIT95"; ?>"/>
         <link rel="shortcut icon" href="img/favicon.ico">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,900,700">
         <link rel="stylesheet" href="<?php echo base_url() . 'assets/client/css/bootstrap.css'; ?>">
@@ -13,10 +15,26 @@
         <link rel="stylesheet" href="<?php echo base_url() . 'assets/client/css/goliath-tablet.css'; ?>">
         <link rel="stylesheet" href="<?php echo base_url() . 'assets/client/css/goliath-phone.css'; ?>">
         <!--<link rel="stylesheet" href="<?php echo base_url() . 'assets/client/demo/demo.css'; ?>">-->
-        <link rel="stylesheet" href="<?php // echo base_url() . 'assets/client/demo/colorpicker/css/bootstrap-colorpicker.min.css';  ?>">
+        <link rel="stylesheet" href="<?php // echo base_url() . 'assets/client/demo/colorpicker/css/bootstrap-colorpicker.min.css';    ?>">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:900,100,300,400">
         <script src="<?php echo base_url() . 'assets/client/js/modernizr-2.6.2-respond-1.1.0.min.js'; ?>"></script>
         <script src="<?php echo base_url() . 'assets/client/js/jquery-1.11.1.js'; ?>"></script>
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments);
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o),
+                        m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-81239126-1', 'auto');
+            ga('send', 'pageview');
+        </script>
     </head>
 
     <body class="preload">
@@ -31,7 +49,7 @@
             }(document, 'script', 'facebook-jssdk'));
         </script>
         <script type="text/javascript">
-            var demo_base_url = '';
+            var demo_base_url = '<?php echo base_url(); ?>';
         </script>
         <div id="particles"></div>
 
@@ -42,7 +60,7 @@
         <?php $this->load->view('client/header'); ?>
 
         <!-- Menu responsive -->
-        <?php $this->load->view('client/menu-responsive'); ?>
+        <?php // $this->load->view('client/menu-responsive'); ?>
 
         <!-- Menu -->
         <?php $this->load->view('client/menu'); ?>
@@ -78,7 +96,7 @@
 
         <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
-        
+
         <script src="<?php echo base_url() . 'assets/client/js/bootstrap.js'; ?>"></script>
         <script src="<?php echo base_url() . 'assets/client/js/bootstrap-hover-dropdown.js'; ?>"></script>
         <script src="<?php echo base_url() . 'assets/client/js/jquery.particleground.js'; ?>"></script>
