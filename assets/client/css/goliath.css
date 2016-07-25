@@ -3503,7 +3503,7 @@ textarea.form-control {
     font-size: 14px;
     line-height: 16px;
     font-weight: 900;
-    margin: 0 0 13px 0;
+    margin: 0 0 5px 0;
 }
 
 .about-author .about h2 span {
@@ -3563,7 +3563,7 @@ textarea.form-control {
 }
 
 .about-author .about .social {
-    padding: 18px 0 0 0;
+    padding: 5px 0 0 0;
 }
 
 .about-author .about .social a {

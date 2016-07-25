@@ -86,7 +86,7 @@
                     </div>
                     <div class="form-group">
                         <label for="google">Google</label>
-                        <input class="form-control" value="<?php echo isset($user) ? $user->getPhone() : ""; ?>" id="google" name="google" type="text">
+                        <input class="form-control" value="<?php echo isset($user) ? $user->getGoogle() : ""; ?>" id="google" name="google" type="text">
                     </div>
                     <div class="form-group">
                         <label>Role</label>

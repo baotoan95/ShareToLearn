@@ -21,6 +21,7 @@ class MPost extends Base_Model {
         $this->load->model('MTermRelationships');
         $this->load->model('MCategory');
         $this->load->model('MTag');
+        $this->load->model('MComment');
         $this->load->model('MUser');
     }
 
@@ -146,7 +147,8 @@ class MPost extends Base_Model {
                     ->getTermRelationshipByObjectId($post->getId(), 'category');
             foreach($term_relates as $term_relate) {
                 $category = new ECategory(intval($term_relate['t_id']), $term_relate['t_name'], 
-                        $term_relate['t_slug'], $term_relate['tt_desc'], intval($term_relate['tt_parent']));
+                        $term_relate['t_slug'], $term_relate['tt_desc'], intval($term_relate['tt_parent']),
+                        intval($term_relate['tt_count']));
                 $categories[] = $category;
             }
             $post->setCategories($categories);
@@ -158,7 +160,7 @@ class MPost extends Base_Model {
                     ->getTermRelationshipByObjectId($post->getId(), 'tag');
             foreach($term_relates as $term_relate) {
                 $tag = new ETag(intval($term_relate['t_id']), $term_relate['t_name'], 
-                        $term_relate['tt_desc'], $term_relate['t_slug']);
+                        $term_relate['tt_desc'], $term_relate['t_slug'], intval($term_relate['tt_count']));
                 $tags[] = $tag;
             }
             $post->setTags($tags);
@@ -309,6 +311,9 @@ class MPost extends Base_Model {
         
         $this->delete($post->getId());
         $this->MTermRelationships->deleteTermRelationshipByObjectId($post_id);
+        
+        // Delete comment on post
+        $this->MComment->deleteCommentByPostId($post_id);
         
         foreach($post->getTags() as $tag) {
             // Reduce count for tag

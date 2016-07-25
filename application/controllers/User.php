@@ -264,7 +264,7 @@ class User extends CI_Controller {
         $blocked = $this->input->post('blocked');
         $actived = $this->input->post('actived');
         $avatar = $this->MUser->getUserById($id)->getAvatar();
-
+        
         $key = generateRandomString(20);
         $user = new EUser($id, $username, $password, $fullname, $avatar, $desc, 
                 $bio, $email, $phone, $facebook, $skype, $google, $key, $actived, $role, $blocked);

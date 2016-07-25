@@ -1,6 +1,6 @@
 <div class="post-1">
     <div class="post">
-        <?php echo $page->getContent(); ?>
+        <?php echo isset($page) ? $page->getContent() : "Vui lòng điền vào biểu mẫu bên dưới"; ?>
     </div>
 </div>
 <div class="add-comment">
@@ -8,12 +8,12 @@
     <form>
         <input type="hidden" name="postId" value="0">
         <p>
-            <input type="text" name="name" class="form-control" placeholder="Your name">
-            <input type="text" name="mail" class="form-control" placeholder="E-mail address">
+            <input type="text" name="name" class="form-control" placeholder="Your name (required)">
+            <input type="text" name="mail" class="form-control" placeholder="E-mail address (required)">
             <input type="text" name="website" class="form-control" placeholder="Web address">
         </p>
         <p>
-            <textarea class="form-control" name="content" placeholder="Your comment"></textarea>
+            <textarea class="form-control" name="content" placeholder="Your comment (required)"></textarea>
         </p>
         <input type="button" id="submit" data-type="contact" data-value="0" class="btn btn-default" value="Send"></input>
     </form>

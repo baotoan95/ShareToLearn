@@ -26,7 +26,10 @@ class EUser {
     private $count_posts; // Extra (not have in DB)
     private $joined;
 
-    public function __construct($id = 0, $username = '', $password = '', $full_name = '', $avatar = '', $desc = '', $bio = '', $email = '', $phone = '', $facebook = '', $skype = '', $google = '', $key = '', $actived = 0, $role = '', $non_blocked = 0, $count_posts = 0, $joined = '') {
+    public function __construct($id = 0, $username = '', $password = '', 
+            $full_name = '', $avatar = '', $desc = '', $bio = '', $email = '', 
+            $phone = '', $facebook = '', $skype = '', $google = '', $key = '', 
+            $actived = 0, $role = '', $non_blocked = 0, $count_posts = 0, $joined = '') {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;

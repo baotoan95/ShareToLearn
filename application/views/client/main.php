@@ -7,7 +7,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="<?php isset($post) ? $post->getExcerpt() : "BTIT95"; ?>"/>
-        <link rel="shortcut icon" href="img/favicon.ico">
+
+        <meta property="og:url" content="<?php echo isset($post) ?
+        base_url() . $post->getGuid() . '-' . $post->getId() . '.html' : base_url(); ?>" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="<?php echo isset($post) ? $post->getTitle() : 'BTIT95'; ?>" />
+        <meta property="og:description" content="<?php echo isset($post) ? $post->getExcerpt() : 'BTIT95'; ?>" />
+        <meta property="og:image" content="<?php echo base_url() . 'assets/upload/images/' .
+              (isset($post) ? $post->getBanner() : 'logo.gif'); ?>" />
+        <link rel="shortcut icon" href="<?php echo base_url() . 'assets/client/img/btit95.ico'; ?>">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Raleway:400,900,700">
         <link rel="stylesheet" href="<?php echo base_url() . 'assets/client/css/bootstrap.css'; ?>">
         <link rel="stylesheet" href="<?php echo base_url() . 'assets/client/css/font-awesome.css'; ?>">
@@ -15,7 +23,7 @@
         <link rel="stylesheet" href="<?php echo base_url() . 'assets/client/css/goliath-tablet.css'; ?>">
         <link rel="stylesheet" href="<?php echo base_url() . 'assets/client/css/goliath-phone.css'; ?>">
         <!--<link rel="stylesheet" href="<?php echo base_url() . 'assets/client/demo/demo.css'; ?>">-->
-        <link rel="stylesheet" href="<?php // echo base_url() . 'assets/client/demo/colorpicker/css/bootstrap-colorpicker.min.css';    ?>">
+        <link rel="stylesheet" href="<?php // echo base_url() . 'assets/client/demo/colorpicker/css/bootstrap-colorpicker.min.css';     ?>">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:900,100,300,400">
         <script src="<?php echo base_url() . 'assets/client/js/modernizr-2.6.2-respond-1.1.0.min.js'; ?>"></script>
         <script src="<?php echo base_url() . 'assets/client/js/jquery-1.11.1.js'; ?>"></script>
@@ -35,11 +43,13 @@
             ga('create', 'UA-81239126-1', 'auto');
             ga('send', 'pageview');
         </script>
+        
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5619409410a0a7e9"></script>
     </head>
 
     <body class="preload">
         <script>(function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
+        var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id))
                     return;
                 js = d.createElement(s);
@@ -60,11 +70,11 @@
         <?php $this->load->view('client/header'); ?>
 
         <!-- Menu responsive -->
-        <?php // $this->load->view('client/menu-responsive'); ?>
+        <?php // $this->load->view('client/menu-responsive');  ?>
 
         <!-- Menu -->
-        <?php $this->load->view('client/menu'); ?>
-        <?php isset($nav) ? $this->load->view($nav) : ""; ?>
+<?php $this->load->view('client/menu'); ?>
+<?php isset($nav) ? $this->load->view($nav) : ""; ?>
 
         <!-- Homepage content -->
         <div class="container homepage-content">
@@ -75,12 +85,12 @@
                 <?php $this->load->view($content); ?>
 
                 <!-- Pages pagination -->
-                <?php $this->load->view('client/pagination'); ?>
+<?php $this->load->view('client/pagination'); ?>
 
             </div>
 
             <!-- Sidebar -->
-            <?php $this->load->view('client/sidebar'); ?>
+<?php $this->load->view('client/sidebar'); ?>
 
         </div>
 
@@ -92,7 +102,7 @@
         <?php $this->load->view('client/footer'); ?>
 
         <!-- Copyright -->
-        <?php $this->load->view('client/copyright'); ?>
+<?php $this->load->view('client/copyright'); ?>
 
         <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 

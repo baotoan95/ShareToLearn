@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2016-07-25 12:11:19
+Date: 2016-07-26 00:10:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,38 +36,11 @@ CREATE TABLE `comments` (
   KEY `cmt_post_id` (`cmt_post_id`),
   KEY `cmt_user_id` (`cmt_user`),
   KEY `cmt_type` (`cmt_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
-INSERT INTO `comments` VALUES ('9', '135', 'Admin', 'support@admin.com', '1', '2016-07-12 14:00:54', 'approved', 'comment', '0', 'Hello\n', null, 'pending');
-INSERT INTO `comments` VALUES ('10', '135', 'Admin', 'support@admin.com', '1', '2016-07-12 17:29:43', 'approved', 'comment', '9', 'Reply hello admin', null, 'pending');
-INSERT INTO `comments` VALUES ('11', '135', 'Admin', 'support@admin.com', '1', '2016-07-12 17:30:24', 'approved', 'comment', '9', 'REply hello amin 2', null, 'pending');
-INSERT INTO `comments` VALUES ('13', '135', 'Admin', 'support@admin.com', '1', '2016-07-12 17:34:57', 'approved', 'comment', '9', 'sdfsdfsdf', null, 'pending');
-INSERT INTO `comments` VALUES ('53', '135', 'Thanh', 'E-mail', '1', '2016-07-14 14:51:34', 'approved', 'comment', '13', 'adb', 'Website', 'pending');
-INSERT INTO `comments` VALUES ('54', '135', 'asdfsdf', 'sdfsdf', '1', '2016-07-19 18:08:37', 'approved', 'comment', '11', 'sdfsdfsdfsdf', 'sdfsdf', 'pending');
-INSERT INTO `comments` VALUES ('55', '0', 'LLLL', 'L@gmail.com', '1', '2016-07-19 18:13:29', 'approved', 'contact', '0', 'abcdefgh', null, 'pending');
-INSERT INTO `comments` VALUES ('56', '0', 'LLLL', 'L@gmail.com', '1', '2016-07-19 18:14:00', 'approved', 'contact', '0', 'abcdefgh', null, 'pending');
-INSERT INTO `comments` VALUES ('57', '0', 'Namesdfsdf', 'E-mailsdfsf', '1', '2016-07-20 08:34:46', 'approved', 'contact', '0', 'sdfsfsfsdf\n\n\n\n\n\n', null, 'pending');
-INSERT INTO `comments` VALUES ('58', '0', 'Namesdfsdf', 'E-mailsdfsf', '1', '2016-07-20 08:35:02', 'approved', 'contact', '0', 'sdfsfsfsdf\n\n\n\n\n\n', null, 'pending');
-INSERT INTO `comments` VALUES ('60', '131', 'sdfsdfsfsdf', '', '1', '2016-07-20 09:26:08', 'approved', 'comment', '0', 'sdfsdfsdf', 'Website', 'pending');
-INSERT INTO `comments` VALUES ('61', '131', 'fsf', 'sdfsdfsdf@sfsdf.com', '1', '2016-07-20 09:28:17', 'approved', 'comment', '0', 'ssdfdfsdfsdf', 'sdfsfd', 'pending');
-INSERT INTO `comments` VALUES ('63', '0', 'sfsdfdsf', 'sdfsdf@sdfs.dsdf', '1', '2016-07-20 09:51:04', 'approved', 'contact', '0', 'sdfsdfsdfdsf', '', 'pending');
-INSERT INTO `comments` VALUES ('64', '131', 'sfsdf', 'sdfsdfs@sfd.sdfsdf', '1', '2016-07-20 10:09:25', 'approved', 'comment', '0', 'sdfsdfsdf', '', 'pending');
-INSERT INTO `comments` VALUES ('65', '131', 'Admin', 'support@admin.com', '1', '2016-07-21 12:58:59', 'pending', 'comment', '64', '', '', 'pending');
-INSERT INTO `comments` VALUES ('66', '131', 'BT', 'baotoan@gmail.com', '1', '2016-07-22 15:13:43', 'approved', 'comment', '60', 'Hello sir', 'website.com', 'pending');
-INSERT INTO `comments` VALUES ('67', '131', 'LOL', 'ABC@gmail.com', '1', '2016-07-22 15:16:06', 'approved', 'comment', '66', 'adfsdfsf', 'LD', 'pending');
-INSERT INTO `comments` VALUES ('68', '131', 'LOL', 'ABC@gmail.com', '1', '2016-07-22 15:16:44', 'approved', 'comment', '0', 'adfsdfsf', 'LD', 'pending');
-INSERT INTO `comments` VALUES ('69', '131', 'LOL', 'ABC@gmail.com', '1', '2016-07-22 15:16:54', 'approved', 'comment', '0', 'adfsdfsf', 'LD', 'pending');
-INSERT INTO `comments` VALUES ('70', '131', 'sdfs', 'sdfs@gmail.com', '1', '2016-07-22 15:17:27', 'approved', 'comment', '0', 'sdfsdfsdf', 'sadfsdf', 'pending');
-INSERT INTO `comments` VALUES ('71', '131', 'sdfsf', 'sdf@gmail.com', '1', '2016-07-22 15:17:53', 'approved', 'comment', '0', 'asdfsfds', 'sdfsdf', 'pending');
-INSERT INTO `comments` VALUES ('72', '131', 'asdfsdf', 'sdfs@gmail.com', '1', '2016-07-22 15:18:21', 'approved', 'comment', '0', 'adfsdf', 'asdfsdfsdf', 'pending');
-INSERT INTO `comments` VALUES ('73', '131', 'asdfsdf', 'sdfsdf@gmail.com', '1', '2016-07-22 15:18:41', 'approved', 'comment', '0', 'dsfsdf', 'sdfsfs', 'pending');
-INSERT INTO `comments` VALUES ('74', '131', 'asdfsdf', 'sdfsdf@sdfsdf.com', '1', '2016-07-22 15:43:47', 'approved', 'comment', '0', 'sdfsdfsdf', 'sdfsdf', 'pending');
-INSERT INTO `comments` VALUES ('75', '0', 'asdfsdf', 'asdfs@gmail.com', '1', '2016-07-22 15:53:37', 'approved', 'contact', '0', 'sdfsf', 'sdfsdf', 'pending');
-INSERT INTO `comments` VALUES ('76', '0', 'adsf', 'sdf@gamo.com', '1', '2016-07-22 15:55:08', 'approved', 'contact', '0', 'sadfsdf', 'sdafsdf', 'pending');
-INSERT INTO `comments` VALUES ('77', '244', 'sdf', 'sdfsdf@asdfsdf.sdfsdf', '1', '2016-07-24 08:03:59', 'trash', 'comment', '0', 'sdfsdfsf', 'sdfsdf', 'approved');
 
 -- ----------------------------
 -- Table structure for menu
@@ -143,22 +116,12 @@ CREATE TABLE `posts` (
   `p_parent` int(11) DEFAULT NULL,
   PRIMARY KEY (`p_id`),
   UNIQUE KEY `p_guid` (`p_guid`)
-) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of posts
 -- ----------------------------
-INSERT INTO `posts` VALUES ('131', 'Bài viết mới', '<p>N&agrave;y l&agrave; nội dung b&agrave;i viết, rất d&agrave;i v&agrave; rất hay, hữu &iacute;ch cho mọi người, n&ecirc;n đọc! :))</p>\r\n', '1', '6', '0', '<p>Đ&acirc;y l&agrave; tr&iacute;ch đoạn</p>\r\n', null, 'public', '2016-07-23 15:49:18', 'bai-viet-moi', '1', '0', 'post', '13439007_552355538305301_342366450246934188_n1.jpg', '', '0');
-INSERT INTO `posts` VALUES ('132', 'Bài viết thứ 2', '                                                                                                ', '1', '0', '0', '                                                                                                ', null, 'draf', '2016-07-06 10:54:16', 'bai-viet-thu-2', '0', '0', 'post', '13439007_552355538305301_342366450246934188_n9.jpg', '', '0');
-INSERT INTO `posts` VALUES ('134', 'Lập trình viên bạn là ai?', 'C&aacute;i cần n&oacute;i l&agrave;, lập tr&igrave;nh vi&ecirc;n họ cũng l&agrave; những con người, hoạt động theo bầy đ&agrave;n :3', '1', '3', '0', 'Lập tr&igrave;nh vi&ecirc;n c&aacute;i t&ecirc;n nghe rất thời thượng nhưng nhiều người vẫn c&ograve;n chưa r&otilde; cụ thể Lập tr&igrave;nh vi&ecirc;n c&ocirc;ng việc thường ng&agrave;y của họ l&agrave;m g&igrave; v&agrave;...', null, 'public', '2016-07-23 16:42:43', 'lap-trinh-vien-ban-la-ai', '0', '0', 'post', '10922542_401367413356838_4205009600434851352_n21.jpg', 'baotoan', '0');
-INSERT INTO `posts` VALUES ('136', 'Tonight You belong to me', '<strong>Tonight you belong to me</strong><br />\r\n<br />\r\nI know you belong to somebody new<br />\r\nBut tonight you belong to me<br />\r\nAlthough you&#39;re apart<br />\r\nYou are a part of my heart<br />\r\nBut tonight you belong to me<br />\r\nWait down by the stream<br />\r\nHow sweet it will seem<br />\r\nOnce more, just to dream in the moonlight<br />\r\nMy honey I know<br />\r\nWith the draw, that you will be gone<br />\r\nAnd to night you belong to me<br />\r\nJust a little old me', '1', '1', '0', 'I know you belong to some body new<br />\r\nBut tonight you belong to me', null, 'public', '2016-07-23 16:12:57', 'tonight-you-belong-to-me', '1', '0', 'post', '13439007_552355538305301_342366450246934188_n3.jpg', '', '0');
-INSERT INTO `posts` VALUES ('139', 'Trang thứ 11', 'Nội dung', '1', '0', '0', 'ABC', null, 'public', '2016-07-08 11:30:58', 'trang-thu-p11', '0', '0', 'page', '13439007_552355538305301_342366450246934188_n11.jpg', '', '0');
-INSERT INTO `posts` VALUES ('140', 'Doremon', '<p style=\"text-align:center\"><span style=\"font-size:28px\"><strong>Doremon</strong></span></p>\r\n\r\n<p style=\"text-align:center\"><iframe frameborder=\"0\" height=\"315\" src=\"https://www.youtube.com/embed/n1dMnNUgCT8\" width=\"560\"></iframe></p>\r\n', '1', '3', '0', 'Phim doremon', null, 'public', '2016-07-15 11:45:49', 'doremon', '0', '0', 'post', '10922542_401367413356838_4205009600434851352_n.jpg', '', '0');
-INSERT INTO `posts` VALUES ('238', 'sdfsdf', '', '0', '0', '0', '', '', 'public', '2016-07-21 18:31:18', 'sdfsdf', '0', '0', 'navigation', '', '', '0');
-INSERT INTO `posts` VALUES ('239', 'sdfsdf', '', '0', '0', '0', '', '', 'public', '2016-07-21 19:01:46', 'sdfsdf-i1', '0', '0', 'navigation', '', '', '0');
-INSERT INTO `posts` VALUES ('241', 'Liên hệ', 'BTIT95 lu&ocirc;n sẵn s&agrave;ng đ&oacute;n nhận mọi &yacute; kiến từ mọi người, nếu c&oacute; bất cứ thắc mắc hay g&oacute;p &yacute; vui l&ograve;ng điền v&agrave;o form b&ecirc;n dưới.&nbsp; Cảm ơn!', '1', '0', '0', '', null, 'public', '2016-07-23 11:38:52', 'lien-he', '1', '0', 'page', 'Koala.jpg', '', '0');
-INSERT INTO `posts` VALUES ('242', 'Trang chủ', '', '0', '0', '0', '', '', 'public', '2016-07-23 11:41:23', 'http://localhost/ShareToLearn/', '0', '0', 'navigation', '', '', '0');
-INSERT INTO `posts` VALUES ('244', 'Cách học lập trình hiệu quả', 'Học lập tr&igrave;nh cũng như bao m&ocirc;n học kh&aacute;c, nhưng c&oacute; một số điều m&agrave; mỗi người cần phải c&acirc;n nhắc v&agrave; n&ecirc;n biết trước khi chọn lập tr&igrave;nh l&agrave; m&ocirc;n ưa th&iacute;ch v&agrave; sẽ &quot;ăn nằm&quot; với n&oacute; c&oacute; thể n&oacute;i l&agrave; cả đời.<br />\r\n<br />\r\nLưu &yacute; thứ 1: Phải c&oacute; một ươc mơ<br />\r\nLưu &yacute; thứ 2: Phải c&oacute; đam m&ecirc;<br />\r\nLưu &yacute; thứ 3: Phải c&oacute; ki&ecirc;n tr&igrave;<br />\r\nLưu &yacute; thứ 4: Phải biết điều chỉnh thời gian<br />\r\n...', '1', '12', '1', 'Học lập tr&igrave;nh cũng như bao m&ocirc;n học kh&aacute;c, nhưng c&oacute; một số điều m&agrave; mỗi người cần phải c&acirc;n nhắc v&agrave; n&ecirc;n biết trước khi chọn lập tr&igrave;nh l&agrave; m&ocirc;n ưa th&iacute;ch v&agrave; sẽ &quot;ăn nằm&quot; với n&oacute; c&oacute; thể n&oacute;i l&agrave; cả đời.', null, 'public', '2016-07-24 07:22:59', 'cach-hoc-lap-trinh-hieu-qua', '1', '0', 'post', '13439007_552355538305301_342366450246934188_n22.jpg', '', '0');
+INSERT INTO `posts` VALUES ('1', 'abc', 'abc', '1', '7', '0', 'abc', null, 'public', '2016-07-25 16:23:29', 'abc', '1', '0', 'post', '13265961_10157146785975105_5891515887297551622_n1.jpg', '', '0');
 
 -- ----------------------------
 -- Table structure for statistic
@@ -222,7 +185,7 @@ CREATE TABLE `term_relationships` (
   `tr_term_taxonomy_id` int(11) NOT NULL,
   `tr_term_order` int(11) NOT NULL,
   PRIMARY KEY (`tr_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=418 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of term_relationships
@@ -239,9 +202,10 @@ INSERT INTO `term_relationships` VALUES ('398', '131', '192', '0');
 INSERT INTO `term_relationships` VALUES ('399', '131', '194', '0');
 INSERT INTO `term_relationships` VALUES ('400', '131', '190', '0');
 INSERT INTO `term_relationships` VALUES ('401', '131', '191', '0');
-INSERT INTO `term_relationships` VALUES ('402', '140', '222', '0');
-INSERT INTO `term_relationships` VALUES ('403', '140', '190', '0');
-INSERT INTO `term_relationships` VALUES ('417', '244', '190', '0');
+INSERT INTO `term_relationships` VALUES ('430', '244', '190', '0');
+INSERT INTO `term_relationships` VALUES ('433', '140', '222', '0');
+INSERT INTO `term_relationships` VALUES ('434', '140', '190', '0');
+INSERT INTO `term_relationships` VALUES ('442', '1', '190', '0');
 
 -- ----------------------------
 -- Table structure for term_taxonomy
@@ -291,7 +255,7 @@ CREATE TABLE `users` (
   `u_password` varchar(32) NOT NULL,
   `u_fullname` varchar(50) NOT NULL,
   `u_avatar` varchar(200) DEFAULT NULL,
-  `u_desc` varchar(300) DEFAULT NULL,
+  `u_desc` varchar(500) DEFAULT NULL,
   `u_bio` text,
   `u_email` varchar(100) NOT NULL,
   `u_phone` varchar(20) DEFAULT NULL,
@@ -312,7 +276,7 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'baotoan1142@gmail.com', 'baotoan', 'Bảo Toàn', '13439007_552355538305301_342366450246934188_n.jpg', 'Tham gia viết b&agrave;i từ năm 2014 với mục đ&iacute;ch chia sẻ v&agrave; học hỏi, rất mong nhận được sự ủng hộ của c&aacute;c bạn để m&igrave;nh c&oacute; thể viết nhiều b&agrave;i hữu &iacute;ch hơn.', '', 'dfsfsdf@gmail.com', '1234', 'facebook cuar toanf ddaay', '', '1234', '5dR32ZYOq2DMRabtozvS', 'writer', '\0', '', '2016-07-23 20:33:21');
+INSERT INTO `users` VALUES ('1', 'baotoan1142@gmail.com', 'baotoan', 'Bảo Toàn', '13439007_552355538305301_342366450246934188_n.jpg', 'L&agrave; một sinh vi&ecirc;n lười biếng, c&oacute; khả năng ngồi &ocirc;m m&aacute;y t&iacute;nh cả ng&agrave;y m&agrave; kh&ocirc;ng thấy ch&aacute;n, th&iacute;ch viết l&aacute;ch v&agrave;&nbsp;chia sẻ những kiến thức đ&atilde; học được mặc d&ugrave; kh&ocirc;ng c&oacute; bao nhi&ecirc;u &nbsp;v&agrave; khả năng viết l&aacute;ch cũng kh&ocirc;ng bằng ai :3 Nhưng cũng muốn đ&oacute;ng g&oacute;p một ch&uacute;t g&igrave; đ&oacute; cho đời. Mong được sự ủng hộ của mọi người.', '', 'dfsfsdf@gmail.com', '1234', 'facebook cuar toanf ddaay', 'dsfsdf', '1234ssdfsdf', 'KQ@0cicuvP8vlJj9YTF0', 'writer', '\0', '', '2016-07-25 19:08:51');
 INSERT INTO `users` VALUES ('2', 'tranlong', '1234', 'Trần Văn Long', '10922542_401367413356838_4205009600434851352_n.jpg', 'Tham gia viết bài từ năm 2014 với mục đích chia sẻ và học hỏi, rất mong nhận được sự ủng hộ của các bạn để mình có thể viết nhiều bài hữu ích hơn.', 'dfsdfsdfdf', 'tranlong@gmail.com', '12345', 'facebook cuar toanf ddaay', 'dsfsdfsdf', '12345', 'aM3iOuolIPcxJH8BcAfJ', 'admin', '', '', '2016-07-23 20:33:26');
 
 -- ----------------------------
@@ -328,4 +292,4 @@ CREATE TABLE `user_online` (
 -- ----------------------------
 -- Records of user_online
 -- ----------------------------
-INSERT INTO `user_online` VALUES ('::1', '1469422678');
+INSERT INTO `user_online` VALUES ('::1', '1469465947');

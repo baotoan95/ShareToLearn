@@ -32,7 +32,7 @@
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <input type="hidden" value="<?php echo $status; ?>" name="status"/>
-                                <?php $uri = base_url() . 'comment/comments'; ?>
+                                <?php $uri = base_url() . 'Comment/comments'; ?>
                                 <a id="all" href="<?php echo $uri . "?type=$type" ?>" 
                                    class="btn btn-sm btn-default <?php
                                    if (empty($_GET['status']) ||
@@ -108,11 +108,11 @@
                                         switch($comment->getStatus()) {
                                             case 'pending':
                                                 echo "<a class='approved'>Approved</a> | <a class='reply'>Reply</a> | "
-                                                . "<a href='".base_url().'comment/editComment/'. $comment->getId() . "'>Edit</a> | <a class='spam'>Spam</a> | <a class='trash'>Delete</a>";
+                                                . "<a href='".base_url().'Comment/editComment/'. $comment->getId() . "'>Edit</a> | <a class='spam'>Spam</a> | <a class='trash'>Delete</a>";
                                                 break;
                                             case 'approved':
                                                 echo "<a class='restore'>Unapproved</a> | <a class='reply'>Reply</a> | "
-                                                . "<a href='".base_url().'comment/editComment/'. $comment->getId() . "'>Edit</a> | <a class='spam'>Spam</a> | <a class='trash'>Delete</a>";
+                                                . "<a href='".base_url().'Comment/editComment/'. $comment->getId() . "'>Edit</a> | <a class='spam'>Spam</a> | <a class='trash'>Delete</a>";
                                                 break;
                                             case 'spam':
                                                 echo "<a class='restore'>Not spam</a> | <a class='delete'>Delete</a>";
@@ -158,7 +158,7 @@
                     $('.delete').click(function() {
                         var element = $(this);
                         $.ajax({
-                            url: <?php echo "\"" . base_url() . "comment/deleteComment\""; ?>,
+                            url: <?php echo "\"" . base_url() . "Comment/deleteComment\""; ?>,
                             type: "POST",
                             dataType: "text",
                             data: {
@@ -184,7 +184,7 @@
                             return;
                         }
                         $.ajax({
-                            url: <?php echo "\"" . base_url() . "comment/reply\""; ?>,
+                            url: document.location.origin + "/Comment/reply",
                             type: "POST",
                             dataType: "text",
                             data: {
@@ -196,15 +196,14 @@
                                     $('#replyrow').remove();
                                     var cmt = $.parseJSON(res);
                                     var action = '';
-                                    alert(cmt.status);
                                     switch(cmt.status) {
                                         case 'pending':
                                             action = "<a class='approved'>Approved</a> | <a class='reply'>Reply</a> | "
-                                            + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Edit</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                            + "<a href='<?php echo base_url(); ?>Comment/editComment/" + cmt.id + "'>Edit</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
                                             break;
                                         case 'approved':
                                             action = "<a class='restore'>Unapproved</a> | <a class='reply'>Reply</a> | "
-                                            + "<a href='<?php echo base_url(); ?>comment/editComment/" + cmt.id + "'>Edit</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
+                                            + "<a href='<?php echo base_url(); ?>Comment/editComment/" + cmt.id + "'>Edit</a> | <a class='spam'>Rác</a> | <a class='trash'>Xóa</a>";
                                             break;
                                     }
                                     $('tbody').append(
@@ -227,7 +226,7 @@
                     $('.pending, .approved, .spam, .trash, .restore').click(function () {
                         var element = $(this);
                         $.ajax({
-                            url: <?php echo "\"" . base_url() . "comment/changeStatus\""; ?>,
+                            url: <?php echo "\"" . base_url() . "Comment/changeStatus\""; ?>,
                             type: "GET",
                             dataType: "text",
                             data: {

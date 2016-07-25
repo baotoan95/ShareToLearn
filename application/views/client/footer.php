@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td><a>Facebook:</a></td>
-                    <td><a href="https://fb.com/btit95">https://fb.com/btit95</a></td>
+                    <td><a target="_blank" href="https://fb.com/btit95">https://fb.com/btit95</a></td>
                 </tr>
             </table>
         </div>

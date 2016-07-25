@@ -71,7 +71,7 @@
     </div>
 
     <?php
-        if(isset($post) && $post->getType() == 'post') {
+        if(isset($post) && $post->getType() == 'post' && count($post->getCategories()) > 0) {
     ?>
     <!-- Tags -->
     <div class="widget-tabs">

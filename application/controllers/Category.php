@@ -11,10 +11,10 @@ class Category extends CI_Controller {
         $this->load->model('MCategory');
     }
     
-    public function index() {
-        echo count($this->MCategory->getCategories()) . "<br/>";
-        echo $this->MCategory->getCategoriesBox(0);
-    }
+//    public function index() {
+//        echo count($this->MCategory->getCategories()) . "<br/>";
+//        echo $this->MCategory->getCategoriesBox(0);
+//    }
     
     public function addCategory() {
         $hasParentBox = $this->input->post('hasParentBox');

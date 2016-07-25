@@ -36,7 +36,7 @@ class Post extends CI_Controller {
                             "<div class='checkbox'>" .
                             "<label>" .
                             "<input type='checkbox' " . 
-                        (is_contain($categoriesNeedChecked, $category) ? "checked" : "")
+                        (is_contain($categoriesNeedChecked, $category) ? "checked" : "sfdf")
                         . " name='categories[]' value='" .
                             $category->getId() . "'>" . $category->getName() .
                             "</label>" .

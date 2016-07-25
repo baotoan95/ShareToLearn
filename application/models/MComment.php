@@ -39,6 +39,11 @@ class MComment extends Base_Model {
         return $this->insert($data);
     }
     
+    public function deleteCommentByPostId($postId) {
+        $this->db->where('cmt_post_id', $postId);
+        $this->db->delete($this->_table['table_name']);
+    }
+    
     public function deleteComment($cmtId) {
         $comment = $this->getCommentById($cmtId);
         $this->db->where('cmt_id', $cmtId);

@@ -15,7 +15,6 @@ $('.del_post').click(function () {
             id: element.attr('id')
         },
         success: function (res) {
-            alert(res);
             if (res !== 'failure') {
                 element.parent().parent().remove();
             }
