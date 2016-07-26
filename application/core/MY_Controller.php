@@ -19,7 +19,9 @@ class My_Controller extends CI_Controller {
         
         $this->_data = array(
             "menu" => $this->MMenu->generateMainMenu($this->MMenu->getMenu()),
+            // Get statistic
             "statistic" => $this->MStatistic->getStatisticByDate(date('Y-m-d')),
+            // Count and increase statistic
             "count_user_online" => $this->MUserOnline->countUserOnline()
         );
         

@@ -7,7 +7,18 @@
     </div>
 
     <ul id="comments">
-        <?php echo $comments; ?>
+        <?php
+        if(strlen($comments) == 0) {
+            echo "
+                <div class='no-comments'>
+                    <p>No comments so far.</p>
+			<p>Be first to leave comment below.</p>
+		</div>
+            ";
+        } else {
+            echo $comments;
+        }
+        ?>
     </ul>
 
     <div class="add-comment" id="comment_part">
