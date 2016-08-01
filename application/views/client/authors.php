@@ -1,6 +1,6 @@
 <div class="post-block-3">
     <div class="title-default">
-        <a href="goliath-blog-1.html" class="active">Danh sách tác giả</a>
+        <a class="active">Danh sách tác giả</a>
     </div>
 
     <div class="items">

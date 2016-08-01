@@ -23,8 +23,7 @@ class MStatistic extends Base_Model {
             $this->insert($data);
         }
         
-        $this->db->where('stt_date', $date);
-        $this->db->update($this->_table['table_name'], array("stt_count"=>"stt_count + 1"));
+        $this->db->query("update statistic set stt_count = (stt_count + 1) where stt_date = '$date'");
     }
     
     public function getStatisticByDate($date) {

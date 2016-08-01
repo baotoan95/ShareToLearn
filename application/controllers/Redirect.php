@@ -68,6 +68,10 @@ class Redirect extends MY_Controller {
         $this->_data['post'] = $post;
         $this->_data['title'] = $post->getTitle();
         $this->_data['content'] = 'client/single';
+        if($post->getType() == 'post') {
+            $this->_data['suggest'] = $this->MPost->getSuggestForPost($post, 10);
+        }
+        
         if($guid == $post->getGuid()) {
             // Update view count
             $post->setViews($post->getViews() + 1);

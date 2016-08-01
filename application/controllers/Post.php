@@ -88,7 +88,8 @@ class Post extends CI_Controller {
         }
 
         // Upload avatar
-        $avatar = $this->upload_image('avatar', './assets/upload/images');
+        $config["file_name"] = $this->input->post('guid') . time();
+        $avatar = $this->upload_image('avatar', './assets/upload/images', $config);
         if (!$avatar) { // Upload fail
             $this->session->set_flashdata('flash_error', 'Ops! please chose a picture with condition below'
                     . '<br/>Condition:'
@@ -278,7 +279,8 @@ class Post extends CI_Controller {
         // When have request change avatar then update it
         if ($_FILES['avatar']['error'] == 0) {
             // Upload avatar
-            $avatar = $this->upload_image('avatar', './assets/upload/images');
+            $config["file_name"] = $this->input->post('guid') . time();
+            $avatar = $this->upload_image('avatar', './assets/upload/images', $config);
             if (!$avatar) { // Upload fail
                 $this->session->set_flashdata('flash_error', 'Ops! please chose a picture with condition below'
                     . '<br/>Condition:'
@@ -294,15 +296,24 @@ class Post extends CI_Controller {
             // If not have request to change avatar then set default for it
             $post->setBanner($this->MPost->getPostById($post->getId())->getBanner());
         }
-        $post->setPassword($this->input->post('password'));
+        // set status for post
+        $post->setStatus($this->input->post('status'));
+//        if ($this->input->post('status') == 'draf') {
+//            $post->setStatus($this->input->post('status'));
+//        }
+        
+        // Set password
+        $visibility = $this->input->post('visibility');
+        $password = $this->input->post('password');
+        if($visibility != 'protected' && ($post->getStatus() == 'public' || $post->getStatus() == 'private')) {
+            $password = '';
+        }
+        $post->setPassword($password);
+        
         $post->setParent(0);
         $post->setCategories($categories);
         $post->setTags($tags);
-        // set status for post
-        $post->setStatus($this->input->post('status'));
-        if ($this->input->post('status') == 'draf') {
-            $post->setStatus($this->input->post('status'));
-        }
+        
 
         // Update post
         if ($this->MPost->updatePost($post)) {

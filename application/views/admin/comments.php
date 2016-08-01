@@ -93,6 +93,7 @@
                             <th>Content</th>
                             <th>Date</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,6 +124,7 @@
                                         }
                                     ?>
                                 </td>
+                                <td><a target="_blank" href="<?php echo base_url() . "view-{$comment->getPostId()}.html"; ?>">View</a></td>
                             </tr>
                             <?php
                         }

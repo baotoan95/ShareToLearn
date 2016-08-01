@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?php echo base_url() . 'assets/client/css/zoomify.min.css'; ?>">
 <?php
 $allowed = $this->session->userdata('passPosts') == NULL ? array() : $this->session->userdata('passPosts');
 if (strlen($post->getPassword()) > 0 &&
@@ -5,10 +6,12 @@ if (strlen($post->getPassword()) > 0 &&
         $post->getPassword() != $allowed[$post->getId()])) {
     ?>
     <div id="password_required">
-        This post is password protected. To view it please enter your password below and press enter key:
+        This post is password protected. To view it please enter your password below:
         <form action="<?php echo base_url() . 'user/checkLogin?action=passpost' ?>" method="post">
             <input type="hidden" name="id" value="<?php echo $post->getId(); ?>"/>
-            <br/><input type="password" placeholder="Enter password" style="width: 200px; display: inline;" name="password"/>
+            <br/>
+            <input type="password" placeholder="Enter password" style="width: 200px; display: inline;" name="password"/>
+            <input type="submit" value="Enter"/>
         </form>
     </div>
     <?php
@@ -56,7 +59,7 @@ if (strlen($post->getPassword()) > 0 &&
             </div>
             <div class="about">
                 <div class="avatar">
-                    <img alt="author" src="<?php echo base_url() . 'assets/upload/images/avatars/' . $post->getAuthor()->getAvatar(); ?>">
+                    <img class="lazy" alt="author" src="<?php echo base_url() . 'assets/upload/images/avatars/' . $post->getAuthor()->getAvatar(); ?>">
                 </div>
                 <h2><?php echo $post->getAuthor()->getFull_name(); ?><span><?php echo $post->getAuthor()->getRole(); ?></span></h2>
                 <p><?php echo $post->getAuthor()->getDesc(); ?></p>
@@ -74,3 +77,10 @@ if (strlen($post->getPassword()) > 0 &&
     <?php
 }
 ?>
+
+<!-- Enable zoomify -->
+<script src="<?php echo base_url() . 'assets/client/js/zoomify.min.js'; ?>"></script>
+
+<script>
+    $('img.zoomable').zoomify({ duration: 500 });
+</script>

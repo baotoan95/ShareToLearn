@@ -86,7 +86,6 @@ $(document).ready(function () {
                                 '</ul>'
                                 );
                     }
-                    $('#submit').val('Sent. Thanks!');
                     // Delete comment parent id
                     $('#submit').attr('data-value', '0');
                 } else if (res !== 'failure') {
@@ -108,11 +107,13 @@ $(document).ready(function () {
                             '</div>' +
                             '</li>'
                             );
-                    $('#submit').val('Sent. Thanks!');
                 } else {
                     $('#submit').val('Error');
+                    return;
                 }
-
+                
+                $('#submit').val('Sent. Thanks!');
+                $('.no-comments').remove();
                 // Scroll to recent comment
                 $('body, html').animate({
                     scrollTop: $('#cmt_' + res).offset().top - 70

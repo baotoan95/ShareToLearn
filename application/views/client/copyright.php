@@ -4,7 +4,8 @@
     </div>
     <div class="right">
         <ul>
-            <li><a href="<?php base_url() . 'lien-he.html'?>">Contact to me</a></li>
+            <li><a href="<?php echo base_url() . 'lien-he.html'?>">Contact to me</a></li>
+            <li><a href="<?php echo base_url() . 'danh-sach-tac-gia.html'?>">Authors</a></li>
             <li>
                 <a target="_blank" href="https://twitter.com/BaoToan1995"><i class="fa fa-twitter-square"></i></a>
                 <a target="_blank" href="https://www.facebook.com/btit95"><i class="fa fa-facebook-square"></i></a>

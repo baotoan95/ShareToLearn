@@ -15,6 +15,7 @@
         <p>
             <textarea class="form-control" name="content" placeholder="Your comment (required)"></textarea>
         </p>
+        <div class="g-recaptcha" data-sitekey="6LedUCYTAAAAAMIdFeABDXrI1pd0GgjBw7DpXGLE"></div>
         <input type="button" id="submit" data-type="contact" data-value="0" class="btn btn-default" value="Send"></input>
     </form>
     <script lang="javascript" src="<?php echo base_url() . 'assets/client/js/comment.js'; ?>"></script>

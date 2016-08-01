@@ -14,4 +14,9 @@ CKEDITOR.editorConfig = function( config ) {
         config.filebrowserImageUploadUrl = 'http://btit95.esy.es/assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images';
         config.filebrowserFlashUploadUrl = 'http://btit95.esy.es/assets/js/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash';
         config.enterMode = CKEDITOR.ENTER_BR;
+        config.extraPlugins = 'syntaxhighlight';
+        config.extraPlugins = 'dialog';
+        config.extraPlugins = 'dialogui';
+        config.allowedContent = true;
+        config.extraAllowedContent =  'img[alt,border,width,height,align,vspace,hspace,class,src,data-original]';
 };

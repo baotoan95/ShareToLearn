@@ -182,7 +182,15 @@
                                 <td><?php echo $post->getComments(); ?></td>
                                 <td><?php echo $post->getViews(); ?></td>
                                 <td><?php echo $post->getPublished(); ?></td>
-                                <td><span class="label label-success"><?php echo $post->getStatus(); ?></span></td>
+                                <td>
+                                    <?php 
+                                        if(strlen($post->getPassword()) > 0) {
+                                            echo '<span class="label label-warning">protected</span>';
+                                        } else {
+                                            echo "<span class='label label-success'>{$post->getStatus()}</span>";
+                                        }
+                                    ?>
+                                </td>
                                 <td><i class="fa fa-fw fa-trash del_post" id="<?php echo $post->getId(); ?>"></i></td>
                             </tr>
                             <?php

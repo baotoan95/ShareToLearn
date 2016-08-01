@@ -79,6 +79,7 @@
                     <span>Setting</span>
                 </a>
             </li>
+            
         </ul>
     </section>
     <!-- /.sidebar -->

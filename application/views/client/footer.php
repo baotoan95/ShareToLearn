@@ -6,10 +6,10 @@
         <div class="text">
             <p class="logo">
                 <a href="<?php echo base_url(); ?>">
-                    <img alt="BTIT95" src="<?php echo base_url() . 'assets/client/img/logo.gif'; ?>">
+                    <img class="lazy" alt="BTIT95" src="<?php echo base_url() . 'assets/client/img/logo.gif'; ?>">
                 </a>
             </p>
-            Đây là blog của BTIT95. <br/>
+            <a href="<?php echo base_url(); ?>">Đây là blog của BTIT95</a><br/>
             Mọi bài viết là do ngẫu hứng hoặc được note lại từ những bài hay mình đã đọc, 
             hay những lỗi mình thường gặp trong quá trình coding. <br/>
             Với mục đích chia sẻ và học hỏi, Rất mong nhận được sự góp ý từ mọi người!

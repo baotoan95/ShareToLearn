@@ -10,6 +10,7 @@
             "</div>";
         }
         ?>
+        <p><a target="_blank" href="http://sql3.hostinger.vn/phpmyadmin/index.php?db=u661562744_cms">PHPmyAdmin</a></p>
         <!-- general form elements -->
         <div class="box box-info">
             <div class="box-header with-border">

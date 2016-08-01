@@ -385,8 +385,45 @@ class MPost extends Base_Model {
     public function adjustCountComments($postId, $operation) {
         if($operation == '+' || $operation == '-' || $operation == '*' || $operation == '/') {
             $this->db->query("update posts set p_comment_count = "
-                    . "p_comment_count $operation 1 where p_id = $postId");
+                    . "(p_comment_count $operation 1) where p_id = $postId");
         }
+    }
+    
+    public function getSuggestForPost($post, $limit) {
+        // GET list term id (categories and tags)
+        $terms = array_merge($post->getCategories(), $post->getTags());
+        $totalTerm = count($terms);
+        $termIds = "";
+        for($i = 0; $i < $totalTerm; $i++) {
+            if($i == ($totalTerm - 1)) {
+                $termIds .= $terms[$i]->getId();
+                break;
+            }
+            $termIds .= $terms[$i]->getId() . ', ';
+        }
+        
+        $this->db->query("SELECT @min := MIN(p_id), @max := MAX(p_id) FROM posts");
+        $rs = $this->db->query("
+                SELECT DISTINCT p.*
+                    FROM posts p 
+                    JOIN term_relationships tr on p.p_id = tr.tr_object_id
+                    JOIN term_taxonomy tt on tt.tt_id = tr.tr_term_taxonomy_id 
+                    JOIN ( SELECT p_id FROM
+                             ( SELECT p_id
+                                 FROM ( SELECT @min + (@max - @min + 1 - 5) * RAND() AS start FROM DUAL ) AS init
+                                 JOIN posts y
+                                 WHERE    y.p_id > init.start
+                                 ORDER BY y.p_id
+                                 LIMIT 50
+                             ) z ORDER BY RAND()
+                            LIMIT $limit
+                          ) r ON p.p_id = r.p_id where tt.tt_term_id in($termIds) and p.p_id != {$post->getId()}
+                ")->result_array();
+        $posts = array();
+        foreach($rs as $item) {
+            $posts[] = $this->createAPost($item, FALSE, FALSE);
+        }
+        return $posts;
     }
 
 }

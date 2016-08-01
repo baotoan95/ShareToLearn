@@ -2550,7 +2550,7 @@ textarea.form-control {
     margin: 0 0 20px 0;
     position: relative;
     width: 200px;
-    height: 302px;
+    height: 200px;
 }
 
 .post-block-3 .post-item .image img {
@@ -2855,7 +2855,7 @@ textarea.form-control {
 }
 
 .post-1 .title {
-    padding: 0px 0 20px 0;
+    padding: 0px 0 0px 0;
 }
 
 .post-1 .title h2 {
@@ -3362,7 +3362,6 @@ textarea.form-control {
 
 .post-1 .post ul {
     font-size: 14px;
-    font-weight: 600;
     line-height: 26px;
     list-style: none;
     padding: 0;
@@ -3418,7 +3417,6 @@ textarea.form-control {
 .post ol {
     padding: 0 0 0 20px;
     font-size: 14px;
-    font-weight: 600;
     line-height: 26px;
     margin: 0 0 25px 0;
 }
@@ -3479,7 +3477,7 @@ textarea.form-control {
 
 .about-author {
     width: 640px;
-    margin: 0 auto 100px auto;
+    margin: 0 auto 50px auto;
 }
 
 .about-author .title-default {

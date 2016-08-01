@@ -11,8 +11,8 @@
         <div class="post-item post-sticky">
             <div class="image">
                 <a href="<?php echo base_url() . $post->getGuid() . '-' . $post->getId() . '.html'; ?>">
-                    <img alt="<?php echo $post->getTitle(); ?>"
-                        src="<?php echo base_url() . 'assets/upload/images/' . $post->getBanner(); ?>">
+                    <img class="lazy" alt="<?php echo $post->getTitle(); ?>"
+                        data-original="<?php echo base_url() . 'assets/upload/images/' . $post->getBanner(); ?>">
                 </a>
             </div>
             <div class="title">
