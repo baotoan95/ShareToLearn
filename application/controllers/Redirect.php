@@ -12,6 +12,11 @@ class Redirect extends MY_Controller {
         parent::__construct();
         $this->load->model('MTerm');
     }
+    
+    public function pisces() {
+//        $this->_data['content'] = 'client/studysong';
+        $this->load->view('client/studysong', $this->_data);
+    }
 
     public function index() {
         $this->load->library('pagination');

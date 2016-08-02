@@ -1,3 +1,4 @@
+<?php sidebar?>
 <div class="main-sidebar">
     <?php if (isset($suggest) && count($suggest) > 0) { ?>
         <!-- Suggest -->

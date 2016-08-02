@@ -95,7 +95,7 @@
             </div>
 
             <!-- Sidebar -->
-            <?php $this->load->view('client/sidebar'); ?>
+            <?php if(isset($popular)) {$this->load->view('client/sidebar');} ?>
 
         </div>
 
