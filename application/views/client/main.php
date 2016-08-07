@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
     <head>
         <title><?php echo isset($title) ? $title : "BTIT95 - Share To Learn"; ?></title>
-        <link rel="alternate" href="<?php echo base_url(); ?>" hreflang="vi"/>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="alternate" href="<?php echo base_url(); ?>" hreflang="vi-VN"/>
         <meta charset="utf-8"/>
+        <meta http-equiv="content-language" content="vi"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="<?php echo isset($post) ? substr($post->getExcerpt(), 0, 200) : "BTIT95 - Share To Learn"; ?>"/>
@@ -95,7 +95,7 @@
             </div>
 
             <!-- Sidebar -->
-            <?php if(isset($popular)) {$this->load->view('client/sidebar');} ?>
+            <?php $this->load->view('client/sidebar'); ?>
 
         </div>
 

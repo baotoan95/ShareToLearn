@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/controllers/Redirect.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/client/single.php</file>
             <file>file:/D:/xampp/htdocs/ShareToLearn/assets/client/css/goliath.css</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/admin/posts.php</file>
-            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/client/pisces.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/client/studysong.php</file>
+            <file>file:/D:/xampp/htdocs/ShareToLearn/application/views/client/main.php</file>
         </group>
     </open-files>
 </project-private>

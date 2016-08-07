@@ -93,11 +93,11 @@
                 <div class="items">
 
                     <div class="post-1">
-                        <div class="post" style="width: 60% !important; float: left;">
+                        <div class="player_container" style="width: 60% !important; float: left;">
                             <video id="youtube1" controls width="100%" height="360" controls>
                                 <source src="https://www.youtube.com/watch?v=1QNy-_hGSxA" type="video/youtube" >
                             </video>
-                            <span id="crrTime"></span>
+
                             <div class="player_control">
                                 <button id="btnPlay">Play</button>
                                 <progress id="progressbar" max="100" value="0" class="html5">
@@ -106,149 +106,252 @@
                                         <span style="width: 80%">80%</span>
                                     </div>
                                 </progress>
+                                <div>
+                                    <span id="crrTime"></span>
 
-                                <button id="mute">Mute</button>
-                                <input id="volume" type="range" name="volume" min="0" max="100" value="100">
+                                    <input id="volume" type="range" name="volume" min="0" max="100" value="100">
+                                    <button id="mute">Mute</button>
+                                </div>
                             </div>
+
                         </div>
-                        <div style="width: 38%; float: left; margin-left: 10px;" id="pisces">
-                            <span class="cue" data-start="1.3">
+                        <div id="bilingual">
+                            <span id="cue0" data-start="1.5">
                                 We are the one
                             </span>
-                            <span class="cue" data-start="3.0">
+                            <span id="cue1" data-start="3.2">
                                 Who start with a program
                             </span>
-                            <span class="cue" data-start="6.8">
+                            <span id="cue2" data-start="6.8">
                                 That say "Hello World"
                             </span>
-                            <span class="cue" data-start="9.6">
+                            <span id="cue3" data-start="9.6">
                                 And we never stay
                             </span>
-                            <span class="cue" data-start="12.5">
-                                We put a wrong condition
+                            <span id="cue4" data-start="12.5">
+                                We put a wrong condition in an if else statement but compile it and run it anyway
                             </span>
+                            <span id="cue5" data-start="23.8">
+                                Our only goal is to make Team leaders dream come true;
+                            </span>
+                            <span id="cue6" data-start="29">
+                                So we copy our code from Stackoverflow
+                            </span>
+                            <span id="cue7" data-start="34.5">
+                                Our life is stuck in an infinete for loop till our kingdom come
+                            </span>
+                            <span id="cue8" data-start="42.5">
+                                Till our kingdom come
+                            </span>
+                            <span id="cue9" data-start="45.5">
+                                If you see someone with alonely life
+                            </span>
+                            <span id="cue10" data-start="50.5">
+                                He is an Engineer
+                            </span>
+                            <span id="cue11" data-start="53.2">
+                                A Software Engineer
+                            </span>
+                            <span id="cue12" data-start="56">
+                                Google infosys and intel inside
+                            </span>
+                            <span id="cue13" data-start="62">
+                                Are our dream companies
+                            </span>
+                            <span id="cue14" data-start="66.5">
+                                System dot out dot print
+                            </span>
+                            <span id="cue15" data-start="69.3">
+                                My life sucks so bad
+                            </span>
+                            <span id="cue16" data-start="72">
+                                Give me a header file
+                            </span>
+                            <span id="cue17" data-start="74.5">
+                                Import java dot life
+                            </span>
+                            <span id="cue18" data-start="77.2">
+                                Your eyes they shine so bright
+                            </span>
+                            <span id="cue19" data-start="80">
+                                I think you've got a life
+                            </span>
+                            <span id="cue20" data-start="82.5">
+                                If you want it to go
+                            </span>
+                            <span id="cue21" data-start="85">
+                                Come with us Onboard
+                            </span>
+                            
                         </div>
-                    </div>
 
+                        <script type="text/javascript">
+                            new MediaElement('youtube1', {
+                                success: function (media) {
+                                    var duration = 0.0001;
+                                    var volume = 100;
+                                    var adjustSeek = false;
+                                    var progressWidth = $('#progressbar').width();
+                                    var bilingualBoxs = $("span[id^='cue']");
+                                    var scrolling = false;
 
-
-                    <script type="text/javascript">
-                        var duration = 0.0001;
-                        var volume = 100;
-                        var adjustSeek = false;
-                        var progressWidth = $('#progressbar').width();
-
-                        new MediaElement('youtube1', {
-                            success: function (media, domNode) {
-                                var items = $('.cue');
-
-                                for (var i = 0; i < items.length; i++) {
-                                    items[i].addEventListener('click', function () {
-                                        media.setCurrentTime(this.getAttribute('data-start'));
-                                    });
-                                }
-
-                                media.addEventListener('timeupdate', function () {
-                                    if (duration === 0.0001) {
-                                        duration = media.duration;
+                                    for (var i = 0; i < bilingualBoxs.length; i++) {
+                                        $(bilingualBoxs[i]).click(function () {
+                                            media.setCurrentTime(this.getAttribute('data-start'));
+                                        });
                                     }
-                                    $('#progressbar').val((media.currentTime * 100) / duration);
-                                    $('#crrTime').text(media.currentTime);
-                                    // access HTML5-like properties
-                                    for (var i = 0; i < items.length; i++) {
-                                        if (parseFloat(items[i].getAttribute('data-start')) <= Math.round(media.currentTime)) {
-                                            $('.cue').css('background-color', 'white');
-                                            items[i].style.background = 'red';
+
+                                    function setTime(value) {
+                                        var seconds = Math.round(value % 60);
+                                        var minutes = Math.round(value / 60);
+
+                                        var relSeconds = Math.round(duration % 60);
+                                        var relMinutes = Math.round(duration / 60);
+                                        $('#crrTime').text(minutes + ":" + seconds + " | " + relMinutes + ":" + relSeconds);
+                                    }
+                                    
+                                    function calTotalHeight(n) {
+                                        var total = 0;
+                                        for (var i = 0; i < n; i++) {
+                                            total += $(bilingualBoxs[i]).height();
+                                        }
+                                        return total;
+                                    }
+
+                                    // find bilingual box and highlight it
+                                    function findPiscesBox(value) {
+                                        for (var i = 0; i < bilingualBoxs.length; i++) {
+                                            var timeBox = Math.round(bilingualBoxs[i].getAttribute('data-start'));
+                                            var curTime = Math.round(value);
+                                            if (timeBox >= curTime && curTime >= (timeBox - 0.1)) {
+                                                if (!media.paused && !scrolling) {
+                                                    if (i > 0) {
+                                                        var containerHeight = $('#bilingual').height();
+                                                        var crrPositionTop = $("#cue" + i).position().top;
+                                                        var nextHeight = $("#cue" + (i + 1)).height();
+                                                        console.log(crrPositionTop + " " + $("#cue" + i).height() + " " + nextHeight);
+                                                        if((crrPositionTop + $("#cue" + i).height() + nextHeight) > containerHeight) {
+                                                            console.log('scroll');
+                                                            $("#bilingual").animate({
+                                                                scrollTop: calTotalHeight(i) + (nextHeight)
+                                                            }, 300);
+                                                        }
+                                                    }
+                                                }
+                                                bilingualBoxs.css('background', 'white');
+                                                $("#cue" + i).css('background', 'red');
+                                                return;
+                                            }
                                         }
                                     }
-                                }, false);
 
-                                document.getElementById('btnPlay').addEventListener('click', function () {
-                                    if (media.paused) {
-                                        media.play();
-                                    } else {
-                                        media.pause();
-                                    }
-                                });
+                                    document.getElementById('bilingual').addEventListener('scroll', function () {
+                                        scrolling = true;
+                                        clearTimeout($.data(this, "scrollCheck"));
+                                        $.data(this, "scrollCheck", setTimeout(function () {
+                                            scrolling = false;
+                                        }, 300));
+                                    });
 
-                                document.getElementById('volume').addEventListener('mousemove', function () {
-                                    media.setVolume(this.value / 100);
-                                });
+                                    media.addEventListener('timeupdate', function () {
+                                        if (duration === 0.0001) {
+                                            duration = media.duration;
+                                        }
+                                        $('#progressbar').val(Math.round((media.currentTime * 100) / duration));
+                                        setTime(media.currentTime);
+                                        findPiscesBox(media.currentTime);
+                                    }, false);
 
-                                document.getElementById('progressbar').addEventListener('mousedown', function (ev) {
-                                    adjustSeek = true;
-                                    updateProgress(ev);
-                                });
+                                    document.getElementById('btnPlay').addEventListener('click', function () {
+                                        if (media.paused) {
+                                            media.play();
+                                            this.innerHTML = 'Pause';
+                                        } else {
+                                            media.pause();
+                                            this.innerHTML = 'Play';
+                                        }
+                                    });
 
-                                document.getElementById('progressbar').addEventListener('mouseup', function () {
-                                    adjustSeek = false;
-                                });
-                                document.getElementById('progressbar').addEventListener('mouseout', function () {
-                                    adjustSeek = false;
-                                });
+                                    document.getElementById('volume').addEventListener('mousemove', function () {
+                                        media.setVolume(this.value / 100);
+                                    });
 
-                                document.getElementById('progressbar').addEventListener('mousemove', function (ev) {
-                                    
-                                    if (adjustSeek) {
+                                    document.getElementById('progressbar').addEventListener('mousedown', function (ev) {
+                                        adjustSeek = true;
                                         updateProgress(ev);
-                                    }
-                                });
+                                    });
 
-                                function updateProgress(mouseEvent) {
-                                    var offset = $('#progressbar').offset();
-                                    x = mouseEvent.clientX - offset.left;
-                                    media.setCurrentTime(duration / 100 * ((x * 100) / progressWidth));
-                                    $('#progressbar').val(x * 100 / progressWidth);
+                                    document.getElementById('progressbar').addEventListener('mouseup', function (ev) {
+                                        adjustSeek = false;
+                                        findPiscesBox(media.currentTime);
+                                    });
+                                    document.getElementById('progressbar').addEventListener('mouseout', function (ev) {
+                                        adjustSeek = false;
+                                        findPiscesBox(media.currentTime);
+                                    });
+
+                                    document.getElementById('progressbar').addEventListener('mousemove', function (ev) {
+                                        if (adjustSeek) {
+                                            updateProgress(ev);
+                                        }
+                                    });
+
+                                    function updateProgress(mouseEvent) {
+                                        var offset = $('#progressbar').offset();
+                                        x = mouseEvent.clientX - offset.left;
+                                        media.setCurrentTime(duration / 100 * ((x * 100) / progressWidth));
+                                        $('#progressbar').val(x * 100 / progressWidth);
+                                        findPiscesBox(media.currentTime);
+                                    }
+
+                                    document.getElementById('mute').addEventListener('click', function () {
+                                        if (media.muted === false) {
+                                            media.setMuted(true);
+                                            volume = document.getElementById('volume').value;
+                                            document.getElementById('volume').value = 0;
+                                        } else {
+                                            media.setMuted(false);
+                                            document.getElementById('volume').value = volume;
+                                        }
+                                    });
                                 }
+                            });
+                        </script>
 
-                                document.getElementById('mute').addEventListener('click', function () {
-                                    if (media.muted === false) {
-                                        media.setMuted(true);
-                                        volume = document.getElementById('volume').value;
-                                        document.getElementById('volume').value = 0;
-                                    } else {
-                                        media.setMuted(false);
-                                        document.getElementById('volume').value = volume;
-                                    }
-                                });
-                            }
-                        });
-                    </script>
-
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Footer -->
-        <?php $this->load->view('client/footer'); ?>
+            <!-- Footer -->
+            <?php $this->load->view('client/footer'); ?>
 
-        <!-- Copyright -->
-        <?php $this->load->view('client/copyright'); ?>
+            <!-- Copyright -->
+            <?php $this->load->view('client/copyright'); ?>
 
-        <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+            <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
 
-        <script src="<?php echo base_url() . 'assets/client/js/bootstrap.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/bootstrap-hover-dropdown.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.particleground.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.cycle2.min.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.cycle2.scrollVert.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.cycle2.swipe.min.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.hoverintent.min.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.inview.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.ui.core.min.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.ui.effect.min.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.ui.effect-size.min.js'; ?>"></script>
-        <script src="<?php echo base_url() . 'assets/client/js/jquery.ui.effect-slide.min.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/bootstrap.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/bootstrap-hover-dropdown.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.particleground.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.cycle2.min.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.cycle2.scrollVert.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.cycle2.swipe.min.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.hoverintent.min.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.inview.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.ui.core.min.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.ui.effect.min.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.ui.effect-size.min.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/client/js/jquery.ui.effect-slide.min.js'; ?>"></script>
 
-        <script src="<?php echo base_url() . 'assets/js/jquery.lazyload.js'; ?>"></script>
-        <script type="text/javascript">
-                        $(document).ready(function () {
-                            $("img.lazy").lazyload({
-                                effect: "fadeIn"
-                            });
-                        });
-        </script>
-        <script src="<?php echo base_url() . 'assets/client/js/goliath.js'; ?>"></script>
+            <script src="<?php echo base_url() . 'assets/js/jquery.lazyload.js'; ?>"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("img.lazy").lazyload({
+                        effect: "fadeIn"
+                    });
+                });
+            </script>
+            <script src="<?php echo base_url() . 'assets/client/js/goliath.js'; ?>"></script>
     </body>
 </html>
