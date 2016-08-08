@@ -172,6 +172,9 @@
                             </span>
                             <span id="cue18" data-start="77.2">
                                 Your eyes they shine so bright
+                                Your eyes they shine so bright
+                                Your eyes they shine so bright
+                                Your eyes they shine so bright
                             </span>
                             <span id="cue19" data-start="80">
                                 I think you've got a life
@@ -212,8 +215,8 @@
                                     
                                     function calTotalHeight(n) {
                                         var total = 0;
-                                        for (var i = 0; i < n; i++) {
-                                            total += $(bilingualBoxs[i]).height();
+                                        for (var i = 0; i <= n + 1; i++) {
+                                            total += $(bilingualBoxs[i]).outerHeight();
                                         }
                                         return total;
                                     }
@@ -226,14 +229,14 @@
                                             if (timeBox >= curTime && curTime >= (timeBox - 0.1)) {
                                                 if (!media.paused && !scrolling) {
                                                     if (i > 0) {
-                                                        var containerHeight = $('#bilingual').height();
+                                                        var containerHeight = $('#bilingual').outerHeight();
                                                         var crrPositionTop = $("#cue" + i).position().top;
-                                                        var nextHeight = $("#cue" + (i + 1)).height();
-                                                        console.log(crrPositionTop + " " + $("#cue" + i).height() + " " + nextHeight);
-                                                        if((crrPositionTop + $("#cue" + i).height() + nextHeight) > containerHeight) {
-                                                            console.log('scroll');
+                                                        var nextHeight = $("#cue" + (i + 1)).outerHeight();
+                                                        if((crrPositionTop + $('#cue' + i).outerHeight() + nextHeight) > containerHeight) {
+                                                            console.log(i);
+                                                            console.log(calTotalHeight(i));
                                                             $("#bilingual").animate({
-                                                                scrollTop: calTotalHeight(i) + (nextHeight)
+                                                                scrollTop: calTotalHeight(i) - 360
                                                             }, 300);
                                                         }
                                                     }
