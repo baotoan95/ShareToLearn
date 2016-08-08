@@ -93,8 +93,8 @@
                 <div class="items">
 
                     <div class="post-1">
-                        <div class="player_container" style="width: 60% !important; float: left;">
-                            <video id="youtube1" controls width="100%" height="360" controls>
+                        <div class="player_container">
+                            <video id="youtube1" controls width="100%" height="360px" controls>
                                 <source src="https://www.youtube.com/watch?v=1QNy-_hGSxA" type="video/youtube" >
                             </video>
 
@@ -103,7 +103,7 @@
                                 <progress id="progressbar" max="100" value="0" class="html5">
                                     <!-- Browsers that support HTML5 progress element will ignore the html inside `progress` element. Whereas older browsers will ignore the `progress` element and instead render the html inside it. -->
                                     <div class="progress-bar">
-                                        <span style="width: 80%">80%</span>
+                                        <span style="width: 0%">0%</span>
                                     </div>
                                 </progress>
                                 <div>
@@ -118,6 +118,8 @@
                         <div id="bilingual">
                             <span id="cue0" data-start="1.5">
                                 We are the one
+                                <br/>
+                                <small>Chúng tôi là một</small>
                             </span>
                             <span id="cue1" data-start="3.2">
                                 Who start with a program
@@ -144,7 +146,7 @@
                                 Till our kingdom come
                             </span>
                             <span id="cue9" data-start="45.5">
-                                If you see someone with alonely life
+                                If you see someone with a lonely life
                             </span>
                             <span id="cue10" data-start="50.5">
                                 He is an Engineer
@@ -172,9 +174,6 @@
                             </span>
                             <span id="cue18" data-start="77.2">
                                 Your eyes they shine so bright
-                                Your eyes they shine so bright
-                                Your eyes they shine so bright
-                                Your eyes they shine so bright
                             </span>
                             <span id="cue19" data-start="80">
                                 I think you've got a life
@@ -194,7 +193,6 @@
                                     var duration = 0.0001;
                                     var volume = 100;
                                     var adjustSeek = false;
-                                    var progressWidth = $('#progressbar').width();
                                     var bilingualBoxs = $("span[id^='cue']");
                                     var scrolling = false;
 
@@ -205,11 +203,11 @@
                                     }
 
                                     function setTime(value) {
-                                        var seconds = Math.round(value % 60);
-                                        var minutes = Math.round(value / 60);
-
+                                        var seconds = Math.round(value % 59);
+                                        var minutes = Math.floor(value / 59);
+                                        
                                         var relSeconds = Math.round(duration % 60);
-                                        var relMinutes = Math.round(duration / 60);
+                                        var relMinutes = Math.floor(duration / 60);
                                         $('#crrTime').text(minutes + ":" + seconds + " | " + relMinutes + ":" + relSeconds);
                                     }
                                     
@@ -233,16 +231,14 @@
                                                         var crrPositionTop = $("#cue" + i).position().top;
                                                         var nextHeight = $("#cue" + (i + 1)).outerHeight();
                                                         if((crrPositionTop + $('#cue' + i).outerHeight() + nextHeight) > containerHeight) {
-                                                            console.log(i);
-                                                            console.log(calTotalHeight(i));
                                                             $("#bilingual").animate({
-                                                                scrollTop: calTotalHeight(i) - 360
+                                                                scrollTop: calTotalHeight(i) - containerHeight
                                                             }, 300);
                                                         }
                                                     }
                                                 }
-                                                bilingualBoxs.css('background', 'white');
-                                                $("#cue" + i).css('background', 'red');
+                                                bilingualBoxs.attr('class', '');
+                                                $("#cue" + i).attr('class', 'active');
                                                 return;
                                             }
                                         }
@@ -257,6 +253,11 @@
                                     });
 
                                     media.addEventListener('timeupdate', function () {
+                                        if(media.paused) {
+                                            $('#btnPlay').text('Play');
+                                        } else {
+                                            $('#btnPlay').text('Pause');
+                                        }
                                         if (duration === 0.0001) {
                                             duration = media.duration;
                                         }
@@ -300,6 +301,7 @@
                                     });
 
                                     function updateProgress(mouseEvent) {
+                                        var progressWidth = $('#progressbar').outerWidth();
                                         var offset = $('#progressbar').offset();
                                         x = mouseEvent.clientX - offset.left;
                                         media.setCurrentTime(duration / 100 * ((x * 100) / progressWidth));
