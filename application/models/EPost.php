@@ -26,11 +26,10 @@ class EPost implements JsonSerializable {
     private $parent;
     private $categories = array();
     private $tags = array();
+    private $youtube;
+    private $cue;
 
-    public function __construct($id = 0, $title = '', $content = '', $author = 0, 
-            $views = 0, $comments = 0, $excerpt = '', $catalogue = '', 
-            $status = '', $published = '', $guid = '', $cmt_allow = 0, $order = 0, 
-            $type = '', $banner = '', $password = '', $parent = 0) {
+    public function __construct($id = 0, $title = '', $content = '', $author = 0, $views = 0, $comments = 0, $excerpt = '', $catalogue = '', $status = '', $published = '', $guid = '', $cmt_allow = 0, $order = 0, $type = '', $banner = '', $password = '', $parent = 0, $youtube = '', $cue = '') {
         $this->id = $id;
         $this->title = $title;
         $this->content = $content;
@@ -48,6 +47,8 @@ class EPost implements JsonSerializable {
         $this->banner = $banner;
         $this->password = $password;
         $this->parent = $parent;
+        $this->youtube = $youtube;
+        $this->cue = $cue;
     }
 
     function getId() {
@@ -201,7 +202,23 @@ class EPost implements JsonSerializable {
     public function setTags($tags) {
         $this->tags = $tags;
     }
-    
+
+    public function getYoutube() {
+        return $this->youtube;
+    }
+
+    public function getCue() {
+        return $this->cue;
+    }
+
+    public function setYoutube($youtube) {
+        $this->youtube = $youtube;
+    }
+
+    public function setCue($cue) {
+        $this->cue = $cue;
+    }
+
     public function jsonSerialize() {
         return array(
             "id" => $this->getId(),

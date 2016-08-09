@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2016-07-26 00:10:38
+Date: 2016-08-09 22:23:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,11 +36,14 @@ CREATE TABLE `comments` (
   KEY `cmt_post_id` (`cmt_post_id`),
   KEY `cmt_user_id` (`cmt_user`),
   KEY `cmt_type` (`cmt_type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
+INSERT INTO `comments` VALUES ('1', '1', 'fsdfsd', null, null, '0000-00-00 00:00:00', 'approved', '', null, '', null, null);
+INSERT INTO `comments` VALUES ('2', '1', 'Admin', 'support@admin.com', null, '2016-07-25 20:33:03', 'approved', '', '1', 'fsdfsdf', null, '');
+INSERT INTO `comments` VALUES ('3', '1', 'Admin', 'support@admin.com', null, '2016-07-25 20:41:08', 'approved', '', '1', 'ffsdfsdfdf', null, '');
 
 -- ----------------------------
 -- Table structure for menu
@@ -114,14 +117,17 @@ CREATE TABLE `posts` (
   `p_banner` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `p_password` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `p_parent` int(11) DEFAULT NULL,
+  `p_youtube_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `p_cue` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`p_id`),
   UNIQUE KEY `p_guid` (`p_guid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of posts
 -- ----------------------------
-INSERT INTO `posts` VALUES ('1', 'abc', 'abc', '1', '7', '0', 'abc', null, 'public', '2016-07-25 16:23:29', 'abc', '1', '0', 'post', '13265961_10157146785975105_5891515887297551622_n1.jpg', '', '0');
+INSERT INTO `posts` VALUES ('1', 'abc', 'abc', '1', '15', '0', 'abc', null, 'public', '2016-07-27 12:30:26', 'abc', '1', '0', 'post', '13265961_10157146785975105_5891515887297551622_n1.jpg', 'abc', '0', null, null);
+INSERT INTO `posts` VALUES ('2', 'Dev song', '<p>Good song for dev</p>', '1', '8', '0', 'Good song for dev', null, 'public', '2016-08-09 16:30:55', 'dev-song', '1', '0', 'post', 'dsfsdfsdf1470666790.jpg', '', '0', 'https://www.youtube.com/watch?v=1QNy-_hGSxA', '[{\"time\":\"1.5\",\"en\":\"We are the one\",\"vi\":\"Chúng tôi là một\"}, {\"time\":\"3.2\",\"en\":\"Who start with a program\",\"vi\":\"Chúng tôi bắt đầu với một chương trình\"}, {\"time\":\"6.8\",\"en\":\"That say Hello World\",\"vi\":\"Chương trình \\\"Hello World\\\"\"},{\"time\":\"9.6\",\"en\":\"And we never stay\",\"vi\":\"Và chúng tôi chưa bao giờ nghỉ\"}, {\"time\":\"12.5\",\"en\":\"We put a wrong condition in an if else statement but compile it and run it anyway\", \"vi\":\"Chúng tôi đặt một điều kiện sai trong câu lệnh if else nhưng biên dịch và chạy nó bằng mọi cách\"}, {\"time\":\"23.8\",\"en\":\"Our only goal is to make Team leaders dream come true\", \"vi\":\"Mục tiêu duy nhất của chúng tôi là làm cho giấc mơ làm trưởng nhóm trở thành sự thật\"}, {\"time\":\"29\",\"en\":\"So we copy our code from Stackoverflow\",\"vi\":\"Chúng tôi copy mã từ Stackoverflow\"}, {\"time\":\"34.5\",\"en\":\"Our life is stuck in an infinete for loop till our kingdom come\",\"vi\":\"Cuộc sống của chúng tôi đang bị mắc kẹt trong một vòng lặp vô hạn cho đến khi thời cơ đến\"}, {\"time\":\"42.5\",\"en\":\"Till our kingdom come\",\"vi\":\"Cho đến khi thời cơ của chúng tôi đến\"},\r\n{\"time\":\"45.5\",\"en\":\"If you see someone with alonely life\",\"vi\":\"Nếu bạn thấy ai đó còn cô đơn trong cuộc sống\"},{\"time\":\"50.5\",\"en\":\"He is an Engineer\",\"vi\":\"Anh ấy chính là một kĩ sư\"},{\"time\":\"53.2\",\"en\":\"A Software Engineer\",\"vi\":\"Một kĩ sư phần mềm\"},\r\n{\"time\":\"56\",\"en\":\"Google infosys and intel inside\",\"vi\":\"Được làm việc trong Google và Intel\"},{\"time\":\"62\",\"en\":\"Are our dream companies\",\"vi\":\"Là những công ty mà chúng tôi mơ ước\"},\r\n{\"time\":\"66.5\",\"en\":\"System dot out dot print\",\"vi\":\"System.out.print\"},{\"time\":\"69.3\",\"en\":\"My life sucks so bad\",\"vi\":\"Cuộc sống của tôi rất nhàm chán\"},{\"time\":\"72\",\"en\":\"Give me a header file\",\"vi\":\"Cho tôi một tập tin\"},\r\n{\"time\":\"74.5\",\"en\":\"Import java dot life\",\"vi\":\"Nhập java.life\"},{\"time\":\"77.2\",\"en\":\"Your eyes they shine so bright\",\"vi\":\"Đôi mắt của bạn sáng quá\"},{\"time\":\"80\",\"en\":\"I think you\'ve got a life\",\"vi\":\"Tôi nghĩ rằng bạn đã có một cuộc sống tốt đẹp\"},\r\n{\"time\":\"82.5\",\"en\":\"If you want it to go\",\"vi\":\"Nếu bạn muốn có nó\"},{\"time\":\"85\",\"en\":\"Come with us Onboard\",\"vi\":\"Hay đến với chúng tôi\"}]');
 
 -- ----------------------------
 -- Table structure for statistic
@@ -138,6 +144,15 @@ CREATE TABLE `statistic` (
 -- ----------------------------
 INSERT INTO `statistic` VALUES ('2016-07-22', '4453');
 INSERT INTO `statistic` VALUES ('2016-07-23', '23');
+INSERT INTO `statistic` VALUES ('2016-07-26', '4');
+INSERT INTO `statistic` VALUES ('2016-07-27', '2');
+INSERT INTO `statistic` VALUES ('2016-08-01', '3');
+INSERT INTO `statistic` VALUES ('2016-08-02', '4');
+INSERT INTO `statistic` VALUES ('2016-08-03', '2');
+INSERT INTO `statistic` VALUES ('2016-08-05', '2');
+INSERT INTO `statistic` VALUES ('2016-08-07', '3');
+INSERT INTO `statistic` VALUES ('2016-08-08', '12');
+INSERT INTO `statistic` VALUES ('2016-08-09', '5');
 
 -- ----------------------------
 -- Table structure for terms
@@ -149,7 +164,7 @@ CREATE TABLE `terms` (
   `t_slug` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `t_group` int(11) NOT NULL,
   PRIMARY KEY (`t_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=255 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=260 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of terms
@@ -174,6 +189,10 @@ INSERT INTO `terms` VALUES ('251', 'Tào lao', 'tao-lao', '0');
 INSERT INTO `terms` VALUES ('252', 'ádfsdf', 'sdfsdfsdf', '0');
 INSERT INTO `terms` VALUES ('253', 'sdfsdf', 'sdfsdf', '0');
 INSERT INTO `terms` VALUES ('254', 'nhạc anh', 'nhac-anh', '0');
+INSERT INTO `terms` VALUES ('256', 'Hello', 'Hello', '0');
+INSERT INTO `terms` VALUES ('257', 'Ngô bảo toàn', 'Ngô bảo toàn', '0');
+INSERT INTO `terms` VALUES ('258', 'Lương Đan Quỳnh', 'luong-dan-quynh', '0');
+INSERT INTO `terms` VALUES ('259', 'Tiếng Anh', 'tieng-anh', '0');
 
 -- ----------------------------
 -- Table structure for term_relationships
@@ -185,7 +204,7 @@ CREATE TABLE `term_relationships` (
   `tr_term_taxonomy_id` int(11) NOT NULL,
   `tr_term_order` int(11) NOT NULL,
   PRIMARY KEY (`tr_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=443 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=522 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of term_relationships
@@ -205,7 +224,8 @@ INSERT INTO `term_relationships` VALUES ('401', '131', '191', '0');
 INSERT INTO `term_relationships` VALUES ('430', '244', '190', '0');
 INSERT INTO `term_relationships` VALUES ('433', '140', '222', '0');
 INSERT INTO `term_relationships` VALUES ('434', '140', '190', '0');
-INSERT INTO `term_relationships` VALUES ('442', '1', '190', '0');
+INSERT INTO `term_relationships` VALUES ('519', '1', '190', '0');
+INSERT INTO `term_relationships` VALUES ('521', '2', '231', '0');
 
 -- ----------------------------
 -- Table structure for term_taxonomy
@@ -219,7 +239,7 @@ CREATE TABLE `term_taxonomy` (
   `tt_parent` int(11) NOT NULL,
   `tt_count` int(11) NOT NULL,
   PRIMARY KEY (`tt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=228 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=232 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of term_taxonomy
@@ -244,6 +264,10 @@ INSERT INTO `term_taxonomy` VALUES ('224', '251', 'category', 'abc', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('225', '252', 'category', 'adsfsdf', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('226', '253', 'category', 'sdfsdf', '0', '0');
 INSERT INTO `term_taxonomy` VALUES ('227', '254', 'tag', 'nhạc anh', '0', '0');
+INSERT INTO `term_taxonomy` VALUES ('228', '256', 'category', 'nothing', '0', '0');
+INSERT INTO `term_taxonomy` VALUES ('229', '257', 'category', 'nothing', '0', '0');
+INSERT INTO `term_taxonomy` VALUES ('230', '258', 'category', 'nothing', '0', '0');
+INSERT INTO `term_taxonomy` VALUES ('231', '259', 'category', 'nothing', '216', '0');
 
 -- ----------------------------
 -- Table structure for users
@@ -292,4 +316,4 @@ CREATE TABLE `user_online` (
 -- ----------------------------
 -- Records of user_online
 -- ----------------------------
-INSERT INTO `user_online` VALUES ('::1', '1469465947');
+INSERT INTO `user_online` VALUES ('::1', '1470755606');

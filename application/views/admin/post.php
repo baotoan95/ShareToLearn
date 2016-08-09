@@ -105,6 +105,17 @@
                                   name="content" onkeypress="change()"><?php echo isset($post) ? $post->getContent() : set_value('content');
                         ?></textarea>
                     </div>
+                    <div class="form-group">
+                        <label>Youtube link</label>
+                        <input type="text" class="form-control" 
+                               value="<?php echo (isset($post)) ? $post->getYoutube() : "" ?>" name="youtube">
+                        <p class="help-block">Used to play video</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Cue</label>
+                        <textarea class="form-control" name="cue"><?php echo (isset($post)) ? $post->getCue() : "" ?></textarea>
+                        <p class="help-block">Used to play video with cues</p>
+                    </div>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div>
@@ -127,15 +138,15 @@
                                 ?>
                                 <option value="public"
                                 <?php
-                                        echo (isset($post) &&
-                                        $post->getStatus() == 'public') ? "selected='selected'" : ""
-                                        ?>>
+                                echo (isset($post) &&
+                                $post->getStatus() == 'public') ? "selected='selected'" : ""
+                                ?>>
                                     Public</option>
                                 <option value="draf"
-                                        <?php
-                                        echo (isset($post) &&
-                                        $post->getStatus() == 'draf') ? "selected='selected'" : ""
-                                        ?>>
+                                <?php
+                                echo (isset($post) &&
+                                $post->getStatus() == 'draf') ? "selected='selected'" : ""
+                                ?>>
                                     Draf</option>
                                 <option value="pending"
                                 <?php
@@ -143,7 +154,7 @@
                                 $post->getStatus() == 'pending') ? "selected='selected'" : ""
                                 ?>>
                                     Pending</option>
-<?php } ?>
+                            <?php } ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -162,15 +173,15 @@
                             ?>>
                                 Private</option>
                             <option value="protected"
-                         <?php
-                         echo (isset($post) &&
-                         $post->getStatus() == 'public' && strlen($post->getPassword()) > 0) ? "selected='selected'" : ""
-                         ?>>
+                            <?php
+                            echo (isset($post) &&
+                            $post->getStatus() == 'public' && strlen($post->getPassword()) > 0) ? "selected='selected'" : ""
+                            ?>>
                                 Protected</option>
                         </select>
                     </div>
                     <div class="form-group" id="password" style="display: 
-                            <?php echo (isset($post) && strlen($post->getPassword()) > 0) ? "block;" : "none;" ?>">
+                         <?php echo (isset($post) && strlen($post->getPassword()) > 0) ? "block;" : "none;" ?>">
                         <label>Password</label>
                         <input class="form-control" placeholder="Password" name="password" type="text"
                                value="<?php echo (isset($post) && strlen($post->getPassword()) > 0) ? $post->getPassword() : "" ?>">
@@ -178,10 +189,10 @@
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="comment_allowed"
-<?php
-echo (isset($post) &&
- $post->getCmt_allow() == TRUE) ? "checked='checked'" : !isset($post) ? "checked" : ""
-?>/>
+                            <?php
+                            echo (isset($post) &&
+                            $post->getCmt_allow() == TRUE) ? "checked='checked'" : !isset($post) ? "checked" : ""
+                            ?>/>
                             Allow comment
                         </label>
                     </div>
@@ -207,16 +218,16 @@ echo (isset($post) &&
                 </div><!-- /.box-body -->
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">
-            <?php
-            echo $action == 'update' ? "Update" : "ADD";
-            ?>
+                        <?php
+                        echo $action == 'update' ? "Update" : "ADD";
+                        ?>
                     </button>
                 </div>
             </div><!-- /.box -->
 
-<?php
-if (isset($post) ? $post->getType() == "post" : $type == "post") {
-    ?>
+            <?php
+            if (isset($post) ? $post->getType() == "post" : $type == "post") {
+                ?>
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
@@ -225,9 +236,9 @@ if (isset($post) ? $post->getType() == "post" : $type == "post") {
                     <!-- form start -->
                     <div class="box-body">
                         <div id="cate_container" class="form-group" style="max-height: 200px; overflow: auto;">
-    <?php
-    echo $categories;
-    ?>
+                            <?php
+                            echo $categories;
+                            ?>
                         </div>
                         <u id="add-cate" style="cursor: pointer;">ADD</u>
                     </div><!-- /.box-body -->
@@ -239,9 +250,9 @@ if (isset($post) ? $post->getType() == "post" : $type == "post") {
                             <div class="form-group">
                                 <select class="form-control" name="parent_cate">
                                     <option value="0">-- Parent Category --</option>
-    <?php
-    echo $categoriesParentBox;
-    ?>
+                                    <?php
+                                    echo $categoriesParentBox;
+                                    ?>
                                 </select>
                             </div>
                         </div><!-- /.box-body -->
@@ -390,9 +401,9 @@ if (isset($post) ? $post->getType() == "post" : $type == "post") {
                         });
                     </script>
                 </div><!-- /.box -->
-    <?php
-}
-?>
+                <?php
+            }
+            ?>
         </div>
         <script>
             tinymce.init({

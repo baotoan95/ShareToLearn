@@ -52,7 +52,9 @@ class MPost extends Base_Model {
             "p_banner" => $post->getBanner(),
             "p_password" => $post->getPassword(),
             "p_menu_order" => $post->getOrder(),
-            "p_parent" => $post->getParent()
+            "p_parent" => $post->getParent(),
+            "p_youtube_url" => $post->getYoutube(),
+            "p_cue" => $post->getCue()
         );
         // Avoid duplicate slug
         $data['p_guid'] = $post->getGuid() . $this->checkDuplicateGuid($post->getGuid());
@@ -135,6 +137,8 @@ class MPost extends Base_Model {
         $post->setBanner($postTemp['p_banner']);
         $post->setPassword($postTemp['p_password']);
         $post->setParent($postTemp['p_parent']);
+        $post->setYoutube($postTemp['p_youtube_url']);
+        $post->setCue($postTemp['p_cue']);
         
         if($post->getType() == "page") {
             return $post;
@@ -203,7 +207,9 @@ class MPost extends Base_Model {
             "p_banner" => $post->getBanner(),
             "p_password" => $post->getPassword(),
             "p_menu_order" => $post->getOrder(),
-            "p_parent" => $post->getParent()
+            "p_parent" => $post->getParent(),
+            "p_youtube_url" => $post->getYoutube(),
+            "p_cue" => $post->getCue()
         );
         $this->db->trans_start();
         $this->update($data);

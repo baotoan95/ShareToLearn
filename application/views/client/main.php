@@ -82,8 +82,10 @@
         <?php isset($nav) ? $this->load->view($nav) : ""; ?>
 
         <!-- Homepage content -->
+        <?php isset($cues) ? $this->load->view('client/bilingual') : ""; ?>
         <div class="container homepage-content">
-
+            
+            
             <div class="main-content-column-1">
 
                 <!-- Blog list 1 -->
@@ -100,16 +102,16 @@
         </div>
 
         <div class="container banner-728x90">
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!--<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
             <!-- ad_1 -->
-            <ins class="adsbygoogle"
+<!--            <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-5942999264053046"
                  data-ad-slot="8043674814"
                  data-ad-format="auto"></ins>
             <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            </script>-->
         </div>
 
         <!-- Footer -->

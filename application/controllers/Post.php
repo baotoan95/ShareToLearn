@@ -141,7 +141,9 @@ class Post extends CI_Controller {
         $post->setPassword($this->input->post('password'));
         $post->setParent(0);
         $post->setCategories($categories);
-        $post->setTags($tags);
+        $post->setYoutube($this->input->post('youtube'));
+        $post->setCue($this->input->post('cue'));
+        
         $post_id = $this->MPost->addPost($post);
         if ($post_id) {
             $this->session->set_flashdata("flash_message", "Added: " . $post->getTitle()
@@ -275,6 +277,8 @@ class Post extends CI_Controller {
         $post->setGuid($this->input->post('guid'));
         $post->setCmt_allow(empty($this->input->post('comment_allowed')) ? FALSE : TRUE);
         $post->setOrder(0);
+        $post->setYoutube($this->input->post('youtube'));
+        $post->setCue($this->input->post('cue'));
         $post->setType($this->input->post('type'));
         // When have request change avatar then update it
         if ($_FILES['avatar']['error'] == 0) {
@@ -298,9 +302,6 @@ class Post extends CI_Controller {
         }
         // set status for post
         $post->setStatus($this->input->post('status'));
-//        if ($this->input->post('status') == 'draf') {
-//            $post->setStatus($this->input->post('status'));
-//        }
         
         // Set password
         $visibility = $this->input->post('visibility');

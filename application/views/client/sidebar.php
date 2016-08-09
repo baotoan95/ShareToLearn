@@ -1,4 +1,3 @@
-<?php sidebar?>
 <div class="main-sidebar">
     <?php if (isset($suggest) && count($suggest) > 0) { ?>
         <!-- Suggest -->
@@ -116,9 +115,9 @@
         </div>
     </div>
 
-    <div class="banner-300x250">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <!-- ad_1 -->
+    <!--<div class="banner-300x250">-->
+<!--        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         ad_1 
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-5942999264053046"
@@ -126,8 +125,8 @@
              data-ad-format="auto"></ins>
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
-    </div>
+        </script>-->
+    <!--</div>-->
 
     <?php
     if (isset($post) && $post->getType() == 'post' && count($post->getCategories()) > 0) {

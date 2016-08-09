@@ -14,7 +14,6 @@ class Redirect extends MY_Controller {
     }
     
     public function pisces() {
-//        $this->_data['content'] = 'client/studysong';
         $this->load->view('client/studysong', $this->_data);
     }
 
@@ -72,9 +71,17 @@ class Redirect extends MY_Controller {
         
         $this->_data['post'] = $post;
         $this->_data['title'] = $post->getTitle();
+        
+        // Normal post
         $this->_data['content'] = 'client/single';
-        if($post->getType() == 'post') {
+        if($post->getType() == 'post' && $post->getCategories()) {
             $this->_data['suggest'] = $this->MPost->getSuggestForPost($post, 10);
+        }
+        
+        // If post is video bilingous
+        if($post->getYoutube() && $post->getCue()) {
+            $cues = json_decode($post->getCue(), true);
+            $this->_data['cues'] = $cues;
         }
         
         if($guid == $post->getGuid()) {
